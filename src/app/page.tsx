@@ -1,8 +1,8 @@
 
 export default function Home() {
   return (
-    <main>
-      Olimpus APP
+    <main className=" text-8xl text-center">
+      Proximamente Olimpus Shop
     </main>
   )
 }
