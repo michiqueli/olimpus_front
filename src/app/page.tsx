@@ -2,7 +2,7 @@
 export default function Home() {
   return (
     <main>
-      Olimpus APP
+      Olimpus Shop APP
     </main>
   )
 }
