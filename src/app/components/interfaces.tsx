@@ -4,3 +4,7 @@ export interface Users {
     active: boolean,
     years: number,
 }
+
+export interface ButtonProps {
+    title: string,
+}
