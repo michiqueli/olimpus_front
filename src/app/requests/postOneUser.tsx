@@ -4,7 +4,7 @@ const getAllTransactions = async () => {
   const storedToken = localStorage.getItem('token');
 
   try {
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/transaction/list`, {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/list`, {
       headers: {
         Authorization: storedToken, 
       },
