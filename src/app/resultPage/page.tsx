@@ -1,7 +1,7 @@
 "use client"
 import { useRouter } from "next/navigation"
 
-export default function SearchPage(){
+export default function ResultPage(){
     const router= useRouter()
     
     return(
