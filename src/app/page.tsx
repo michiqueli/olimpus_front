@@ -6,12 +6,12 @@ import EditButton from "./components/editButton";
 export default function Home() {
   return (
     <main>
-      <NavBar></NavBar>
+      <NavBar />
       Olimpus Shop APP
       <PrimaryButton title='Nuevo botón'/>
       <AlertButton title='Alerta'/>
       <EditButton title='Editar'/>
-    <Footer></Footer>
+      <Footer />
     </main>
   )
 }
