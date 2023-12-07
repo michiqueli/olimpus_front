@@ -7,13 +7,13 @@ import CreateProductForm from "./components/createProduct";
 export default function Home() {
   return (
     <main>
-      <NavBar></NavBar>
+      <NavBar />
       Olimpus Shop APP
       <PrimaryButton title='Nuevo botón'/>
       <AlertButton title='Alerta'/>
       <EditButton title='Editar'/>
       <CreateProductForm/>
-    <Footer></Footer>
+      <Footer />
     </main>
   )
 }
