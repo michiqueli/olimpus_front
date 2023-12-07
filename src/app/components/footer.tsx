@@ -18,6 +18,11 @@ const Footer: React.FC=()=>{
                     </div>
                     <div className="px-5 py-2">
                         <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
+                            Help
+                        </a>
+                    </div>
+                    <div className="px-5 py-2">
+                        <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
                             Contact
                         </a>
                     </div>
