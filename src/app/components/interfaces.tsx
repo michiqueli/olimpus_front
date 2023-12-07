@@ -8,3 +8,10 @@ export interface Users {
 export interface ButtonProps {
     title: string,
 }
+
+export interface FieldProps {
+    placeholder: string,
+    name: string,
+    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    value: string | number;
+}
