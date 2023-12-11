@@ -8,6 +8,7 @@ export const DELETE_PRODUCT= "DELET_PRODUCT"
 export const FILTER_BY_PRODUCT= "FILTER_PRODUCT"
 export const ORDER_BY_NAME= "ORDER_BY_NAME"
 export const ORDER_BY_PRICE= "ORDER_BY_PRICE"
+import { setSearchedProducts } from "./sliceProducts";
 
 export const getProducts=()=>{
     return async function (dispatch){
@@ -19,15 +20,14 @@ export const getProducts=()=>{
     }
 }
 
-export const getByName =(name)=>{
-    return async function (dispatch){
-        let json= await axios.get(`https://olimpusback.up.railway.app/products/name/?name=${name}`)
-        return dispatch({
-            type: GET_PRODUCTS_NAME,
-            payload: json.data
-        })
+export const getProductByName = async (name, dispatch) => {
+    try {
+        const response = await axios.get(`https://olimpusback.up.railway.app/products/name?name=${name}`);
+        dispatch(setSearchedProducts(response.data));
+    } catch (error) {
+        console.error('Error fetching product by name:', error);
     }
-}
+};
 
 export const getById =(id)=>{
     return async function (dispatch){

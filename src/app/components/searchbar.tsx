@@ -1,11 +1,13 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import {getProductByName} from '../../Redux/Actions'
+import { useAppDispatch } from '@/Redux/hooks';
 // import { ResultState } from '../components/interfaces';
 
 export default function SearchBar() {
+  const dispatch = useAppDispatch()
   const router = useRouter();
-//   const dispatch = useDispatch();
   const [result, setResult] = useState<ResultState>({
     name: '',
   });
@@ -24,8 +26,8 @@ export default function SearchBar() {
     if (!result.name.length) {
       window.alert('Por favor ingrese un producto');
     } else {
-    //   dispatch(getByName(result.name));
-      router.push(`/resultPage=${result.name}`);
+      getProductByName(result.name, dispatch)
+      router.push(`/resultPage`);
     }
   };
   return (
