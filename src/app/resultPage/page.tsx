@@ -1,8 +1,6 @@
 "use client"
 import { useAppSelector } from "@/Redux/hooks"
 import { getSearchedProducts } from "@/Redux/sliceProducts"
-import { url } from "inspector"
-import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { ProductInterface } from "../components/interfaces"
 
