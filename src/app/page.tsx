@@ -4,6 +4,7 @@ import Footer from "./components/footer";
 // import AlertButton from "./components/alertButton";
 // import EditButton from "./components/editButton";
 // import CreateProductForm from "./components/createProduct";
+import CardSlider from "./components/cardsSlider";
 
 import NovedadesSlicer from "./components/novedadesSlicer";
 export default function Home() {
@@ -16,6 +17,7 @@ export default function Home() {
       <AlertButton title='Alerta'/>
       <EditButton title='Editar'/> */}
       <NovedadesSlicer/>
+      <CardSlider />
       </div>
       <Footer />
     </main>
