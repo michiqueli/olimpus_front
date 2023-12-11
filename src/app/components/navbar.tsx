@@ -5,7 +5,7 @@ import { signIn } from "next-auth/react";
 const NavBar: React.FC = () => {
   const router = useRouter();
   return (
-  <div className="bg-black">
+  <div className="bg-black w-[100%]">
     <div className="flex justify-between items-center p-4">
       <div className="flex items-center">
         <img src="https://i.ibb.co/BrF41j4/zeus-1.png" alt="" className="w-10 h-10 p-1 bg-white rounded-lg ml-2" />
