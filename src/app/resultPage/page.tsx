@@ -1,8 +1,12 @@
 "use client"
 import { useAppSelector } from "@/Redux/hooks"
 import { getSearchedProducts } from "@/Redux/sliceProducts"
-import { deepStrictEqual } from "assert"
+import { url } from "inspector"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
+import { ProductInterface } from "../components/interfaces"
+
+
 
 export default function ResultPage(){
     const router= useRouter()
@@ -11,11 +15,13 @@ export default function ResultPage(){
     return(
         <main>
         <div>
-            {displayedProducts.map((product) => {
+            {displayedProducts.map((product: ProductInterface) => {
                return (
-                <div>
-                <h1>{product.name}</h1>
+                <div key={product.id}>
+              
                 <h1>{product.image}</h1>
+           
+                <h1>{product.name}</h1>
                 <h1>{product.description}</h1>
                 </div>
                )
