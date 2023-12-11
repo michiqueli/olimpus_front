@@ -5,8 +5,8 @@ import Footer from "./components/footer";
 // import EditButton from "./components/editButton";
 // import CreateProductForm from "./components/createProduct";
 import CardSlider from "./components/cardsSlider";
+import NovedadesSlider from "./components/novedadesSlider";
 
-import NovedadesSlicer from "./components/novedadesSlicer";
 export default function Home() {
   return (
     <main className="w-full h-full flex flex-col items-center text-center">
@@ -16,7 +16,7 @@ export default function Home() {
       <PrimaryButton title='Nuevo botón'/>
       <AlertButton title='Alerta'/>
       <EditButton title='Editar'/> */}
-      <NovedadesSlicer/>
+      <NovedadesSlider/>
       <CardSlider />
       </div>
       <Footer />
