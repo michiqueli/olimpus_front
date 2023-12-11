@@ -1,6 +1,6 @@
-import { UserInterface } from "../interfaces";
+import { Users } from "../components/interfaces";
 
-const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<UserInterface[]>>) => {
+const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<Users[]>>) => {
     const storedToken = localStorage.getItem('token');
     try {
       if (storedToken !== null) {
