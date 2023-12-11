@@ -9,7 +9,7 @@ name: "productsState",
 initialState,
 reducers: {
     setProducts:(state, action) => {
-        state.drivers = action.payload;
+        state.products = action.payload;
     },
     setSearchedProducts: (state, action) => {
         state.searchedProducts = action.payload;
