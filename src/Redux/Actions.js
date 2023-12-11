@@ -5,6 +5,9 @@ export const GET_PRODUCTS_ID= "GET_PRODUCTS_ID"
 export const CREATE_PRODUCT= "CREATE_PRODUCT"
 export const MODOFY_PRODUCT= "MODIFY_PRODUCT"
 export const DELETE_PRODUCT= "DELET_PRODUCT"
+export const FILTER_BY_PRODUCT= "FILTER_PRODUCT"
+export const ORDER_BY_NAME= "ORDER_BY_NAME"
+export const ORDER_BY_PRICE= "ORDER_BY_PRICE"
 
 export const getProducts=()=>{
     return async function (dispatch){
@@ -62,6 +65,26 @@ export const deleteProduct=(id)=>{
         type: DELETE_PRODUCT,
         payload: json.data
        })
+    }
+}
+
+export const filterProduct=(payload)=>{
+    return{
+        type:FILTER_BY_PRODUCT,
+        payload: payload
+    }
+}
+
+export const orderByName=(payload)=>{
+    return{
+        type:ORDER_BY_NAME,
+        payload: payload
+    }
+}
+export const orderByPrice=(payload)=>{
+    return{
+        type:ORDER_BY_PRICE,
+        payload: payload
     }
 }
 
