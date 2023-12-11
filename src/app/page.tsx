@@ -1,5 +1,4 @@
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
+
 // import PrimaryButton from "./components/primaryButton";
 // import AlertButton from "./components/alertButton";
 // import EditButton from "./components/editButton";
