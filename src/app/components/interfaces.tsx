@@ -16,3 +16,10 @@ export interface FieldProps {
     onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
     value: string | number;
 }
+
+export interface PaginationProps {
+    data: any[];
+    lastIndex?: number;
+    firstIndex?: number;renderData: (data: any[]) => React.ReactNode; 
+    recordsPerPage: number,
+  }
