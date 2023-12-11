@@ -10,6 +10,13 @@ export interface ButtonProps {
     title: string,
 }
 
+export interface ProductInterface{
+    id: string,
+    name: string,
+    description: string,
+    image: string
+}
+
 export interface FieldProps {
     placeholder: string,
     name: string,
