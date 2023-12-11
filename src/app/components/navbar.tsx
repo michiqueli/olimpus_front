@@ -5,15 +5,14 @@ import SearchBar from "./searchbar";
 const NavBar: React.FC = () => {
   const router = useRouter();
   return (
-  <div className="bg-black w-[100%] flex justify-center items-center">
-    <div className="flex justify-between items-center p-4 w-[80%]">
+  <div className="bg-yellow-300 w-full flex justify-center items-center">
+    <div className="flex justify-between items-center p-4 w-[100%]">
       <div className="flex items-center">
         <button onClick={() => router.push('/')}>
           <img src="https://i.ibb.co/BrF41j4/zeus-1.png" alt="" className="w-10 h-10 p-1 bg-white rounded-lg ml-2" />
         </button>
         <p className="text-white hidden lg:inline font-serif text-2xl ml-4">Olimpus</p>
       </div>
-      {/* <input type="text" className="block sm:w-60 md:w-80 lg:w-3/5 h-10 p-3 pl-4 rounded-lg bg-gray-300 focus:outline-none" /> */}
       <SearchBar />
       <div className="flex">
         <button onClick={() => router.push('/login')}>
