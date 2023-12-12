@@ -15,7 +15,6 @@ export default function ResultPage() {
         {displayedProducts.map((product: ProductInterface) => (
           <ProductCard key={product.id} product={product} />
         ))}
-
       </div>
     </main>
   );
