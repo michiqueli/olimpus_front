@@ -14,6 +14,7 @@ export default function ResultPage() {
         {displayedProducts.map((product: ProductInterface) => {
           return (
             <div key={product.id}>
+                
               <h1>{product.image}</h1>
               <h1>{product.name}</h1>
               <h1>{product.description}</h1>
