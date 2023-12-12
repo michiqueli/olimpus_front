@@ -20,6 +20,6 @@ export const getUsers = (state) =>
 
 export const {
     setUsers,
-} = productsHandler.actions;
+} = usersHandler.actions;
 
 export default usersHandler.reducer;
