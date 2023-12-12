@@ -4,7 +4,7 @@ const initialState = {
     users: [],
   
 }
-export const productsHandler = createSlice({
+export const usersHandler = createSlice({
 name: "usersState",
 initialState,
 reducers: {
