@@ -35,10 +35,11 @@ export const getProductByName = async (name, dispatch) => {
   }
 };
 
-export const getById = async(id,dispatch)=>{
+export const getById = async(id)=>{
    try{
         let json= await axios.get(`https://olimpusback.up.railway.app/products/${id}`)
-        dispatch(setSearchedProducts(json.data))
+        console.log("json",json.data)
+        return json.data
     }catch(error){
         console.error("'Error fetching product by id:', error")
     }
