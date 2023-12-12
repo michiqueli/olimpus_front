@@ -1,6 +1,5 @@
 
 import axios from "axios"
-import { setSearchedProducts } from "./sliceProducts";
 import { setUsers } from "./sliceUsers";
 import { setSearchedProducts, setProductTypes } from "./sliceProducts";
 
