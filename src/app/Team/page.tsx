@@ -43,7 +43,7 @@ function Team() {
             Back-end
             </h1>
           </div>
-            <img src='https://github.com/michiqueli.png' alt='perfil NicoTS' className='w-48 h-48'/>
+            <img src='https://github.com/melstfor.png' alt='perfil NicoTS' className='w-48 h-48'/>
         </div>
 
         <div className='border border-white rounded-2xl flex flex-row p-4 justify-around w-5/12 items-center shadow-lg shadow-slate-900'>
@@ -55,7 +55,7 @@ function Team() {
               Back-end
             </h1>
           </div>
-            <img src='https://github.com/ProfeCandy.png' alt='perfil MatiJS' className='w-48 h-48'/>
+            <img src='https://github.com/ramallomatiasg.png' alt='perfil MatiJS' className='w-48 h-48'/>
         </div>
       </div>
 
@@ -69,7 +69,7 @@ function Team() {
             Front-end
             </h1>
           </div>
-            <img src='https://github.com/michiqueli.png' alt='perfil NicoTS' className='w-48 h-48'/>
+            <img src='https://github.com/micaliste.png' alt='perfil NicoTS' className='w-48 h-48'/>
         </div>
 
         <div className='border border-white rounded-2xl flex flex-row p-4 justify-around w-5/12 items-center shadow-lg shadow-slate-900'>
@@ -81,7 +81,7 @@ function Team() {
               Front-end
             </h1>
           </div>
-            <img src='https://github.com/ProfeCandy.png' alt='perfil MatiJS' className='w-48 h-48'/>
+            <img src='https://github.com/SGuevaraOlie.png' alt='perfil MatiJS' className='w-48 h-48'/>
         </div>
       </div>
 
@@ -95,7 +95,7 @@ function Team() {
             Front-end
             </h1>
           </div>
-            <img src='https://github.com/michiqueli.png' alt='perfil NicoTS' className='w-48 h-48'/>
+            <img src='https://github.com/santiagodietrich.png' alt='perfil NicoTS' className='w-48 h-48'/>
         </div>
 
         <div className='border border-white rounded-2xl flex flex-row p-4 justify-around w-5/12 items-center shadow-lg shadow-slate-900'>
