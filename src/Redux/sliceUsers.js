@@ -2,6 +2,7 @@ import {createSlice} from "@reduxjs/toolkit"
 
 const initialState = {
     users: [],
+  
 }
 export const usersHandler = createSlice({
 name: "usersState",
@@ -19,6 +20,6 @@ export const getUsers = (state) =>
 
 export const {
     setUsers,
-} = productsHandler.actions;
+} = usersHandler.actions;
 
 export default usersHandler.reducer;
