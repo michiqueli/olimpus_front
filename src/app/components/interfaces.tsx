@@ -32,3 +32,9 @@ export interface PaginationProps {
     firstIndex?: number;renderData: (data: any[]) => React.ReactNode; 
     recordsPerPage: number,
   }
+
+export interface CredentialsLogin {
+    email: string,
+    password: string,
+    googlePass: string,
+}

@@ -3,6 +3,7 @@ import "./globals.css";
 import { Providers } from "@/Redux/provider";
 import NavBar from "./components/navbar";
 import Footer from "./components/footer";
+import SessionAuthProvider from "./context/SessionAuthProvider";
 
 export const metadata: Metadata = {
   title: "Olimpus ",
@@ -17,11 +18,13 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <Providers>
-          <NavBar />
-          {children}
-          <Footer />
-        </Providers>
+        <SessionAuthProvider>
+          <Providers>
+            <NavBar />
+            {children}
+            <Footer />
+          </Providers>
+        </SessionAuthProvider>
       </body>
     </html>
   );
