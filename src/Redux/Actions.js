@@ -2,6 +2,7 @@
 import axios from "axios"
 import { setUsers } from "./sliceUsers";
 import { setSearchedProducts, setProductTypes } from "./sliceProducts";
+import getAllProducts from "@/app/requests/getAllProducts";
 
 export const getProducts= async (dispatch)=>{
     try{
@@ -14,9 +15,7 @@ export const getProducts= async (dispatch)=>{
 
 export const getDiscountProducts = async (dispatch) => {
   try {
-    const response = await axios.get(
-      `https://olimpusback.up.railway.app/products`
-    );
+    const response = await getAllProducts();
     const filtered = response.data.filter((product) => product.discount > 0);
     dispatch(setSearchedProducts(filtered));
   } catch (error) {
