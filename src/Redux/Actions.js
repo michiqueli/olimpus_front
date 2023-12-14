@@ -2,6 +2,7 @@
 import axios from "axios"
 import { setUsers } from "./sliceUsers";
 import { setSearchedProducts, setProductTypes } from "./sliceProducts";
+export const ORDER_BY_PRICE = "ORDER_BY_PRICE"
 
 export const getProducts= async (dispatch)=>{
     try{
@@ -127,7 +128,7 @@ export const deleteUser= async (id, dispatch)=>{
     }
 }
 
-//////////////////////////////// Types users ///////////////////////////////////////////////
+//////////////////////////////// Types products ///////////////////////////////////////////////
 export const getAllTypes = async (dispatch) => {
   try {
     const response = await axios.get(
@@ -138,3 +139,22 @@ export const getAllTypes = async (dispatch) => {
     console.error("Error fetching Types", error);
   }
 };
+
+export const getAllTypesInStock= async (dispatch, payload)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/types`,payload)
+    dispatch(setProductTypes(json.data))
+  }catch(error){
+    console.error("Error al traer los productos en stock")
+  }
+}
+
+export const getSubtypes= async (dispatch, payload)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/types/withSubtypes`,payload)
+    dispatch(setProductTypes(json.data))
+  }catch(error){
+    console.error("Error al traer los productos en stock")
+  }
+}
+
