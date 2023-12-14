@@ -2,20 +2,29 @@
 import { useAppSelector } from "@/Redux/hooks";
 import { getSearchedProducts } from "@/Redux/sliceProducts";
 import { useRouter } from "next/navigation";
+import { useState } from "react";
 import { ProductInterface } from "../components/interfaces";
+import Pagination from "../components/pagination";
 
 
 
 export default function ResultPage() {
   const displayedProducts = useAppSelector(getSearchedProducts);
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const recordsPerPage = 1; 
+  const lastIndex = currentPage * recordsPerPage;
+  const firstIndex = lastIndex - recordsPerPage;
+  const dataShow = displayedProducts.slice(firstIndex, lastIndex);
 
   return (
     <main className="w-[100%]">
       <div className="w-[100%] flex flex-col justify-center items-center mt-10">
-        {displayedProducts.map((product: ProductInterface) => (
+        {dataShow.map((product: ProductInterface) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
+      <Pagination data={dataShow}  recordsPerPage={recordsPerPage}/>
     </main>
   );
 }
