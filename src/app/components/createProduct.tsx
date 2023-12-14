@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState } from 'react'
-import PrimaryButton from './primaryButton';
+import PrimaryButton from './buttons/primaryButton';
 import Field from './field';
 
 function CreateProductForm() {

@@ -2,9 +2,13 @@
 
 import { Carousel } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
+import { ProductInterface } from './interfaces';
 
 function CardSlider() {
-  const router = useRouter()
+  const router = useRouter();
+
+//   const popular = products.filter((product: ProductInterface) => product.popular == true);
+
   return (
     <div className="h-56 sm:h-50 xl:h-80 2xl:h-96 w-10/12 mx-auto">
         <div className='flex'>

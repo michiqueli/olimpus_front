@@ -1,6 +1,6 @@
 'use client';
 import React, { Children } from 'react';
-import { ButtonProps } from './interfaces';
+import { ButtonProps } from '../interfaces';
 
 function PrimaryButton(props: ButtonProps) {
     const {title} = props;
