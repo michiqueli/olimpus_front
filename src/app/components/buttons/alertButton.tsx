@@ -1,5 +1,5 @@
 import React from 'react';
-import { ButtonProps } from './interfaces';
+import { ButtonProps } from '../interfaces';
 
 function AlertButton(props: ButtonProps) {
     const {title} = props;
