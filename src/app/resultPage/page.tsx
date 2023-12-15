@@ -19,8 +19,9 @@ export default function ResultPage() {
 
   return (
     <main className="w-[100%]">
-      <div className="w-[100%] flex flex-col justify-center items-center mt-10">
-        {dataShow.map((product: ProductInterface) => (
+
+      <div className="w-[100%] flex flex-col justify-center items-center mt-10 space-y-7">
+        {displayedProducts.map((product: ProductInterface) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
