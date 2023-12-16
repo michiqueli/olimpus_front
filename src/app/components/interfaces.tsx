@@ -29,6 +29,8 @@ export interface FieldProps {
 export interface PaginationProps {
     data: any[];
     recordsPerPage: number,
+    currentPage: number,
+    setCurrentPage: (pageNumber: number) => void;
 }
 
 export interface CredentialsLogin {
