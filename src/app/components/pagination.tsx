@@ -1,21 +1,20 @@
 //CODIGO A INSERTAR DONDE SE UTILICE LA PAGINACION
 
-    // const recordsPerPage = 10; 
-    // const lastIndex = currentPage * recordsPerPage;
-    // const firstIndex = lastIndex - recordsPerPage;
-    // const dataShow = filteredData.slice(firstIndex, lastIndex);
-    //USAR EL COMPONENTE COPIANDO Y PEGANDO ESTO DE ABAJO
-    // <Pagination data={data que se quiere paginar} lastIndex={lastIndex} firstIndex={firstIndex} recordsPerPage={recordPerPage}/>
+// const [currentPage, setCurrentPage] = useState(1);
 
-    
+// const recordsPerPage = 10; 
+// const lastIndex = currentPage * recordsPerPage;
+// const firstIndex = lastIndex - recordsPerPage;
+// const dataShow = displayedProducts.slice(firstIndex, lastIndex);
+// <Pagination data={displayedProducts} recordsPerPage={recordsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
+
 'use client';
 
-import React, {useState} from 'react';
+import React from 'react';
 import { PaginationProps } from './interfaces';
 
 function Pagination(props: PaginationProps) {
-    const {data, recordsPerPage} = props;
-    const [currentPage, setCurrentPage] = useState(1);
+    const {data, recordsPerPage, currentPage, setCurrentPage} = props;
     
     const npage = Math.ceil(data.length / recordsPerPage);
     const numbers: number[] = [];
