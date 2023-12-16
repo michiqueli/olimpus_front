@@ -4,10 +4,10 @@ import axios from "axios";
 const initialState = {
   products: [], // Todos los Productos
   searchedProducts: [], // Para renderizar en la Result Page
-  withDiscountProduct: [], // Productos con descuento
+  withDiscountProducts: [], // Productos con descuento
 };
 export const productsHandler = createSlice({
-  name: "productsState",
+  name: "products",
   initialState,
   reducers: {
     setProducts: (state, action) => {
@@ -17,15 +17,16 @@ export const productsHandler = createSlice({
       state.searchedProducts = action.payload;
     },
     setWithDiscountProducts: (state, action) => {
-      state.withDiscountProduct = action.payload;
+      state.withDiscountProducts = action.payload;
     },
   },
 });
 
 export const getProducts = (state) => state.products.products;
-export const getSearchedProducts = (state) => state.products.searchedProducts;
+export const getSearchedProducts = (state) =>
+  state.products.searchedProducts;
 export const getWithDiscountProducts = (state) =>
-  state.products.withDiscountProduct;
+  state.products.withDiscountProducts;
 
 export const { setProducts, setSearchedProducts, setWithDiscountProducts } =
   productsHandler.actions;
@@ -51,6 +52,7 @@ export const getProductsWithDiscount = async (dispatch) => {
     );
     console.log(response.data);
     dispatch(setWithDiscountProducts(response.data));
+    dispatch(setSearchedProducts(response.data))
   } catch (error) {
     console.error("Error fetching products", error);
   }
@@ -61,45 +63,57 @@ export const getProductByName = async (name, dispatch) => {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/name?name=${name}`
     );
-    console.log(response.data)
+    console.log(response.data);
     dispatch(setSearchedProducts(response.data));
   } catch (error) {
     console.error("Error fetching product by name:", error);
   }
 };
 
-export const getProductById = async(id)=>{
-  try{
-       const response= await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`)
-       console.log(response.data)
-       return response.data
-   }catch(error){
-       console.error('Error fetching product by id:', error)
-   }
-}
+export const getProductById = async (id) => {
+  try {
+    const response = await axios.get(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/${id}`
+    );
+    console.log(response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching product by id:", error);
+  }
+};
 
-export const createProduct = async (data)=>{
-  try{
-      await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/create`, data)
-      console.log(`El producto ${response.data.name} ha sido Creado con exito`)
-  }catch(error){
-      console.error("Error al crear el producto", error)
+export const createProduct = async (data) => {
+  try {
+    await axios.post(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/create`,
+      data
+    );
+    console.log(`El producto ${response.data.name} ha sido Creado con exito`);
+  } catch (error) {
+    console.error("Error al crear el producto", error);
   }
-}
+};
 
-export const modifyProduct= async (id, data)=>{
-  try{
-    const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/update/${id}`, payload)
-    console.log(`El producto ${response.data.name} ha sido Modificado con exito`)
-  }catch(error){
-    console.error("Error al modificar el producto")
+export const modifyProduct = async (id, data) => {
+  try {
+    const response = await axios.patch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/update/${id}`,
+      payload
+    );
+    console.log(
+      `El producto ${response.data.name} ha sido Modificado con exito`
+    );
+  } catch (error) {
+    console.error("Error al modificar el producto");
   }
-}
-export const deleteProduct= async (id, dispatch)=>{
-  try{
-     let json= await axios.delete(`https://olimpusback.up.railway.app/products/delete/${id}`) 
-     dispatch(setSearchedProducts(json.data))
-  }catch(error){
-      console.error("Error al eliminar el producto", error)
+};
+export const deleteProduct = async (id, dispatch) => {
+  try {
+    let json = await axios.delete(
+      `https://olimpusback.up.railway.app/products/delete/${id}`
+    );
+    dispatch(setSearchedProducts(json.data));
+  } catch (error) {
+    console.error("Error al eliminar el producto", error);
   }
-}
+};
