@@ -3,7 +3,7 @@ import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
 import { getTodosProducts } from '@/Redux/Actions';
 import { useEffect } from 'react';
 import { getProducts } from '@/Redux/sliceProducts';
-import { ProductInterface } from './interfaces';
+import { ProductInterface } from '../components/interfaces';
 import { useRouter } from 'next/navigation';
 
 export default function ProductosCompleto(){
