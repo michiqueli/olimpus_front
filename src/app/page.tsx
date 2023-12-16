@@ -3,6 +3,7 @@
 import { useEffect } from "react";
 import CardSlider from "./components/cardsSlider";
 import NovedadesSlider from "./components/novedadesSlider";
+import Catalogo from "./components/catalogo";
 
 import { useAppDispatch } from "@/Redux/hooks";
 import { getAllProducts, getProductsWithDiscount } from "@/Redux/sliceProducts";
