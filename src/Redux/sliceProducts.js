@@ -89,7 +89,7 @@ export const createProduct = async (data)=>{
 
 export const modifyProduct= async (id, data)=>{
   try{
-    const response = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/update/${id}`, payload)
+    const response = await axios.patch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products/update/${id}`, payload)
     console.log(`El producto ${response.data.name} ha sido Modificado con exito`)
   }catch(error){
     console.error("Error al modificar el producto")
@@ -97,7 +97,7 @@ export const modifyProduct= async (id, data)=>{
 }
 export const deleteProduct= async (id, dispatch)=>{
   try{
-     let json= await axios.get(`https://olimpusback.up.railway.app/products/delete/${id}`) 
+     let json= await axios.delete(`https://olimpusback.up.railway.app/products/delete/${id}`) 
      dispatch(setSearchedProducts(json.data))
   }catch(error){
       console.error("Error al eliminar el producto", error)
