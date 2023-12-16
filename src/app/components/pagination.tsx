@@ -1,4 +1,5 @@
 //CODIGO A INSERTAR DONDE SE UTILICE LA PAGINACION
+
     // const recordsPerPage = 10; 
     // const lastIndex = currentPage * recordsPerPage;
     // const firstIndex = lastIndex - recordsPerPage;
