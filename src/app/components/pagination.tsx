@@ -14,7 +14,7 @@ import React, {useState} from 'react';
 import { PaginationProps } from './interfaces';
 
 function Pagination(props: PaginationProps) {
-    const {data, lastIndex, firstIndex, recordsPerPage} = props;
+    const {data, recordsPerPage} = props;
     const [currentPage, setCurrentPage] = useState(1);
     
     const npage = Math.ceil(data.length / recordsPerPage);
