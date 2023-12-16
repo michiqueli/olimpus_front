@@ -1,16 +1,17 @@
 "use client";
-import { useAppSelector } from "@/Redux/hooks";
+import { useAppSelector, useAppDispatch } from "@/Redux/hooks";
 import { getSearchedProducts } from "@/Redux/sliceProducts";
 import { useRouter } from "next/navigation";
 import { ProductInterface } from "../components/interfaces";
-
+import ProductosCompleto from "../components/productosCatalogo";
 
 
 export default function ResultPage() {
   const displayedProducts = useAppSelector(getSearchedProducts);
-
+ 
   return (
     <main className="w-[100%]">
+      <ProductosCompleto/>
       <div className="w-[100%] flex flex-col justify-center items-center mt-10 space-y-7">
         {displayedProducts.map((product: ProductInterface) => (
           <ProductCard key={product.id} product={product} />
