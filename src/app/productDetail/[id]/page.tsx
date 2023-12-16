@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getById } from "@/Redux/Actions";
+import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png"
 
 
-export default function productDetail(){
+export default function ProductDetail(){
   
   const router = useRouter();
   const params = useParams();
@@ -19,9 +19,10 @@ export default function productDetail(){
     stock: 0,
   })
 
-  const [count, setCount]=useState(1)
+  
   const productID = params.id;
-
+  
+  const [count, setCount]=useState(1)
   const increment=()=>{
     setCount(count + 1)
   }
@@ -35,7 +36,7 @@ export default function productDetail(){
   useEffect(() => {
     async function fetchData() {
       try {
-        const productFind = await getById(productID);
+        const productFind = await getProductById(productID);
           setProduct(productFind);
         } catch (error) {
           console.error("Error en render componente de detalle producto", error);
@@ -55,16 +56,16 @@ export default function productDetail(){
             <div className="max-w-md mx-auto  mr-80 mt-60 ml-40 ">
               <h1 className="text-black text-6xl text-center ">{product.name}</h1>
               <h2 className="text-black text-center text-lg mt-16">{product.description}</h2> 
-              <h2 className="text-black text-4xl text-right mt-20 border border-gray-300 p-4 rounded-md">$ {product.price}</h2> 
+              <h2 className="text-black text-4xl text-right mt-20 border border-gray-300 w-6/12 p-4 rounded-md">$ {product.price}</h2> 
             </div>
             <div className="flex items-center ml-40">
-              <Image alt="" src={envios} width={60} height={60} className="mt-20" />
+              <img alt="" src="/envio.png" width={60} height={60} className="mt-20" />
               <h2 className="text-black text-lg ml-4 mt-20">Envíos gratis a partir de $20.000</h2>
             </div>
             <div className="mt-10 ml-40 text-lg">
               <h2>Cantidad</h2>
             </div>
-            <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 p-4 rounded-full ">
+            <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-4/12 p-4 rounded-full ">
               <button onClick={decrement} className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full">-</button>
               <p className="mr-20 font-normal "> {count}</p>
               <button className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full" onClick={increment}>+</button>
@@ -76,7 +77,7 @@ export default function productDetail(){
         
         </div> 
       <div>
-        <button onClick={() => router.push("/search")} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Back</button>
+        <button onClick={() => router.push("/resultPage")} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Back</button>
       </div>
     </div>
    
