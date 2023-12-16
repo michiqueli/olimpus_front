@@ -40,6 +40,7 @@ export const getAllProducts = async (dispatch) => {
     );
     console.log(response);
     dispatch(setProducts(response.data));
+    dispatch(setSearchedProducts(response.data));
   } catch (error) {
     console.error("Error fetching products ", error);
   }
