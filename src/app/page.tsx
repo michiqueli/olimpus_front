@@ -3,9 +3,10 @@
 import { useEffect } from "react";
 import CardSlider from "./components/cardsSlider";
 import NovedadesSlider from "./components/novedadesSlider";
-import SelectsCategories from "./components/selectsCategories";
+
 import { useAppDispatch } from "@/Redux/hooks";
 import { getAllProducts, getProductsWithDiscount } from "@/Redux/sliceProducts";
+
 
 export default function Home() {
   const dispatch = useAppDispatch();
@@ -24,10 +25,10 @@ export default function Home() {
   return (
     <main className="w-full h-full flex flex-col items-center text-center">
       <div className="w-[80%]">
-        {/* <SelectsCategories/> */}
-        <NovedadesSlider />
-        <CardSlider />
-      </div>
+      <NovedadesSlider/>
+      <Catalogo/>
+      <CardSlider />
+     </div>
     </main>
   );
 }
