@@ -2,11 +2,11 @@
 import Image from "next/image";
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import { getById } from "@/Redux/Actions";
+import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png"
 
 
-export default function productDetail(){
+export default function ProductDetail(){
   
   const router = useRouter();
   const params = useParams();
@@ -36,7 +36,7 @@ export default function productDetail(){
   useEffect(() => {
     async function fetchData() {
       try {
-        const productFind = await getById(productID);
+        const productFind = await getProductById(productID);
           setProduct(productFind);
         } catch (error) {
           console.error("Error en render componente de detalle producto", error);
@@ -77,7 +77,7 @@ export default function productDetail(){
         
         </div> 
       <div>
-        <button onClick={() => router.push("/search")} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Back</button>
+        <button onClick={() => router.push("/resultPage")} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Back</button>
       </div>
     </div>
    
