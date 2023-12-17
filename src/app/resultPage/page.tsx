@@ -5,11 +5,11 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ProductInterface } from "../components/interfaces";
 import Pagination from "../components/pagination";
+import GoBack from "../components/buttons/goBack";
 
 export default function ResultPage() {
   const displayedProducts = useAppSelector(getSearchedProducts);
   const [currentPage, setCurrentPage] = useState(1);
-
   const recordsPerPage = 10; 
   const lastIndex = currentPage * recordsPerPage;
   const firstIndex = lastIndex - recordsPerPage;
@@ -17,7 +17,6 @@ export default function ResultPage() {
 
   return (
     <main className="w-[100%]">
-
       <div className="w-[100%] flex flex-col justify-center items-center mt-10 space-y-7">
         {dataShow.map((product: ProductInterface) => (
           <ProductCard key={product.id} product={product} />
