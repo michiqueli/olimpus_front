@@ -6,6 +6,7 @@ import GoBack from "./buttons/goBack";
 const NavBar: React.FC = () => {
   const router = useRouter();
   const path = usePathname();
+  
   return (
   <div className="bg-yellow-300 w-full flex justify-center items-center">
     <div className="flex justify-between items-center p-4 w-[80%]">
