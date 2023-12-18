@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png"
 
-
 export default function ProductDetail(){
   
   const router = useRouter();
