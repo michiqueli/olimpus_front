@@ -22,18 +22,25 @@ function CardSlider() {
         }
         fetchData();
     }, []);
+    const productsPerSlide = 4;
+    const slides = [];
+    for (let i=0; i < products.length; i += productsPerSlide){
+        slides.push(products.slice(i, i+productsPerSlide))
+    }
     return (
-        <div className="h-96 w-10/12 mx-auto">
-            <div className='flex'>
-                <h1 className='w-full'>Productos más populares:</h1>
+        <div className="h-96 w-full mx-auto flex flex-row">
+            <div className='flex w-72'>
+                <img src="/masVendidos.png" alt="" className='rounded-lg'/>
             </div>
-            <Carousel slide={true}>
-                <div className="flex">
-                {products.map((product: ProductInterface) => (
-                    <CarrouselCard key={product.id} product={product} />
+            <Carousel slide={true} leftControl={<img src="/izq.png" className='h-12 opacity-80 hover:opacity-100' />} rightControl={<img src="/der.png" className='h-12 opacity-80 hover:opacity-100'/>} >
+                {slides.map((slide, index) => (
+                    <div key={index} className='flex justify-center'>
+                        {slide.map((product: ProductInterface) => (
+                            <CarrouselCard key={product.id} product={product} />
+                        ))}
+                    </div>
                 ))}
-                </div>
-        </Carousel>
+            </Carousel>
         </div>
     );
 }
