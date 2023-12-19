@@ -2,6 +2,8 @@
 import axios from "axios"
 import { setUsers } from "./sliceUsers";
 import { setSearchedProducts, setProducts } from "./sliceProducts";
+import { setProductTypes } from "./sliceTypes";
+
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"
 
 

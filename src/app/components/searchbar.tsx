@@ -34,7 +34,7 @@ export default function SearchBar() {
     <div>
         <form onSubmit={(e) => handleSubmit(e)}>
         <div className='flex flex-col p-2 py-6 m-h-screen'>
-            <div className='bg-white items-center justify-between w-80 flex rounded-full shadow-lg p-2 mb-5 sticky'>
+            <div className='bg-white items-center justify-between w-96  flex rounded-full shadow-lg p-2 mb-5 sticky'>
                 <input className='font-bold uppercase rounded-full w-full py-2 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs' type='text' name="name" value={result.name} placeholder='Search' onChange={(e) => handleInputChange(e)} />
                     <div className='bg-gray-600 p-2 hover:bg-blue-800 cursor-pointer mx-2 rounded-full'>
                       <button type='submit'>
