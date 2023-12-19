@@ -1,59 +1,65 @@
 "use client";
-import { useDispatch, useSelector} from "react-redux";
-import { useState } from "react";
-import {orderByName, orderByPrice, filterByProduct} from '../../Redux/Actions'
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import { getAllTypes, getTypes } from "@/Redux/Actions";
+import { useEffect, useState } from "react";
 
-export default function Filtered (){
-    const dispatch=useDispatch();
-    const allProducts=useSelector((state) => state.products)
-    const [selectedProduct, setSelectedProduct] = useState('');
-    
-    const handleProducthange = async (e) => {
-        const product = e.target.value;
-        setSelectedProduct(product);
-        try {
-            await dispatch(filterByProduct(product));
-        } catch (error) {
-            console.error(error);
-        }
-    };
+export default function Filtered () {
+    const dispatch=useAppDispatch();
 
-    const handleOrderName = (event) => {
-        dispatch(orderByName(event.target.value));
+    const initialState ={
+        name:""
     };
+    const allProducts=useAppSelector(state => state.products.Type);
+    console.log("all",allProducts)
+    const [estado,setEstado]=useState(initialState);
+    console.log("estado",estado.name)
 
-    const handleOrderPrice = (event) => {
-        dispatch(orderByPrice(event.target.value));
-    };
+    useEffect(()=>{
+        dispatch(getAllTypes)
+    },[dispatch])
+
+    const handleInputChange=(event)=>{
+        const value=event.target.value
+        console.log("value",value)
+        setEstado({
+            ...estado,name: event.target.value
+        })
+        // dispatch(getTypes(estado.name))
+        // getTypes(estado.name, dispatch)
+    }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+        getTypes(estado.name, dispatch)
+      };
+
 
     return(
+        // <div className="">
+        //     <form onSubmit={(e) => handleSubmit(e)}>
+        //         <label className="" htmlFor="ordenPorType">Types:</label>
+        //         <select className="" id="ordenPorType" onChange={event=>handleInputChange(event)}>
+        //             <option value="">Todos</option>
+        //             <option value="calzado">Calzado</option>
+        //             <option value="indumentaria">Indumentaria</option>
+        //             <option value="accesorios">Accesorios</option>
+        //             <option value="suplementos">Suplementos</option>
+        //         </select>
+        //         <button>filtrar</button>
+        //     </form>
+        //     </div>
+
         <div>
             <div className='' >
             <label className=''>Filter by products:</label>
-                <select defaultValue={'default'} name="products" onChange={handleProducthange}>
+                <select defaultValue={'default'} name="products" onChange={handleInputChange}>
                     <option disabled={true} value='default'>All</option>
-                      {allProducts?.map(el => (       
-                        <option key={el} value={el}>{el}</option>
-                      ))}
-                </select>
-        </div>
-
-        <div  className='' >
-                <label className=''>Order by name</label>
-                <select onChange={(event) => handleOrderName(event)}>
-                    <option value="Ascendente">A-Z</option>
-                    <option value="Descendente">Z-A</option>
-                </select>
-       </div>
-
-       <div  className='' >
-                <label className=''>Order by price</label>
-                <select onChange={(event) => handleOrderPrice(event)}>
-                    <option value="Ascendente">A-Z</option>
-                    <option value="Descendente">Z-A</option>
+                      {/* {allProducts.Type.name?.map(el => (  
+                        console.log("productos",allProducts.name),     
+                        <option key={el} value={el.name}>{el.name}</option>
+                      ))} */}
                 </select>
             </div>
         </div>
     )
-
 }

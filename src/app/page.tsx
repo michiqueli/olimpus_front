@@ -2,7 +2,7 @@
 
 import CardSlider from "./components/cardsSlider";
 import NovedadesSlider from "./components/novedadesSlider";
-import Catalogo from "./components/banner";
+import Banner from "./components/catalogo";
 
 export default function Home() {
   
@@ -10,7 +10,7 @@ export default function Home() {
     <main className="w-full h-full flex flex-col items-center text-center">
       <div className="w-[80%]">
       <NovedadesSlider/>
-      <Catalogo/>
+      <Banner/>
       <CardSlider />
      </div>
     </main>
