@@ -2,7 +2,7 @@
 
 import CardSlider from "./components/cardsSlider";
 import NovedadesSlider from "./components/novedadesSlider";
-import Catalogo from "./components/banner";
+import Banner from "./components/catalogo";
 
 export default function Home() {
   
@@ -16,7 +16,7 @@ export default function Home() {
           <CardSlider />
         </div>
         <div className="my-6">
-          <Catalogo/>
+          <Banner/>
         </div>
      </div>
     </main>
