@@ -2,7 +2,7 @@
 
 import CardSlider from "./components/cardsSlider";
 import NovedadesSlider from "./components/novedadesSlider";
-import Catalogo from "./components/catalogo";
+import Catalogo from "./components/banner";
 
 export default function Home() {
   

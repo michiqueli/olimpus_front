@@ -1,10 +1,9 @@
 "use client";
-import Image from "next/image";
+
 import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png"
-
 
 export default function ProductDetail(){
   
