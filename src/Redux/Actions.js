@@ -1,14 +1,18 @@
 
 import axios from "axios"
 import { setUsers } from "./sliceUsers";
-import { setSearchedProducts, setProductTypes } from "./sliceProducts";
+import { setSearchedProducts, setProducts } from "./sliceProducts";
+export const ORDER_BY_PRICE = "ORDER_BY_PRICE"
+
 
 import getAllProducts from "@/app/requests/getAllProducts";
 
-export const getProducts= async (dispatch)=>{
+
+export const getTodosProducts= async (dispatch)=>{
     try{
         let json= await axios.get(`https://olimpusback.up.railway.app/products`)
-        dispatch(setSearchedProducts(json.data));
+        console.log("j",json)
+        dispatch(setProducts(json.data));
     }catch(error){
         console.error("Error fetching products ", error)
     }
@@ -156,4 +160,24 @@ export const getSubtypes= async (dispatch, payload)=>{
     console.error("Error al traer los productos en stock")
   }
 }
+
+///////////////////////////// FILTERS PRODUCT ///////////////////////
+export const getTypes= async (Type)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByType/${Type}`)
+    dispatch(setProductTypes(json.data))
+  }catch(error){
+    console.error("Error fetching types")
+  }
+}
+
+export const getSubTypes= async (subType)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByType/${subType}`)
+    dispatch(setProductTypes(json.data))
+  }catch(error){
+    console.error("Error fetching subtypes")
+  }
+}
+
 

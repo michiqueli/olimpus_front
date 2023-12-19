@@ -28,10 +28,10 @@ export interface FieldProps {
 
 export interface PaginationProps {
     data: any[];
-    lastIndex?: number;
-    firstIndex?: number;renderData: (data: any[]) => React.ReactNode; 
     recordsPerPage: number,
-  }
+    currentPage: number,
+    setCurrentPage: (pageNumber: number) => void;
+}
 
 export interface CredentialsLogin {
     email: string,
