@@ -39,8 +39,8 @@ const Footer: React.FC=()=>{
                         </a>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            Help
+                        <a onClick={() => router.push("/guiaTalles")} className="text-base leading-6 text-black-500 hover:text-blue-800">
+                            Guia de Talles
                         </a>
                     </div>
                     <div className="px-5 py-2">
