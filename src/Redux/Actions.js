@@ -140,7 +140,6 @@ export const getAllTypes = async () => {
     const response = await axios.get(
       "https://olimpusback.up.railway.app/types/all"
     );
-    console.log("r",response)
     dispatch(setProductTypes(response.data));
   } catch (error) {
     console.error("Error fetching Types", error);
@@ -184,10 +183,20 @@ export const getSubTypes= async (subType,dispatch)=>{
   }
 }
 
-export const getMetrics= async (metrics,dispatch)=>{
+export const getMetrics= async (metric,dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterBySubtype/${metrics}`)
-    console.log("m",json)
+    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByMetric/${metric}`)
+    console.log("h",json)
+    dispatch(setFilteredProducts(json.data))
+  }catch(error){
+    console.error("Error fetching metrics")
+  }
+}
+
+export const orderByPrice= async (ascending,dispatch)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/products/orderByPrice/${ascending}`)
+    console.log("h",json)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching metrics")
