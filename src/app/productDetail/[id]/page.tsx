@@ -70,14 +70,9 @@ export default function ProductDetail(){
               <button className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full" onClick={increment}>+</button>
             </div>
 
-            <button className="mt-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">Agregar al carrito</button>
+            <button className="my-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">Agregar al carrito</button>
           </div>
-          
-        
         </div> 
-      <div>
-        <button onClick={() => router.push("/resultPage")} className="mt-4 bg-blue-500 text-white px-4 py-2 rounded focus:outline-none focus:shadow-outline-blue active:bg-blue-800">Back</button>
-      </div>
     </div>
    
     

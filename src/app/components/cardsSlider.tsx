@@ -50,8 +50,8 @@ const CarrouselCard: React.FC <{ product: ProductInterface }> = ({ product }) =>
     const router = useRouter();
     return (
         <button onClick={() => router.push(`/productDetail/${product.id}`)}>
-            <div className='flex flex-col items-center justify-center bg-white mx-2 border border-gray-300 rounded-lg shadow w-56 h-96 md:flew-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
-                <div className='h-56 w-56 border-b-2 border-gray-300 flex justify-center'>
+            <div className='flex flex-col items-center justify-center bg-white mx-2 border border-gray-300 rounded-lg shadow w-56 h-96 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
+                <div className='h-56 w-56 border-b-2 border-gray-300 flex justify-center bg-white'>
                     <img className='object-fit-cover h-full rounded-t-lg' src={product.image} alt={product.name} />
                 </div>
                 <div className='my-2 h-10'>
