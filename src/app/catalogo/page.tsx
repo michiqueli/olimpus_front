@@ -1,23 +1,28 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
-import { getTodosProducts } from '@/Redux/Actions';
+import {getTodosProducts } from '@/Redux/Actions';
 import { useEffect } from 'react';
-import { getProducts } from '@/Redux/sliceProducts';
 import { ProductInterface } from '../components/interfaces';
 import { useRouter } from 'next/navigation';
+import Filtered from '../components/filtros';
+import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
 
 export default function ProductosCompleto(){
     const dispatch= useAppDispatch()
     const router= useRouter()
     const allProducts= useAppSelector(getProducts)
+    const filtered= useAppSelector(getFilteredProducts)
+    console.log("f", filtered)
    
     useEffect(()=>{
-        dispatch(getTodosProducts)
+      dispatch(getTodosProducts)   
     },[dispatch])
+
     
     return (
         <div>
-            {allProducts.map((product: ProductInterface) => (
+          <Filtered/>
+            {filtered.map((product: ProductInterface) => (
                 <button onClick={() => router.push(`/productDetail/${product.id}`)}>
                 <a
                   href="#"
