@@ -1,27 +1,32 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
-import { getTodosProducts } from '@/Redux/Actions';
+import {getTodosProducts } from '@/Redux/Actions';
 import { useEffect } from 'react';
-import { getProducts } from '@/Redux/sliceProducts';
 import { ProductInterface } from '../components/interfaces';
 import { useRouter } from 'next/navigation';
+import Filtered from '../components/filtros';
+import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
 
 export default function ProductosCompleto(){
     const dispatch= useAppDispatch()
     const router= useRouter()
     const allProducts= useAppSelector(getProducts)
+    const filtered= useAppSelector(getFilteredProducts)
+    console.log("f", filtered)
    
     useEffect(()=>{
-        dispatch(getTodosProducts)
+      dispatch(getTodosProducts)   
     },[dispatch])
+
     
     return (
         <div>
-            {allProducts.map((product: ProductInterface) => (
-                <button onClick={() => router.push(`/productDetail/${product.id}`)}>
+          <Filtered/>
+            {filtered.map((product: ProductInterface) => (
+                <button key={product.id} onClick={() => router.push(`/productDetail/${product.id}`)}>
                 <a
                   href="#"
-                  className="flex flex-col mt-4 ml-16 mb-4 mr-4 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
+                  className="flex flex-col mt-14 ml-16 mb-4 mr-4 items-center bg-white border border-gray-200 rounded-lg shadow md:flex-row md:max-w-xl hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700"
                 >
                   <img
                     className="object-cover w-full rounded-t-lg h-96 md:h-auto md:w-48 md:rounded-none md:rounded-s-lg"

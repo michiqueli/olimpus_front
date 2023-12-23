@@ -27,7 +27,7 @@ const SelectsCategories: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await getAllTypes(dispatch);
+        await getAllTypes();
         const uniqueTypes = [...new Set(data.map((item) => item.Type.name))];
         setTypes(uniqueTypes);
       } catch (error) {
