@@ -78,27 +78,27 @@ export default function Filtered() {
 
   const handleOrderByPrice = async (event) => {
     const order = event.target.value;
-    let sortedProducts;
+    
+    console.log(order)
+    let ascending
 
     if (order === 'desc') {
       // Ordenar de forma descendente por precio
-      sortedProducts = [...allProducts].sort((a, b) => b.price - a.price);
-    } else if (order === 'asc') {
+      ascending = false
+    } else {
       // Ordenar de forma ascendente por precio
-    sortedProducts = [...allProducts].sort((a, b) => a.price - b.price);
+    ascending = true
     } 
-
-    orderByPrice(sortedProducts, dispatch);
+    orderByPrice( ascending, dispatch);
   };
 
   
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 mb-10">
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by category:</label>
         <select className="w-full" defaultValue={'default'} name="products" onChange={event => handleInputChange(event)}>
-          <option disabled={true} value='default'>Categorias</option>
-          <option disabled={true} value='todos'>Todos</option>
+          <option value='todos'>Todos</option>
           {[...new Set(allProducts.map(el => el.Type.name))].map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
@@ -108,7 +108,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by products:</label>
         <select className="w-full" defaultValue={'default'} name="subtypes" onChange={event => handleInputSubtypes(event)}>
-          <option disabled={true} value='todos'>Todos</option>
+          <option value='todos'>Todos</option>
           {filteredSubtypes.map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
@@ -118,7 +118,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by metric:</label>
         <select className="w-full" defaultValue={'default'} name="metrics" onChange={event => handleInputMetrics(event)}>
-          <option disabled={true} value='default'>Medidas</option>
+          <option value='todos'>Todos</option>
           {filteredMetrics.map(metric => (
             <option key={metric} value={metric}>{metric}</option>
           ))}
