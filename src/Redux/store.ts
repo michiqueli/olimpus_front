@@ -1,11 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
 import productsHandler from "./sliceProducts";
-import usersHandler from "./sliceUsers"
+import usersHandler from "./sliceUsers";
+import productTypeHandler from "./sliceTypes"
 
 export const store = configureStore({
   reducer: {
     products: productsHandler,
-    users: usersHandler
+    users: usersHandler,
+    productTypes: productTypeHandler
+    
   },
   devTools: process.env.NODE_ENV !== "production",
 });

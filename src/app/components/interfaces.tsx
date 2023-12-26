@@ -1,9 +1,12 @@
 export interface Users {
     id: number,
     name: string,
-    street: string,
-    isActive: boolean,
-    roleId: number,
+    email:string,
+    password:string,
+    street:string,
+    zipCode:string,
+    roleid:number,
+    isActive: boolean
 }
 
 export type UserList = Users[];

@@ -30,12 +30,12 @@ function NovedadesSlicer() {
   }
 
   return (
-    <div className="h-56 sm:h-50 xl:h-80 2xl:h-96 w-10/12 mx-auto">
-      <Carousel slide={true}>
+    <div className="mx-auto">
+      <Carousel slide={true} style={{ width: 1200, height: 600}} leftControl={<img src="/izq.png" className='h-12 opacity-80 hover:opacity-100'/>} rightControl={<img src="/der.png" className='h-12 opacity-80 hover:opacity-100'/>}>
         <button className="w-full h-full" onClick={FilterByDiscount}>
           <img
             className="object-fit w-full h-full"
-            src="https://www.hnosperez.com/blog/wp-content/uploads/2015/01/mega-descuentos-categoria.jpg"
+            src="/preciosBajos.jpeg"
             alt="..."
           />
         </button>
@@ -45,7 +45,7 @@ function NovedadesSlicer() {
         >
           <img
             className="object-fit w-full h-full"
-            src="https://d22fxaf9t8d39k.cloudfront.net/67697c6f30030fd50ff940047889495611a0ca3ab3421f8fa8eab98a7df8b47676932.jpeg"
+            src="/navidad.jpeg"
             alt="..."
           />
         </button>
@@ -55,7 +55,7 @@ function NovedadesSlicer() {
         >
           <img
             className="object-fit w-full h-full"
-            src="https://pbs.twimg.com/media/BexnS4bCMAA6YUm.png:large"
+            src="/envios.jpeg"
             alt="..."
           />
         </button>

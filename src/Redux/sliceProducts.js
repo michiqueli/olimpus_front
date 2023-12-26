@@ -5,7 +5,11 @@ const initialState = {
   products: [], // Todos los Productos
   searchedProducts: [], // Para renderizar en la Result Page
   withDiscountProducts: [], // Productos con descuento
+  productTypes:[],
+  filteredProducts:[],
+  filteredSubTypes:[]
 };
+
 export const productsHandler = createSlice({
   name: "products",
   initialState,
@@ -19,6 +23,15 @@ export const productsHandler = createSlice({
     setWithDiscountProducts: (state, action) => {
       state.withDiscountProducts = action.payload;
     },
+    setProductTypes: (state, action) => {
+      state.productTypes = action.payload;
+    },
+    setFilteredProducts: (state, action) => {
+      state.filteredProducts = action.payload;
+    },
+    setFilteredSubtypes: (state, action) => {
+      state.filteredSubTypes = action.payload;
+    },
   },
 });
 
@@ -27,8 +40,14 @@ export const getSearchedProducts = (state) =>
   state.products.searchedProducts;
 export const getWithDiscountProducts = (state) =>
   state.products.withDiscountProducts;
+export const getProductTypes = (state) =>
+  state.products.productTypes;
+export const getFilteredProducts = (state) =>
+  state.products.filteredProducts;
+export const getFilteredSubtypes = (state) =>
+  state.products.filteredSubTypes;
 
-export const { setProducts, setSearchedProducts, setWithDiscountProducts } =
+export const {setProducts, setSearchedProducts, setWithDiscountProducts, setProductTypes, setFilteredProducts, setFilteredSubtypes} =
   productsHandler.actions;
 
 export default productsHandler.reducer;
@@ -118,3 +137,4 @@ export const deleteProduct = async (id, dispatch) => {
     console.error("Error al eliminar el producto", error);
   }
 };
+

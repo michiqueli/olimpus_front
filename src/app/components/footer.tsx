@@ -29,7 +29,7 @@ const Footer: React.FC=()=>{
             <div className="max-w-screen-xl px-4 py-12 mx-auto space-y-8 overflow-hidden sm:px-6 lg:px-8 w-[80%]">
                 <nav className="flex flex-wrap justify-center -mx-5 -my-2">
                     <div className="px-5 py-2">
-                        <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
+                        <a onClick={() => router.push("/about")} className="text-base leading-6 text-black-500 hover:text-blue-800">
                             About
                         </a>
                     </div>
@@ -39,8 +39,8 @@ const Footer: React.FC=()=>{
                         </a>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            Help
+                        <a onClick={() => router.push("/guiaTalles")} className="text-base leading-6 text-black-500 hover:text-blue-800">
+                            Guia de Talles
                         </a>
                     </div>
                     <div className="px-5 py-2">
