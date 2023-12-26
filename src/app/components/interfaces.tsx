@@ -1,9 +1,13 @@
 export interface Users {
     id: number,
     name: string,
-    surname: string,
-    active: boolean,
-    years: number,
+    email:string,
+    password:string,
+    street:string,
+    zipCode:string,
+    roleid:number,
+    isActive: boolean,
+    
 }
 
 export interface ButtonProps {
