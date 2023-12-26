@@ -110,6 +110,7 @@ export const getUsersByName= async (name, dispatch)=>{
 export const getUsersById= async (id, dispatch)=>{
     try{
        let json= await axios.get(`https://olimpusback.up.railway.app/users/${id}`) 
+       console.log("json",json)
        dispatch(setUsers(json.data))
     }catch(error){
         console.error("Error al encontrar el usuario por id", error)
