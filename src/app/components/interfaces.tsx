@@ -38,7 +38,19 @@ export interface PaginationProps {
 }
 
 export interface CredentialsLogin {
-    email: string,
-    password: string,
-    googlePass: string,
+    email: string;
+    password: string;
+    googlePass?: string;
+}
+  
+
+export interface LoginError {
+    email?: string;
+    password?: string;
+}
+
+  
+export interface CredentialsLoginResponse {
+    emailExists: boolean;
+    credentialsMatch: boolean;
 }
