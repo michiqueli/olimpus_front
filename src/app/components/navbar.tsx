@@ -27,7 +27,7 @@ const NavBar: React.FC = () => {
       </div>
     </div>
     <div className="my-2 ml-2">
-      {path !== '/' ? <GoBack title='← Volver atrás'/> : ''}
+      {path !== '/' ? <GoBack title='← Back'/> : ''}
     </div>
   </div>
   )
