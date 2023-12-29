@@ -26,7 +26,7 @@ export interface ProductInterface{
 export interface FieldProps {
     placeholder: string,
     name: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string | number;
 }
 
@@ -38,19 +38,7 @@ export interface PaginationProps {
 }
 
 export interface CredentialsLogin {
-    email: string;
-    password: string;
-    googlePass?: string;
-}
-  
-
-export interface LoginError {
-    email?: string;
-    password?: string;
-}
-
-  
-export interface CredentialsLoginResponse {
-    emailExists: boolean;
-    credentialsMatch: boolean;
+    email: string,
+    password: string,
+    googlePass: string,
 }
