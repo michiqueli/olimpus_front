@@ -12,7 +12,6 @@ export default function ProductosCompleto(){
     const router= useRouter()
     const allProducts= useAppSelector(getProducts)
     const filtered= useAppSelector(getFilteredProducts)
-    console.log("f", filtered)
    
     useEffect(()=>{
       dispatch(getTodosProducts)   

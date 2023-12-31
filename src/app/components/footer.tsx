@@ -30,12 +30,12 @@ const Footer: React.FC=()=>{
                 <nav className="flex flex-wrap justify-center -mx-5 -my-2">
                     <div className="px-5 py-2">
                         <a onClick={() => router.push("/about")} className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            About
+                        Acerca de Olimpus
                         </a>
                     </div>
                     <div className="px-5 py-2">
                         <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            Stores
+                            Nuestras Sucursales
                         </a>
                     </div>
                     <div className="px-5 py-2">
@@ -44,13 +44,8 @@ const Footer: React.FC=()=>{
                         </a>
                     </div>
                     <div className="px-5 py-2">
-                        <a href="#" className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            Contact
-                        </a>
-                    </div>
-                    <div className="px-5 py-2">
                         <button onClick={() => router.push('/team')} className="text-base leading-6 text-black-500 hover:text-blue-800">
-                            Team
+                            Equipo
                         </button>
                     </div>
                 
@@ -76,7 +71,7 @@ const Footer: React.FC=()=>{
                     </a>
                 </div>
                 <p id="clock" className="text-2xl">
-                    Local time: {currentTime}
+                     {currentTime}
                 </p>
 
                 {/* <img src="zeus.png"></img>  */}
