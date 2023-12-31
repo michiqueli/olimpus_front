@@ -14,19 +14,27 @@ export interface ButtonProps {
     title: string,
 }
 
+
+export interface Review{
+    content: string;
+    rating: number;
+  };
+  
+
 export interface ProductInterface{
     id: string,
     name: string,
     description: string,
     image: string
     price: number,
-    discount: number
+    discount: number,
+    reviews:Review[],
 }
 
 export interface FieldProps {
     placeholder: string,
     name: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string | number;
 }
 
