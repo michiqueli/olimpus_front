@@ -13,7 +13,7 @@ import getAllProducts from "@/app/requests/getAllProducts";
 export const getTodosProducts= async (dispatch)=>{
     try{
         let json= await axios.get(`https://olimpusback.up.railway.app/products`)
-        console.log("j",json)
+       
         dispatch(setProducts(json.data));
         dispatch(setFilteredProducts(json.data))
     }catch(error){
@@ -110,7 +110,7 @@ export const getUsersByName= async (name, dispatch)=>{
 export const getUsersById= async (id, dispatch)=>{
     try{
        let json= await axios.get(`https://olimpusback.up.railway.app/users/${id}`) 
-       console.log("json",json)
+       
        dispatch(setUsers(json.data))
     }catch(error){
         console.error("Error al encontrar el usuario por id", error)
@@ -187,20 +187,31 @@ export const getSubTypes= async (subType,dispatch)=>{
 export const getMetrics= async (metric,dispatch)=>{
   try{
     const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByMetric/${metric}`)
-    console.log("h",json)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching metrics")
   }
 }
 
-export const orderByPrice= async (ascending,dispatch)=>{
+export const orderByPrice= async (sortedProducts,dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/orderByPrice/${ascending}`)
-    console.log("h",json)
+    const json= await axios.get(`https://olimpusback.up.railway.app/products/orderByPrice/${sortedProducts}`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching metrics")
+  }
+}
+
+export const orderByPrices= async (ordenar, dispatch)=>{
+  dispatch(setFilteredProducts(ordenar))
+}
+
+export const reset= async (dispatch)=>{
+  try{
+    const json= await axios.get(`https://olimpusback.up.railway.app/products`)
+    dispatch(setFilteredProducts(json.data))
+  }catch(error){
+    console.error("Error fetching products ", error)
   }
 }
 
