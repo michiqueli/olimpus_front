@@ -34,7 +34,7 @@ export interface ProductInterface{
 export interface FieldProps {
     placeholder: string,
     name: string,
-    onChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     value: string | number;
 }
 
