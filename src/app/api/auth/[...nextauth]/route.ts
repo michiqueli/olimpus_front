@@ -1,15 +1,16 @@
-// import NextAuth from "next-auth/next";
-// import GoogleProvider from "next-auth/providers/google";
+import NextAuth from "next-auth";
+import GoogleProvider from "next-auth/providers/google";
 // import CredentialsProvider from "next-auth/providers/credentials";
 // import userLogin from "@/app/requests/loginUSer";
 // import { error } from "console";
 // import { Session } from "inspector";
 
-// const handler = NextAuth({
-//     providers: [
-//         GoogleProvider({
-//             clientId: process.env.GOOGLE_CLIENT_ID as string,
-//             clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+ const handler = NextAuth({
+     providers: [
+         GoogleProvider({
+            clientId: process.env.GOOGLE_CLIENT_ID as string,
+            clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+         })]})
 //             authorization: {
 //                 params: {
 //                     prompt: "consent",
@@ -88,4 +89,4 @@
 //     }
 // });
 
-// export { handler as GET, handler as POST };
+export { handler as GET, handler as POST };
