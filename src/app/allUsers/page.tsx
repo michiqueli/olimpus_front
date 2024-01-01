@@ -1,15 +1,15 @@
 "use client";
 
-import { Users } from "../components/interfaces";
+import { Users } from "../../components/interfaces";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import ActiveAdmins from "../components/users/admins/adminUsers";
-import InactiveAdmins from "../components/users/admins/inactiveAdmins";
-import ActiveBuyers from "../components/users/buyers/buyerUsers";
-import InactiveBuyers from "../components/users/buyers/inactiveBuyers";
+import ActiveAdmins from "../../components/users/admins/adminUsers";
+import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
+import ActiveBuyers from "../../components/users/buyers/buyerUsers";
+import InactiveBuyers from "../../components/users/buyers/inactiveBuyers";
 import { useAppSelector } from "@/Redux/hooks";
 import getAllUsers from "../requests/getAllUsers";
-import PrimaryButton from "../components/buttons/primaryButton";
+import PrimaryButton from "../../components/buttons/primaryButton";
 
 export default function AllUsers(){
   //const listUsers = useAppSelector<UserList[]>(users);

@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {getProductByName} from '../../Redux/sliceProducts'
+import {getProductByName} from '../Redux/sliceProducts'
 import { useAppDispatch } from '@/Redux/hooks';
 // import { ResultState } from '../components/interfaces';
 
@@ -35,7 +35,7 @@ export default function SearchBar() {
         <form onSubmit={(e) => handleSubmit(e)}>
         <div className='flex flex-col'>
             <div className='bg-white items-center justify-between flex rounded-full shadow-lg p-2 sticky'>
-                <input className='font-bold uppercase rounded-full w-full py-2 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs' type='text' name="name" value={result.name} placeholder='Search' onChange={(e) => handleInputChange(e)} />
+                <input className='font-bold uppercase rounded-full w-full py-2 pl-4 text-gray-700 bg-gray-100 leading-tight focus:outline-none focus:shadow-outline lg:text-sm text-xs' type='text' name="name" value={result.name} placeholder='Buscar' onChange={(e) => handleInputChange(e)} />
                     <div className='bg-gray-600 p-2 hover:bg-blue-800 cursor-pointer mx-2 rounded-full'>
                       <button type='submit'>
                         <svg className='w-6 h-6 text-white' xmlns="http://www.w3.org/2000/svg" viewBox='0 0 20 20' fill='currentColor'>

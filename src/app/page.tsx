@@ -1,8 +1,8 @@
 "use client";
 
-import CardSlider from "./components/cardsSlider";
-import NovedadesSlider from "./components/novedadesSlider";
-import Banner from "./components/catalogo";
+import CardSlider from "../components/cardsSlider";
+import NovedadesSlider from "../components/novedadesSlider";
+import Banner from "../components/catalogo";
 
 export default function Home() {
   

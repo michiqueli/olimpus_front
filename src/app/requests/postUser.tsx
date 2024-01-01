@@ -1,4 +1,4 @@
-import { UserPost } from "../components/interfaces";
+import { UserPost } from "../../components/interfaces";
 
 const postUser = async (user: UserPost) => {
   const storedToken = localStorage.getItem('token');

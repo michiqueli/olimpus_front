@@ -1,4 +1,4 @@
-import { ValidationsInterface } from "../components/interfaces";
+import { ValidationsInterface } from "../../components/interfaces";
 
 export default function validations(inputs: ValidationsInterface) {
   const regexName = /^[a-zA-Z\s]*$/;

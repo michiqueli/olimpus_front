@@ -1,6 +1,6 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
-import { getTypes, getSubTypes, getMetrics, orderByPrice} from "@/Redux/Actions";
+import { getTypes, getSubTypes, getMetrics, orderByPrice, reset, orderByPrices} from "@/Redux/Actions";
 import { useState } from "react";
 import { getProducts } from "@/Redux/sliceProducts";
 
@@ -17,7 +17,14 @@ export default function Filtered() {
   const [filteredMetrics, setFilteredMetrics] = useState([]);
 
   const handleInputChange = (event) => {
-    const selectedCategory = event.target.value;
+    const selectedCategory = event.target.value
+
+    setEstado((prevEstado) => {
+      // Usar el estado anterior para obtener el valor actualizado
+      const nuevoEstado = { ...prevEstado, name: selectedCategory };
+      // Actualizar el estado
+        return nuevoEstado;
+    });
         
     const filteredSubtypes = allProducts
       .filter(product => product.Type.name === selectedCategory)
@@ -30,74 +37,107 @@ export default function Filtered() {
     const filteredMetrics = allProducts
       .filter(product => product.Type.name === selectedCategory)
       .map(product => product.Subtype.metric);
-
+  
     const uniqueMetrics = [...new Set(filteredMetrics)];
       setFilteredMetrics(uniqueMetrics);
 
-    getTypes(selectedCategory, dispatch);
+    if(selectedCategory==="todos"){
+      dispatch(reset)
+    }else{
+      getTypes(selectedCategory, dispatch);
+    }
   };
 
-  const handleInputSubtypes = (event) => {
 
+  const handleInputSubtypes = (event) => {
     const value = event.target.value;
-      setEstado((prevEstado) => {
-        // Usar el estado anterior para obtener el valor actualizado
-        const nuevoEstado = { ...prevEstado, name: value };
-          // Actualizar el estado
-          return nuevoEstado;
-      });   
-      getSubTypes(value,dispatch)
-    };
+
+    setEstado((prevEstado) => {
+      const nuevoEstado = { ...prevEstado, name: value };
+      return nuevoEstado;
+    });
+
+    getSubTypes(value, dispatch);
+    
+  };
 
   const handleInputMetrics = (event) => {
 
     const value = event.target.value;
+    
     setEstado((prevEstado) => {
-      // Usar el estado anterior para obtener el valor actualizado
       const nuevoEstado = { ...prevEstado, name: value };
-      // Actualizar el estado
-        return nuevoEstado;
-    });   
+      return nuevoEstado;
+    });
+    
     getMetrics(value,dispatch)
   };
 
-      
-  //const handleOrderByPrice = async (event) => {
-  //   const order = event.target.value;
-  //   let sortedProducts;
-
-  //   if (order === 'desc') {
-  //     sortedProducts = [...allProducts].reverse(); // Hacer una copia antes de revertir
-  //   } else {
-  //     sortedProducts = [...allProducts]; // Hacer una copia para evitar modificar el estado directamente
-  //   }
-
-  //   orderByPrice(sortedProducts, dispatch);
-  // };
-
   const handleOrderByPrice = async (event) => {
     const order = event.target.value;
-    let sortedProducts;
-    
+    let ascending;
+  
     if (order === 'desc') {
-      // Ordenar de forma descendente por precio
-      sortedProducts = [...allProducts].sort((a, b) => b.price - a.price);
-    } else if (order === 'asc') {
-      // Ordenar de forma ascendente por precio
-    sortedProducts = [...allProducts].sort((a, b) => a.price - b.price);
-    } 
+      ascending = false;
+    } else {
+      ascending = true;
+    }
 
-    orderByPrice(sortedProducts, dispatch);
+    const selectedSubtype = estado.name;
+    const medidas= allProducts.filter(product=> product.Subtype.metric=== selectedSubtype)
+   
+    if(selectedSubtype === "Indumentaria"|| selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
+      const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype);
+  
+      const ordenar = filteredProducts.sort((a, b) => {
+        const priceA = a.price;
+        const priceB = b.price;
+  
+        if (ascending) {
+          return priceA - priceB;
+        } else {
+          return priceB - priceA;
+        }
+      });
+      orderByPrices(ordenar, dispatch);
+    
+    }else if(medidas){
+      const filteredProducts = allProducts.filter(product => product.Subtype.metric === selectedSubtype);
+  
+      const ordenar = filteredProducts.sort((a, b) => {
+        const priceA = a.price;
+        const priceB = b.price;
+    
+        if (ascending) {
+          return priceA - priceB;
+        } else {
+          return priceB - priceA;
+        }
+      });
+      orderByPrices(ordenar, dispatch);
+    }else{
+      const filteredProducts = allProducts.filter(product => product.Subtype.name === selectedSubtype);
+  
+      const ordenar = filteredProducts.sort((a, b) => {
+        const priceA = a.price;
+        const priceB = b.price;
+    
+        if (ascending) {
+          return priceA - priceB;
+        } else {
+          return priceB - priceA;
+        }
+      });
+      orderByPrices(ordenar, dispatch);
+    }
   };
-
   
   return (
-    <div className="flex space-x-4">
+    <div className="flex space-x-4 mb-10">
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by category:</label>
         <select className="w-full" defaultValue={'default'} name="products" onChange={event => handleInputChange(event)}>
-          <option disabled={true} value='default'>Categorias</option>
-          <option disabled={true} value='todos'>Todos</option>
+          <option value='todos'>Todos</option>
           {[...new Set(allProducts.map(el => el.Type.name))].map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
@@ -107,7 +147,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by products:</label>
         <select className="w-full" defaultValue={'default'} name="subtypes" onChange={event => handleInputSubtypes(event)}>
-          <option disabled={true} value='todos'>Todos</option>
+          <option></option>
           {filteredSubtypes.map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
@@ -117,13 +157,13 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by metric:</label>
         <select className="w-full" defaultValue={'default'} name="metrics" onChange={event => handleInputMetrics(event)}>
-          <option disabled={true} value='default'>Medidas</option>
+          <option></option>
           {filteredMetrics.map(metric => (
             <option key={metric} value={metric}>{metric}</option>
           ))}
         </select>
       </div>
-      
+      <p>HOLAAAAAAAAA</p>
       <div className="flex-grow w-4 h-4">
         <label className="">Order by price:</label>
         <select className="w-full"  name="price" onChange={event => handleOrderByPrice(event)}>
@@ -134,7 +174,3 @@ export default function Filtered() {
     </div>    
   );
 }
-
-
-
-

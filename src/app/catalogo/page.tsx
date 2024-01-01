@@ -2,9 +2,9 @@
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
 import {getTodosProducts } from '@/Redux/Actions';
 import { useEffect } from 'react';
-import { ProductInterface } from '../components/interfaces';
+import { ProductInterface } from '../../components/interfaces';
 import { useRouter } from 'next/navigation';
-import Filtered from '../components/filtros';
+import Filtered from '../../components/filtros';
 import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
 
 export default function ProductosCompleto(){
@@ -12,7 +12,6 @@ export default function ProductosCompleto(){
     const router= useRouter()
     const allProducts= useAppSelector(getProducts)
     const filtered= useAppSelector(getFilteredProducts)
-    console.log("f", filtered)
    
     useEffect(()=>{
       dispatch(getTodosProducts)   

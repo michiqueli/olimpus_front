@@ -1,194 +1,111 @@
-"use client";
+'use client';
+import { useRouter, usePathname } from "next/navigation";
+import SearchBar from "./searchbar";
+import GoBack from "./buttons/goBack";
+import { useState } from "react";
+import React from "react";
+import { signIn, useSession, signOut } from "next-auth/react";
 
-import { useRouter, useParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import { getProductById } from "@/Redux/sliceProducts";
-import envios from "../../../assets/envio.png";
-import { Review } from "@/components/interfaces";
-
-export default function ProductDetail() {
-  const router = useRouter();
-  const params = useParams();
-  const [product, setProduct] = useState({
-    name: "",
-    price: 0,
-    description: "",
-    image: "",
-    Reviews: [] as Review[],
-    stock: 0,
-    discount: 0,
-  });
-
+const NavBar: React.FC = () => {
+  const {data: session} = useSession();
   
-  const productID = params.id;
+  const router = useRouter();
+  const path = usePathname();
+  // Estado para controlar la visibilidad del menú desplegable
+  const [dropdownVisible, setDropdownVisible] = React.useState(false);
 
-  const [count, setCount] = useState(1);
+  // Estado para abrir modal carrito
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const openModal = () => setIsModalOpen(true);
 
-  const increment = () => {
-    setCount(count + 1);
+  const handleCartClick = () => {
+    openModal();
   };
-
-  const decrement = () => {
-    if (count > 1) {
-      setCount(count - 1);
-    }
-  };
-
-  function getAverageRating(): number {
-    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.Reviews.length;
-  }
-
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const productFind = await getProductById(productID);
-        setProduct(productFind);
-      } catch (error) {
-        console.error(
-          "Error en render componente de detalle producto",
-          error
-        );
-      }
-    }
-    fetchData();
-  }, []);
-
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar si el modal está abierto o cerrado
-
   const onClose = () => {
-    console.log("cerrado")
-    setIsOpen(false);
-  };
-  const handleAddToCart = () => {
-    // Lógica para agregar al carrito...
-    setIsOpen(true); // Abrir el modal al agregar al carrito
+    setIsModalOpen(false);
   };
 
   return (
-    <>
-      <div>
-        <div>
-          <div className="flex flex-row justify-end  bg-gray-50 ">
-            <div className="flex items-center mb-10 mr-4">
-              <img
-                src={product.image}
-                alt="image product"
-                className="w-50 h-50 object-cover "
-              />
-            </div>
-            <div>
-              <div className="max-w-md mx-auto  mr-80  ml-40 ">
-                <h1 className="text-black text-6xl text-center ">
-                  {product.name}
-                </h1>
-                <h2 className="text-black text-center text-lg mt-16">
-                  {product.description}
-                </h2>
-                <div className="flex flex-col items-center justify-center flex-grow">
-                  {/*div precio*/}
-                  {product.discount ? (
-                    <div>
-                      <div className="flex flex-row align-middle text-center">
-                        <h1 className="text-gray-600 text-xl line-through">
-                          $ {product.price}
-                        </h1>
-                        <h1 className="text-sm text-lime-500 ml-2">
-                          {product.discount}%
-                        </h1>
-                      </div>
-                      <h1 className="text-lime-500 text-xl">
-                        ${" "}
-                        {product.price -
-                          (product.price * product.discount) / 100}
-                      </h1>
-                    </div>
-                  ) : (
-                    <h1 className="text-lime-500 text-xl">${product.price}</h1>
-                  )}
-                </div>
-              </div>
-              <div className="flex items-center ml-40">
-                <img
-                  alt=""
-                  src="/envio.png"
-                  width={60}
-                  height={60}
-                  className="mt-20"
-                />
-                <h2 className="text-black text-lg ml-4 mt-20">
-                  Envíos gratis a partir de $20.000
-                </h2>
-              </div>
-              <div className="mt-10 ml-40 text-lg">
-                <h2>Cantidad</h2>
-              </div>
-              <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
-                <button
-                  onClick={decrement}
-                  className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
-                >
-                  -
-                </button>
-                <p className="mr-20 font-normal "> {count}</p>
-                <button
-                  className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
-                  onClick={increment}
-                >
-                  +
-                </button>
-              </div>
-              <button onClick={handleAddToCart} className="my-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
-                Agregar al carrito
-              </button>
-            </div>
+  <>
+    <div className="flex flex-col">
+      <div className="bg-yellow-300 w-full h-28 flex justify-center items-center">
+        <div className="flex justify-between items-center p-4 w-[95%]">
+          <div className="flex items-center">
+            <button onClick={() => router.push('/')}>
+              <img src="/zeus.png" alt="" className="w-24 h-24 hover:scale-110" />
+            </button>
           </div>
-          <div className="max-w-4xl mx-auto mt-4 flex">
-            {/* Promedio de Valoración General */}
-            {product.Reviews && product.Reviews.length > 0 && (
-              <div className="mr-8">
-                <h3 className="text-black font-bold text-lg">
-                  Promedio de Valoración General:
-                </h3>
-                <div className="text-yellow-500 mb-2">
-                  {Array.from({ length: Math.max(0, Math.round(getAverageRating())) }).map(
-                    (_, i) => (
-                      <span key={i} className="text-2xl">
-                        ⭐
-                      </span>
-                    )
-                  )}
-                </div>
-                <p className="text-gray-500 text-sm">
-                  Promedio: {getAverageRating().toFixed(2)}%
-                </p>
-              </div>
-            )}
+          {
+            session?.user ? (
+              <div>
+            <h1 className="text-black">
+              Bienvenido {session?.user.name}
+            </h1>
+          </div>
+            )
+            :
+            ''
 
-            {/* Opiniones */}
-            <div className="max-w-4xl mx-auto p-6 border  border-gray-300 rounded-md bg-gray-50">
-              <h2 className="text-black font-bold text-center text-xl">Opiniones:</h2>
-              {product.Reviews &&
-                product.Reviews.map((review: Review, index) => (
-                  <div key={index} className="mt-4 border-b border-gray-300 pb-4">
-                    <div className="text-yellow-500 mb-2">
-                      {Array.from({ length: Math.max(0, review.rating) }).map(
-                        (_, i) => (
-                          <span key={i} className="text-2xl">
-                            ⭐
-                          </span>
-                        )
-                      )}
-                    </div>
-                    <p className="text-black text-xl">{review.content}</p>
-                    {/* Porcentaje de valoración en rango de 1 a 5 estrellas */}
-                  </div>
-                ))}
+          }
+          <SearchBar />
+          <div className="flex">
+            <div className="relative">
+              <button
+                onClick={() => setDropdownVisible(!dropdownVisible)}
+                className="flex items-center focus:outline-none"
+              >
+                <img src="/user.png" alt="" className="w-11 h-11 mr-6 hover:scale-110" />
+              </button>
+              {dropdownVisible && (
+                <div className="absolute top-12 right-0 bg-white border border-gray-300 p-2 shadow-md rounded-md z-20">
+                {
+                  session?.user ? (
+                  <>
+                  <button
+                    onClick={() => router.push('/userDetail/bb7f87f4-5ec6-4177-be68-9440ee3eb41b')}
+                    className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
+                  >
+                    Mi Perfil
+                  </button>
+                  <button
+                    onClick={async () => {
+                      await signOut({
+                        callbackUrl: '/'
+                      })
+                    }}
+                    className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
+                  >
+                    ¿Log-out?
+                  </button>
+                  </>
+                  )
+                  :
+                  (
+                    <button
+                    onClick={() => signIn()}
+                    className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
+                  >
+                    ¿Log-in?
+                  </button>
+                  )
+                }
+                  
+                </div>
+              )}
             </div>
+
+            {/* <button onClick={() => router.push('/cart')}> */}
+            <button onClick={handleCartClick}>
+              <img src="/shopping.png" alt="" className="w-11 h-11 hover:scale-110" />
+            </button>
           </div>
         </div>
       </div>
-      {isOpen && (
+      <div className="my-2 ml-2">
+        {path !== '/' ? <GoBack title='← Volver atrás'/> : ''}
+      </div>
+    </div>
+    {isModalOpen && (
           <div className="relative z-10" aria-labelledby="slide-over-title" role="dialog" aria-modal="true">
             <div className="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
               <div className="fixed inset-0 overflow-hidden">
@@ -283,8 +200,9 @@ export default function ProductDetail() {
                 </div>
               </div>
           </div>
-        )} 
-    </>
+        )}
+  </>
   )
 }
-            
+
+export default NavBar;

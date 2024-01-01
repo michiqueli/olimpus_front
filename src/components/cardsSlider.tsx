@@ -3,7 +3,7 @@
 import { Carousel } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { ProductInterface } from './interfaces';
-import getAllProducts from '../requests/getAllProducts';
+import getAllProducts from '../app/requests/getAllProducts';
 import { useEffect, useState } from 'react';
 
 

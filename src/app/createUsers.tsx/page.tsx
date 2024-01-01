@@ -4,7 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useState} from "react";
 import validations from './validationsUser';
 import postUser from '../requests/postUser';
-import { UserPost } from '../components/interfaces';
+import { UserPost } from '../../components/interfaces';
 
 export default function CreateUser () {
   const storedToken = localStorage.getItem('token');
