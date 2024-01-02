@@ -6,7 +6,7 @@ import { ActiveAdminsProps } from "../../interfaces";
 import Pagination from "../../pagination";
 import EditButton from "../../buttons/editButton";
 import AlertButton from "../../buttons/alertButton";
-import deleteUser from "@/app/requests/deleteUser";
+import deleteUser from "@/components/requests/deleteUser";
 
 const ActiveAdmins: React.FC<ActiveAdminsProps> = (props) => {
   const {admins, setAdmins} = props;

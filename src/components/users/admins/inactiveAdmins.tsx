@@ -2,7 +2,7 @@
 
 import List from "../../list";
 import { useState } from "react";
-import activateUser from "@/app/requests/activateUser";
+import activateUser from "@/components/requests/activateUser";
 import { useRouter } from "next/navigation";
 import { ActiveAdminsProps } from "../../interfaces";
 import Pagination from "../../pagination";

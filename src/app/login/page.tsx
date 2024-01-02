@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import userLogin from '../requests/loginUser';
+import userLogin from '@/components/requests/loginUSer';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
 import { CredentialsLogin } from '../../components/interfaces';

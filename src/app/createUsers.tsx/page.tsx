@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { useState} from "react";
 import validations from './validationsUser';
-import postUser from '../requests/postUser';
+import postUser from '../../components/requests/postUser';
 import { UserPost } from '../../components/interfaces';
 
 export default function CreateUser () {

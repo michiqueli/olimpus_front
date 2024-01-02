@@ -8,7 +8,7 @@ import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
 import InactiveBuyers from "../../components/users/buyers/inactiveBuyers";
 import { useAppSelector } from "@/Redux/hooks";
-import getAllUsers from "../requests/getAllUsers";
+import getAllUsers from "../../components/requests/getAllUsers";
 import PrimaryButton from "../../components/buttons/primaryButton";
 
 export default function AllUsers(){
