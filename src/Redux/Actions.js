@@ -7,7 +7,7 @@ import { setSearchedProducts, setProducts, setProductTypes, setFilteredProducts 
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"
 
 
-import getAllProducts from "@/app/requests/getAllProducts";
+import getAllProducts from "@/components/requests/getAllProducts";
 
 
 export const getTodosProducts= async (dispatch)=>{

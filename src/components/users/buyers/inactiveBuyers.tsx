@@ -2,7 +2,7 @@
 
 import List from "../../list";
 import { useState } from "react";
-import activateUser from "@/app/requests/activateUser";
+import activateUser from "@/components/requests/activateUser";
 import { useRouter } from "next/navigation";
 import { ActiveBuyersProps } from "../../interfaces";
 import Pagination from "../../pagination";
@@ -23,7 +23,7 @@ const InactiveBuyers: React.FC<ActiveBuyersProps> = (props) => {
 const filteredUsers = buyers.filter((user) => {
   const lowercaseSearchTerm = search.toLowerCase();
   return (
-    (user.dni && user.dni.toLowerCase().includes(lowercaseSearchTerm)) ||
+    (user.email && user.email.toLowerCase().includes(lowercaseSearchTerm)) ||
     (user.name && user.name.toLowerCase().includes(lowercaseSearchTerm))
   );
 });
@@ -62,7 +62,7 @@ const filteredUsers = buyers.filter((user) => {
                     <tr key={index} 
                     className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200">
                     <td className="whitespace-nowrap px-6 py-4 font-medium">{user.name}</td>
-                     <td className="whitespace-nowrap px-6 py-4">{user.dni}</td>
+                     <td className="whitespace-nowrap px-6 py-4">{user.email}</td>
                      <td className="whitespace-nowrap px-6 py-4">{user.roleId === 1 ? 'SúperAdmin' : user.roleId === 2 ? 'Admin' : user.roleId === 3 ? 'Mecánico' : ''}</td>
                       <td>
                         <EditButton route={`/editUser/${user.id}`} title='Ver usuario'/>

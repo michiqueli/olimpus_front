@@ -1,4 +1,4 @@
-import { Users } from "../../components/interfaces";
+import { Users } from "../interfaces";
 
 const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<Users[]>>) => {
     const storedToken = localStorage.getItem('token');
