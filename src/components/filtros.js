@@ -82,12 +82,13 @@ export default function Filtered() {
     } else {
       ascending = true;
     }
-
+  
     const selectedSubtype = estado.name;
+ 
     const medidas= allProducts.filter(product=> product.Subtype.metric=== selectedSubtype)
    
-    if(selectedSubtype === "Indumentaria"|| selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
-      const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype);
+    if(selectedSubtype === "Indumentaria"|| selectedSubtype==="todos" || selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
+      const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype || selectedSubtype==="todos");
   
       const ordenar = filteredProducts.sort((a, b) => {
         const priceA = a.price;
@@ -115,6 +116,7 @@ export default function Filtered() {
         }
       });
       orderByPrices(ordenar, dispatch);
+
     }else{
       const filteredProducts = allProducts.filter(product => product.Subtype.name === selectedSubtype);
   
@@ -137,7 +139,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by category:</label>
         <select className="w-full" defaultValue={'default'} name="products" onChange={event => handleInputChange(event)}>
-          <option value='todos'>Todos</option>
+          <option value="todos">Todos</option>
           {[...new Set(allProducts.map(el => el.Type.name))].map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
@@ -163,7 +165,6 @@ export default function Filtered() {
           ))}
         </select>
       </div>
-      <p>HOLAAAAAAAAA</p>
       <div className="flex-grow w-4 h-4">
         <label className="">Order by price:</label>
         <select className="w-full"  name="price" onChange={event => handleOrderByPrice(event)}>
