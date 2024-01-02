@@ -1,11 +1,11 @@
 import { Users } from "../interfaces";
 
 const deleteUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<Users[]>>) => {
-  const storedToken = localStorage.getItem('token');
+  const storedToken = 'token';
   try {
     if (storedToken !== null) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/deactivate`, {
-        method: 'PATCH',
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/delete/${id}`, {
+        method: 'DELETE',
         headers: {
           'Content-Type': 'application/json', 
           Authorization: storedToken,

@@ -62,7 +62,7 @@ const NavBar: React.FC = () => {
                   session?.user ? (
                   <>
                   <button
-                    onClick={() => router.push('/userDetail/bb7f87f4-5ec6-4177-be68-9440ee3eb41b')}
+                    onClick={() => router.push('/account')}
                     className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                   >
                     Mi Perfil

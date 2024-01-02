@@ -5,7 +5,7 @@ export interface Users {
     password:string,
     street:string,
     zipCode:string,
-    roleId:number,
+    roleid:number,
     isActive: boolean
 }
 
