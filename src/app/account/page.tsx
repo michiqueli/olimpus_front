@@ -1,10 +1,12 @@
 "use client";
 import React from "react";
 import { useSession } from "next-auth/react";
+import PrimaryButton from "@/components/buttons/primaryButton";
+import { useRouter } from "next/navigation";
 
 export default function UserDetail() {
   const {data: session} = useSession();
-
+  const router = useRouter();
   return (
     <div className="mr-96 flex items-start justify-center h-screen">
       {/* Tarjeta de perfil del usuario */}
@@ -21,9 +23,10 @@ export default function UserDetail() {
             (
                 ''
             )
-        }
-            
+        }   
         </div>
+        <PrimaryButton title='Admin dashboard' onClickfunction={() => router.push('/adminDashboard')}/>
+        <PrimaryButton title='Todos los usuarios' onClickfunction={() => router.push('/allUsers')}/>
       </div>
   
       {/* Contenedor de compras */}
