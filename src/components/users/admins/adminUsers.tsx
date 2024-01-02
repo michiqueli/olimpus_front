@@ -30,7 +30,6 @@ const ActiveAdmins: React.FC<ActiveAdminsProps> = (props) => {
       setCurrentPage(0);
       setSearch(target.value)
    }
-  
 
     return (
       <div className="flex flex-col items-center">
@@ -57,7 +56,7 @@ const ActiveAdmins: React.FC<ActiveAdminsProps> = (props) => {
               <tr key={index} 
               className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200">
                 <td className="whitespace-nowrap px-6 py-4 font-medium">{user.name}</td>
-                <td className="whitespace-nowrap px-6 py-4">{user.dni}</td>
+                <td className="whitespace-nowrap px-6 py-4">{user.email}</td>
                 <td className="whitespace-nowrap px-6 py-4"> {user.roleId === 1 ? 'SúperAdmin' : user.roleId === 2 ? 'Admin' : ''}</td>
                 <td>
                   <EditButton title='Ver usuario' route={`/editUser/${user.id}`}/>
