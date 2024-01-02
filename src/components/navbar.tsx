@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
                 <img src="/user.png" alt="" className="w-11 h-11 mr-6 hover:scale-110" />
               </button>
               {dropdownVisible && (
-                <div className="absolute top-12 right-0 bg-white border border-gray-300 p-2 shadow-md rounded-md z-20">
+                <div className="w-36 absolute top-12 right-0 bg-white border border-gray-300 p-3 shadow-md rounded-md z-20">
                 {
                   session?.user ? (
                   <>

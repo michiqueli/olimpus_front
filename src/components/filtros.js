@@ -163,7 +163,6 @@ export default function Filtered() {
           ))}
         </select>
       </div>
-      <p>HOLAAAAAAAAA</p>
       <div className="flex-grow w-4 h-4">
         <label className="">Order by price:</label>
         <select className="w-full"  name="price" onChange={event => handleOrderByPrice(event)}>
