@@ -25,9 +25,9 @@ export default function UserDetail() {
             )
         }   
         </div>
+      </div>
         <PrimaryButton title='Admin dashboard' onClickfunction={() => router.push('/adminDashboard')}/>
         <PrimaryButton title='Todos los usuarios' onClickfunction={() => router.push('/allUsers')}/>
-      </div>
   
       {/* Contenedor de compras */}
       
