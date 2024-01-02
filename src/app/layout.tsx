@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/Redux/provider";
-import NavBar from "./components/navbar";
-import Footer from "./components/footer";
-import SessionAuthProvider from "./context/SessionAuthProvider";
+import NavBar from "../components/navbar";
+import Footer from "../components/footer";
+import SessionAuthProvider from "../context/SessionAuthProvider";
 
 export const metadata: Metadata = {
   title: "Olimpus ",

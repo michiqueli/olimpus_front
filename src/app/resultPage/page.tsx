@@ -3,9 +3,9 @@ import { useAppSelector } from "@/Redux/hooks";
 import { getSearchedProducts } from "@/Redux/sliceProducts";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ProductInterface } from "../components/interfaces";
-import Pagination from "../components/pagination";
-import GoBack from "../components/buttons/goBack";
+import { ProductInterface } from "../../components/interfaces";
+import Pagination from "../../components/pagination";
+import GoBack from "../../components/buttons/goBack";
 
 export default function ResultPage() {
   const displayedProducts = useAppSelector(getSearchedProducts);

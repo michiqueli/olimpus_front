@@ -1,4 +1,4 @@
-import { Users } from "../components/interfaces";
+import { Users } from "../interfaces";
 
 const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<Users[]>>) => {
     const storedToken = localStorage.getItem('token');
@@ -14,7 +14,7 @@ const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateA
       });
       if (!response.ok) {
         if (response.status === 401) {
-          window.location.href = '/'; 
+          window.location.href = '/login?tokenExpired=true';
         } else {
           throw new Error('Error al activar el usuario' + response);
         }

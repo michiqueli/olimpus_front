@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {getProductByName} from '../../Redux/sliceProducts'
+import {getProductByName} from '../Redux/sliceProducts'
 import { useAppDispatch } from '@/Redux/hooks';
 // import { ResultState } from '../components/interfaces';
 

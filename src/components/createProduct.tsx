@@ -3,6 +3,7 @@
 import React, { useState } from 'react'
 import PrimaryButton from './buttons/primaryButton';
 import Field from './field';
+import FormButton from './buttons/fornButton';
 
 function CreateProductForm() {
     const [product, setProduct] = useState({
@@ -58,7 +59,7 @@ function CreateProductForm() {
                 value={product.description}
                 className='text-black rounded-3xl border border-cyan-400 mb-3 text-center py-2 w-full'
             />
-            <PrimaryButton title='Crear producto'/>
+            <FormButton title='Crear producto'/>
         </form>
     </div>
   )

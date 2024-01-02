@@ -10,9 +10,7 @@ import { getUsers } from "@/Redux/sliceUsers";
 export default function UserDetail() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
-  const usuarios=useAppSelector(getUsers)
-
-
+  const usuarios=useAppSelector(getUsers);
 
   useEffect(()=>{
     getUsersById(id,dispatch)
@@ -35,14 +33,9 @@ export default function UserDetail() {
       </div>
   
       {/* Contenedor de compras */}
-      <div className="mt-8 ml-8 bg-gray-100 shadow-[0_2px_15px_-3px_rgba(0,0,0,0.07),0_10px_20px_-2px_rgba(0,0,0,0.04)] dark:bg-neutral-700">
-        <p>ACA VAN LAS COMPRAS REALIZADAS</p>
-      </div>
+      
     </div>
   );
   
- 
-  
-
 }
 

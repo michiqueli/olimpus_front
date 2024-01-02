@@ -1,5 +1,5 @@
 import axios from "axios";
-import { CredentialsLogin } from "../components/interfaces";
+import { CredentialsLogin } from "../interfaces";
 
 const userLogin = async (credentials: CredentialsLogin) => {
     const { email, password, googlePass } = credentials;
