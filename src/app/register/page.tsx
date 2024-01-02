@@ -44,9 +44,9 @@ const RegisterPage = () => {
             <div className='flex-col justify-start w-10/12'>
                 <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Tu contraseña:</label>
                 {/* <Field placeholder='Tu contraseña' name='password' onChange={handleChange} value={userData.password}/> */}
-                <div className='flex flex-row'>
-                    <input type={viewPass ? "text" : "password"} name="password" placeholder='Tu Contraseña' className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-center py-2 w-full focus:outline-none' value={userData.password} onChange={handleChange} />
-                    <button type='button' className='text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100 mx-3' onClick={() => handleView()}>{viewPass ? <FaEyeSlash/> : <FaEye/>}</button> 
+                <div className='relative'>
+                    <input type={viewPass ? "text" : "password"} name="password" placeholder='Tu Contraseña' className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 pr-10 text-start py-2 w-full focus:outline-none' value={userData.password} onChange={handleChange} />
+                    <button type='button' className='absolute top-5 right-3 transform -translate-y-1/2 text-gray-500 hover:text-gray-700 dark:text-gray-300 dark:hover:text-gray-100' onClick={() => handleView()}>{viewPass ? <FaEyeSlash/> : <FaEye/>}</button> 
                 </div>
             </div>
             <div className='flex-col justify-start w-10/12'>
