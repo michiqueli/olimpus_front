@@ -86,7 +86,9 @@ export default function Filtered() {
     const selectedSubtype = estado.name;
  
     const medidas= allProducts.filter(product=> product.Subtype.metric=== selectedSubtype)
-   
+
+    const productos= allProducts.filter(product=> product.Subtype.name=== selectedSubtype)
+  
     if(selectedSubtype === "Indumentaria"|| selectedSubtype==="todos" || selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
       const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype || selectedSubtype==="todos");
   
@@ -102,22 +104,22 @@ export default function Filtered() {
       });
       orderByPrices(ordenar, dispatch);
     
-    }else if(medidas){
-      const filteredProducts = allProducts.filter(product => product.Subtype.metric === selectedSubtype);
+    // }else if(medidas){
+    //   const filteredProducts = allProducts.filter(product => product.Subtype.metric === selectedSubtype);
   
-      const ordenar = filteredProducts.sort((a, b) => {
-        const priceA = a.price;
-        const priceB = b.price;
+    //   const ordenar = filteredProducts.sort((a, b) => {
+    //     const priceA = a.price;
+    //     const priceB = b.price;
     
-        if (ascending) {
-          return priceA - priceB;
-        } else {
-          return priceB - priceA;
-        }
-      });
-      orderByPrices(ordenar, dispatch);
+    //     if (ascending) {
+    //       return priceA - priceB;
+    //     } else {
+    //       return priceB - priceA;
+    //     }
+    //   });
+    //   orderByPrices(ordenar, dispatch);
 
-    }else{
+    }else if(productos.length > 0){
       const filteredProducts = allProducts.filter(product => product.Subtype.name === selectedSubtype);
   
       const ordenar = filteredProducts.sort((a, b) => {
