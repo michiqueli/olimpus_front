@@ -2,16 +2,21 @@
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
 import {getTodosProducts } from '@/Redux/Actions';
 <<<<<<< HEAD
+<<<<<<< HEAD
 import { useEffect } from 'react';
 import { ProductInterface } from '../../components/interfaces';
 =======
 import { useEffect, useState } from 'react';
 import { ProductInterface } from '../components/interfaces';
 >>>>>>> aa2c52573bee05867c9f30dd63b9b1029feb0d34
+=======
+import { useEffect, useState } from 'react';
+import { ProductInterface } from '@/components/interfaces';
+>>>>>>> 35bcdd10928e4c9509d2fb90fed13e5a4496e085
 import { useRouter } from 'next/navigation';
 import Filtered from '../../components/filtros';
 import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
-import Pagination from '../components/pagination';
+import Pagination from '@/components/pagination';
 
 export default function ProductosCompleto(){
     const dispatch= useAppDispatch()
@@ -31,6 +36,7 @@ export default function ProductosCompleto(){
     const dataShow = filtered.slice(firstIndex, lastIndex);
     
     return (
+<<<<<<< HEAD
 <<<<<<< HEAD
         <div>
           <Filtered/>
@@ -76,6 +82,8 @@ export default function ProductosCompleto(){
                 {/* </button> */}
             </div>
 =======
+=======
+>>>>>>> 35bcdd10928e4c9509d2fb90fed13e5a4496e085
         <div className='flex flex-col justify-center items-center'>
           <div className='mb-6 mt-6 w-[98%]'>
             <Filtered />
@@ -83,7 +91,10 @@ export default function ProductosCompleto(){
           <div className='w-[98%] grid grid-cols-3 gap-y-6 gap-x-4'>
             {dataShow.map((product: ProductInterface) => (
               <ProductCard key={product.id} product={product} />
+<<<<<<< HEAD
 >>>>>>> aa2c52573bee05867c9f30dd63b9b1029feb0d34
+=======
+>>>>>>> 35bcdd10928e4c9509d2fb90fed13e5a4496e085
             ))}
           </div>
           <Pagination data={filtered} recordsPerPage={recordsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage} />

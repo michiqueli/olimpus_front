@@ -57,12 +57,12 @@ const NavBar: React.FC = () => {
                 <img src="/user.png" alt="" className="w-11 h-11 mr-6 hover:scale-110" />
               </button>
               {dropdownVisible && (
-                <div className="absolute top-12 right-0 bg-white border border-gray-300 p-2 shadow-md rounded-md z-20">
+                <div className="w-36 absolute top-12 right-0 bg-white border border-gray-300 p-3 shadow-md rounded-md z-20">
                 {
                   session?.user ? (
                   <>
                   <button
-                    onClick={() => router.push('/userDetail/bb7f87f4-5ec6-4177-be68-9440ee3eb41b')}
+                    onClick={() => router.push('/account')}
                     className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                   >
                     Mi Perfil

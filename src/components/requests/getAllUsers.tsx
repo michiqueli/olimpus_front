@@ -1,5 +1,6 @@
+
 const getAllUsers = async () => {
-  const storedToken = localStorage.getItem('token');
+  const storedToken = 'token';
   try {
     if (storedToken !== null) {
       const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users`, {

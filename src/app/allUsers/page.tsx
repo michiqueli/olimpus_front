@@ -8,23 +8,28 @@ import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
 import InactiveBuyers from "../../components/users/buyers/inactiveBuyers";
 import { useAppSelector } from "@/Redux/hooks";
-import getAllUsers from "../requests/getAllUsers";
+import { getUsers } from "@/Redux/sliceUsers";
+import getAllUsers from "../../components/requests/getAllUsers";
 import PrimaryButton from "../../components/buttons/primaryButton";
 
 export default function AllUsers(){
   //const listUsers = useAppSelector<UserList[]>(users);
+  const filtusers = useAppSelector(getUsers);
   const [component, setComponent] = useState(true);
   const [active, setActive] = useState(true);
   const router = useRouter();
   const [admins, setAdmins] = useState<Users[]>([]);
+  const [inactiveAdmins, setInactiveAdmins] = useState<Users[]>([]);
   const [buyers, setBuyers] = useState<Users[]>([]);
+  const [inactivebBuyers, setInactiveBuyers] = useState<Users[]>([]);
+
 
   useEffect(() => {
     async function fetchData() {
       try {
         const userList = await getAllUsers();
-        const filteredAdmins = userList.filter((user: Users) => user.roleId === 1);
-        const filteredBuyers = userList.filter((user: Users) => user.roleId === 2);
+        const filteredAdmins = userList.filter((user: Users) => user.roleid === 2);
+        const filteredBuyers = userList.filter((user: Users) => user.roleid === 3);
   
         setAdmins(filteredAdmins);
         setBuyers(filteredBuyers);
@@ -34,12 +39,14 @@ export default function AllUsers(){
     }
     fetchData();
   }, []);
-  const toggleActive = () => {
-    setActive(!active);
-  };
 
   // id, name, email, password, zipcode, street, roleId, isActive
+  const toggleActive = () => {
+    setActive(!active);
+  };  
   
+console.log(filtusers);
+
   return (
     <div>
       <div className="flex flex-col items-center w-full">

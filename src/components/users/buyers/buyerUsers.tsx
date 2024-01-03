@@ -2,7 +2,7 @@
 
 import List from "../../list";
 import { useState } from "react";
-import deleteUser from "@/app/requests/deleteUser";
+import deleteUser from "@/components/requests/deleteUser";
 import { ActiveBuyersProps } from "../../interfaces";
 import Pagination from "../../pagination";
 import EditButton from "../../buttons/editButton";
@@ -20,7 +20,7 @@ const {buyers, setBuyers} = props;
 const filteredUsers = buyers.filter((user) => {
   const lowercaseSearchTerm = search.toLowerCase();
   return (
-    (user.dni && user.dni.toLowerCase().includes(lowercaseSearchTerm)) ||
+    (user.email && user.email.toLowerCase().includes(lowercaseSearchTerm)) ||
     (user.name && user.name.toLowerCase().includes(lowercaseSearchTerm))
   );
 });
@@ -56,14 +56,14 @@ const userShow = userActive.slice(firstIndex, lastIndex);
                     </tr>
                 </thead>
                 <tbody>
-                  {userShow.map((user, index) => (
-                  <tr key={index} 
+                  {buyers.map((user) => (
+                  <tr key={user.id} 
                     className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200">
                     <td className="whitespace-nowrap px-6 py-4 font-medium">{user.name}</td>
-                    <td className="whitespace-nowrap px-6 py-4">{user.dni}</td>
-                    <td className="whitespace-nowrap px-6 py-4">{user.roleId === 3 ? 'Buyer' : ''}</td>
+                    <td className="whitespace-nowrap px-6 py-4">{user.email}</td>
+                    <td className="whitespace-nowrap px-6 py-4">{user.roleid === 3 ? 'Buyer' : ''}</td>
                     <td>
-                      <EditButton title='Ver usuario' route={`/editUser/${user.id}`}/>
+                      <EditButton title='Ver usuario' route={`/userDetail/${user.id}`}/>
                     </td>
                     <td>
                       <AlertButton title="Desactivar" onClickfunction={() => deleteUser(user.id, setBuyers)}/>

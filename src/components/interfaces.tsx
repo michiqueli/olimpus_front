@@ -11,6 +11,10 @@ export interface Users {
 
 export type UserList = Users[];
 
+export interface GoBackButtonProps {
+    title: string,
+}
+
 export interface PrimaryButtonProps {
     title: string,
     onClickfunction: () => void;
@@ -24,12 +28,10 @@ export interface AlertButtonProps {
     onClickfunction: () => void;
 }
 
-
 export interface Review{
     content: string;
     rating: number;
   };
-  
 
 export interface ProductInterface{
     id: string,
