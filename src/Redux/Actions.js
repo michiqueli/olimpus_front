@@ -7,7 +7,8 @@ import { setSearchedProducts, setProducts, setProductTypes, setFilteredProducts 
 export const ORDER_BY_PRICE = "ORDER_BY_PRICE"
 
 
-import getAllProducts from "@/app/requests/getAllProducts";
+import getAllProducts from "@/components/requests/getAllProducts";
+import getAllUsers from "@/components/requests/getAllUsers";
 
 
 export const getTodosProducts= async (dispatch)=>{
@@ -89,13 +90,21 @@ export const createUser= async (payload, dispatch)=>{
     }
 }
 
-export const getUsers= async (dispatch)=>{
-    try{
-       let json= await axios.get(`https://olimpusback.up.railway.app/users`) 
-       dispatch(setUsers(json.data))
-    }catch(error){
-        console.error("Error al buscar los usuarios", error)
-    }
+// export const getUsers= async (dispatch)=>{
+//     try{
+//        let json= await axios.get(`https://olimpusback.up.railway.app/users`) 
+//        dispatch(setUsers(json.data))
+//     }catch(error){
+//         console.error("Error al buscar los usuarios", error)
+//     }
+// }
+export const getUsers = async (dispatch)=>{
+  try{
+     let json= await getAllUsers();
+     dispatch(setUsers(json.data))
+  }catch(error){
+      console.error("Error al buscar los usuarios", error)
+  }
 }
 
 export const getUsersByName= async (name, dispatch)=>{

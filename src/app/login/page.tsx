@@ -1,11 +1,11 @@
 "use client";
 
 import { useState } from 'react';
-import userLogin from '../requests/loginUser';
+import userLogin from '@/components/requests/loginUSer';
 import Cookies from 'js-cookie';
 import { useRouter } from "next/navigation";
-import { CredentialsLogin } from '../components/interfaces';
-import Field from '../components/field';
+import { CredentialsLogin } from '../../components/interfaces';
+import Field from '../../components/field';
 import { signIn } from 'next-auth/react';
 import { FaEye, FaEyeSlash } from 'react-icons/fa'
 
@@ -71,7 +71,10 @@ const loginPage = () => {
 
                     <button className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Inicia Sesión</button>
                 </form>
-                <button className='mb-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full' onClick={() => signIn()}>Iniciar Sesión con Google</button>
+                <button className='mb-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'
+                 onClick={async () => signIn()}>
+                    Iniciar Sesión con Google
+                </button>
                 <div className='flex flex-row'>
                     <h1 className='block mb-2 ml-2 text-sm font-medium dark:text-white'>¿No tienes cuenta?</h1>
                     <button onClick={() => router.push('/register')} className="block mb-2 ml-2 text-sm font-medium dark:text-white hover:text-blue-800">Registrate.</button>

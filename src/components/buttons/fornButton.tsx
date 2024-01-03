@@ -1,8 +1,8 @@
 'use client';
-import React, { Children } from 'react';
-import { ButtonProps } from '../interfaces';
+import React from 'react';
+import { GoBackButtonProps } from '../interfaces';
 
-function PrimaryButton(props: ButtonProps) {
+function FormButton(props: GoBackButtonProps) {
     const {title} = props;
   return (
     <div>
@@ -13,4 +13,4 @@ function PrimaryButton(props: ButtonProps) {
   )
 }
 
-export default PrimaryButton;
+export default FormButton;

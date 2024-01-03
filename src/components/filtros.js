@@ -16,7 +16,6 @@ export default function Filtered() {
   const [filteredSubtypes, setFilteredSubtypes] = useState([]);
   const [filteredMetrics, setFilteredMetrics] = useState([]);
 
-
   const handleInputChange = (event) => {
     const selectedCategory = event.target.value
 
