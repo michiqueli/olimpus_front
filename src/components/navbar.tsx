@@ -4,8 +4,11 @@ import SearchBar from "./searchbar";
 import GoBack from "./buttons/goBack";
 import { useState } from "react";
 import React from "react";
+import { signIn, useSession, signOut } from "next-auth/react";
 
 const NavBar: React.FC = () => {
+  const {data: session} = useSession();
+  
   const router = useRouter();
   const path = usePathname();
   // Estado para controlar la visibilidad del menú desplegable
@@ -32,6 +35,18 @@ const NavBar: React.FC = () => {
               <img src="/zeus.png" alt="" className="w-24 h-24 hover:scale-110" />
             </button>
           </div>
+          {
+            session?.user ? (
+              <div>
+            <h1 className="text-black">
+              Bienvenido {session?.user.name}
+            </h1>
+          </div>
+            )
+            :
+            ''
+
+          }
           <SearchBar />
           <div className="flex">
             <div className="relative">
@@ -42,19 +57,39 @@ const NavBar: React.FC = () => {
                 <img src="/user.png" alt="" className="w-11 h-11 mr-6 hover:scale-110" />
               </button>
               {dropdownVisible && (
-                <div className="absolute top-12 right-0 bg-white border border-gray-300 p-2 shadow-md rounded-md z-20">
+                <div className="w-36 absolute top-12 right-0 bg-white border border-gray-300 p-3 shadow-md rounded-md z-20">
+                {
+                  session?.user ? (
+                  <>
                   <button
-                    onClick={() => router.push('/userDetail/bb7f87f4-5ec6-4177-be68-9440ee3eb41b')}
+                    onClick={() => router.push('/account')}
                     className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                   >
                     Mi Perfil
                   </button>
                   <button
-                    onClick={() => router.push('/login')}
+                    onClick={async () => {
+                      await signOut({
+                        callbackUrl: '/'
+                      })
+                    }}
                     className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                   >
-                    Registrarse
+                    ¿Log-out?
                   </button>
+                  </>
+                  )
+                  :
+                  (
+                    <button
+                    onClick={() => signIn()}
+                    className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
+                  >
+                    ¿Log-in?
+                  </button>
+                  )
+                }
+                  
                 </div>
               )}
             </div>

@@ -4,7 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png";
-import { Review } from "@/app/components/interfaces";
+import { Review } from "@/components/interfaces";
 
 export default function ProductDetail() {
   const router = useRouter();

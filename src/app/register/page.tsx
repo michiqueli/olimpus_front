@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from 'react';
-import Field from '../components/field';
+import Field from '../../components/field';
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
 import { FaEye, FaEyeSlash } from 'react-icons/fa'

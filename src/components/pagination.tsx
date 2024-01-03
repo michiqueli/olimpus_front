@@ -12,6 +12,7 @@
 
 import React from 'react';
 import { PaginationProps } from './interfaces';
+import PrimaryButton from './buttons/primaryButton';
 
 function Pagination(props: PaginationProps) {
     const {data, recordsPerPage, currentPage, setCurrentPage} = props;
@@ -39,15 +40,8 @@ function Pagination(props: PaginationProps) {
 
   return (
     
-    <div className="flex items-center justify-center my-6 space-x-4">
-        <button
-             type="button"
-            onClick={prevPage}
-            // className="w-24 text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            className="text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
-        >
-            Anteriores
-        </button>
+    <div className="flex items-center justify-center mt-6 space-x-4">
+        <PrimaryButton title='Anteriores' onClickfunction={prevPage}/>
         {
             numbers.map((n, i) => (
              <div className='text-black flex items-center'>
@@ -61,14 +55,7 @@ function Pagination(props: PaginationProps) {
             </div>
                 ))
         }
-        <button
-            type="button"
-            onClick={nextPage}
-            // className="w-24 text-white bg-blue-600 hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
-            className="text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
-        >
-            Siguientes
-        </button>
+        <PrimaryButton title='Siguientes' onClickfunction={nextPage}/>
     </div>  
   )
 }

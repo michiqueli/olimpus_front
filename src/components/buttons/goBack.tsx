@@ -1,8 +1,8 @@
 import React from 'react';
-import { ButtonProps } from '../interfaces';
+import { GoBackButtonProps } from '../interfaces';
 import { useRouter } from 'next/navigation';
 
-function GoBack(props: ButtonProps) {
+function GoBack(props: GoBackButtonProps) {
     const {title} = props;
     const router = useRouter();
   return (
