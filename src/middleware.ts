@@ -4,8 +4,7 @@ import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
  
 
-export const config = { matcher : ['/about', '/adminDashboard', '/allUsers', '/catalogo', '/createUsers', '/guiaTalles', 
-'/userDetail']}
+export const config = { matcher : []}
 
 
 export async function middleware(req: NextRequest) {
