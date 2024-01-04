@@ -18,11 +18,11 @@ export default function Home() {
           <CardSlider />
         </div>
         <div>
-        {
-          session?.user ? (
             <div className="my-6">
               <Banner/>
             </div>
+        {/* {
+          session?.user ? (
           ):
           (
             <div className="my-6">
@@ -31,7 +31,7 @@ export default function Home() {
               </h1>
             </div>
           )
-        }
+        } */}
         </div>
      </div>
     </main>
