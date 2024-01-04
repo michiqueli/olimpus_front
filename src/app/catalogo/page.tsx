@@ -1,8 +1,9 @@
 "use client"
 import { useAppDispatch, useAppSelector } from '@/Redux/hooks';
 import {getTodosProducts } from '@/Redux/Actions';
+import { ProductInterface } from '../../components/interfaces';
 import { useEffect, useState } from 'react';
-import { ProductInterface } from '@/components/interfaces';
+
 import { useRouter } from 'next/navigation';
 import Filtered from '../../components/filtros';
 import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
