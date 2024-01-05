@@ -82,12 +82,15 @@ export default function Filtered() {
     } else {
       ascending = true;
     }
-
+  
     const selectedSubtype = estado.name;
+ 
     const medidas= allProducts.filter(product=> product.Subtype.metric=== selectedSubtype)
-   
-    if(selectedSubtype === "Indumentaria"|| selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
-      const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype);
+
+    const productos= allProducts.filter(product=> product.Subtype.name=== selectedSubtype)
+    
+    if(selectedSubtype === "Indumentaria"|| selectedSubtype==="todos" || selectedSubtype==="Calzado" || selectedSubtype==="Equipamiento" || selectedSubtype==="Suplementos" || selectedSubtype==="Accesorios"){
+      const filteredProducts = allProducts.filter(product => product.Type.name === selectedSubtype || selectedSubtype==="todos");
   
       const ordenar = filteredProducts.sort((a, b) => {
         const priceA = a.price;
@@ -101,21 +104,21 @@ export default function Filtered() {
       });
       orderByPrices(ordenar, dispatch);
     
-    }else if(medidas){
-      const filteredProducts = allProducts.filter(product => product.Subtype.metric === selectedSubtype);
+    // }else if(medidas){
+    //   const filteredProducts = allProducts.filter(product => product.Subtype.metric === selectedSubtype);
   
-      const ordenar = filteredProducts.sort((a, b) => {
-        const priceA = a.price;
-        const priceB = b.price;
-    
-        if (ascending) {
-          return priceA - priceB;
-        } else {
-          return priceB - priceA;
-        }
-      });
-      orderByPrices(ordenar, dispatch);
-    }else{
+    //   const ordenar = filteredProducts.sort((a, b) => {
+    //     const priceA = a.price;
+    //     const priceB = b.price;
+    //     if (ascending) {
+    //       return priceA - priceB;
+    //     } else {
+    //       return priceB - priceA;
+    //     }
+    //   });
+    //   orderByPrices(ordenar, dispatch);
+
+      }else if(productos.length > 0){
       const filteredProducts = allProducts.filter(product => product.Subtype.name === selectedSubtype);
   
       const ordenar = filteredProducts.sort((a, b) => {
@@ -129,15 +132,15 @@ export default function Filtered() {
         }
       });
       orderByPrices(ordenar, dispatch);
-    }
-  };
+    }
+  };
   
   return (
     <div className="flex space-x-4 mb-10">
       <div className="flex-grow w-4 h-4">
         <label className="">Filter by category:</label>
         <select className="w-full" defaultValue={'default'} name="products" onChange={event => handleInputChange(event)}>
-          <option value='todos'>Todos</option>
+          <option value="todos">Todos</option>
           {[...new Set(allProducts.map(el => el.Type.name))].map(typeName => (
             <option key={typeName} value={typeName}>{typeName}</option>
           ))}
