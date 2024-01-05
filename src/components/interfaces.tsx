@@ -60,7 +60,6 @@ export interface PaginationProps {
 export interface CredentialsLogin {
     email: string,
     password: string,
-    googlePass: string,
 }
 
 export interface ValidationsInterface {
