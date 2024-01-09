@@ -15,6 +15,12 @@ export interface GoBackButtonProps {
     title: string,
 }
 
+export interface CartProps{  
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>  
+    onClose: ()=> void   
+}
+
 export interface PrimaryButtonProps {
     title: string,
     onClickfunction: () => void;
