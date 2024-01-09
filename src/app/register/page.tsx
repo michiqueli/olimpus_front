@@ -1,13 +1,16 @@
 "use client";
-
-import { useState } from 'react';
 import Field from '../../components/field';
 import { signIn } from 'next-auth/react';
 import { useRouter } from "next/navigation";
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
+import { useState, ChangeEvent, FormEvent } from 'react';
+import { useAppDispatch } from '@/Redux/hooks';
+import { createUser } from '@/Redux/Actions';
+
 
 const RegisterPage = () => {
     const router = useRouter();
+    const dispatch=useAppDispatch();
     const [userData, setUserData] = useState({
         name: "",
         email: "",
@@ -15,8 +18,21 @@ const RegisterPage = () => {
         street: "",
         zipCode: "",
     })
-    const handleChange = () => {};
-    const handleSubmit = () => {};
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        const inputValue = event.target.value;
+        setUserData({ ...userData, [event.target.name]: inputValue });
+      };
+      
+    
+      const handleSubmit = (event: FormEvent) => {
+        event.preventDefault();
+        if(userData.name === "" || userData.email === "" || userData.password === "" || userData.street === "" || userData.zipCode === ""){
+           window.alert("Falta completar datos") 
+        }else{
+            createUser(userData,dispatch)
+        }
+      };
     const [viewPass, setViewPass] = useState(false);
     const handleView = () => {
         if (viewPass === true){
@@ -57,7 +73,7 @@ const RegisterPage = () => {
                 <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Tu código postal:</label>
                 <Field placeholder='Tu código postal' name='zipCode' onChange={handleChange} value={userData.zipCode}/>
             </div>
-            <button className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Registrate.</button>
+            <button  className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Registrate.</button>
         </form>
         <div className='flex flex-row'>
             <h1 className='block mb-2 ml-2 text-sm font-medium dark:text-white'>¿Ya tienes tu cuenta?</h1>
