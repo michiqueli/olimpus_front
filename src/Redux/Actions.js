@@ -110,15 +110,6 @@ export const getUserRegister= async (dispatch)=>{
   }
 }
 
-// export const getUsers = async (dispatch)=>{
-//   try{
-//      let json= await getAllUsers();
-//      dispatch(setUsers(json.data))
-//   }catch(error){
-//       console.error("Error al buscar los usuarios", error)
-//   }
-// }
-
 export const getUsersByName= async (name, dispatch)=>{
     try{
        let json= await axios.get(`https://olimpusback.up.railway.app/users/name/?name=${name}`) 

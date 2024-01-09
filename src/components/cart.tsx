@@ -1,9 +1,10 @@
 import { useRouter } from "next/navigation"
 import { CartProps } from "./interfaces"
 
-
 const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
     const router= useRouter()
+
+
 
     return(
         <>
@@ -15,7 +16,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                     <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
                     <div className="pointer-events-auto w-screen max-w-md">
                         <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
-                        <div className="flex-1 overflow-y-auto px-4 py-6 sm:px-6">
+                        <div className="flex-1 px-4 py-6 sm:px-6">
                             <div className="flex items-start justify-between">
                             <h2 className="text-lg font-medium text-gray-900" id="slide-over-title">Carrito de compras</h2>
                                 <div className="ml-3 flex h-7 items-center">
@@ -40,6 +41,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                                         <p className="mt-1 text-sm text-gray-500">Salmon</p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
+                                        <p className="text-gray-500">Cantidad 1</p>
                                         <div className="flex">
                                         <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             <img alt="" src="/eliminar.png" width={20} height={20} className="mt-20 ml-60" />
@@ -61,6 +63,8 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                                         <p className="mt-1 text-sm text-gray-500">Blue</p>
                                     </div>
                                     <div className="flex flex-1 items-end justify-between text-sm">
+                                    
+                                        <p className="text-gray-500">Cantidad 1</p>
                                         <div className="flex ml-60 ">
                                         <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
                                             <img alt="" src="/eliminar.png" width={20} height={20} className="mt-20" />
