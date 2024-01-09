@@ -82,7 +82,7 @@ const NavBar: React.FC = () => {
                   :
                   (
                     <button
-                    onClick={() => signIn()}
+                    onClick={() => router.push("/login")}
                     className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                   >
                     ¿Log-in?
