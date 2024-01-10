@@ -21,6 +21,14 @@ export interface CartProps{
     onClose: ()=> void   
 }
 
+export interface Errors {
+    name?: string;
+    email?: string;
+    password?: string;
+    street?: string;
+    zipCode?: string;
+}
+
 export interface PrimaryButtonProps {
     title: string,
     onClickfunction: () => void;
