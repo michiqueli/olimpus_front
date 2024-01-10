@@ -1,16 +1,18 @@
 import { useState, useEffect } from "react"
 import {v4 as UUIDV4} from "uuid"
-
+import { useProduct } from "@/context/CartContext"
+import { ProductInterface } from "../interfaces"
 export const useCart=()=>{
-    const [products, setProducts]= useState([])
+    const {products, setProducts, addProduct, total} = useProduct()
+    // const [products, setProducts]= useState([])
     const [badgeCount, setBadgeCount]= useState(0)
-    const [storageProducts, setStorageProductos]= useLocalStorage("products",[])
+    // const [storageProducts, setStorageProductos]= useLocalStorage("products",[])
 
-    useEffect(()=>{
+    // useEffect(()=>{
 
-    },[storageProducts])
+    // },[storageProducts])
 
-    const addProduct = (product) => {
+    const setNewProduct = (product: ProductInterface) => {
         const id = UUIDV4();
         let cart = [...storageProducts];
         const { name, price, quantity, image } = product;

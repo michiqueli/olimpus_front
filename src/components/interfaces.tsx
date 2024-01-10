@@ -1,3 +1,5 @@
+import { ReactNode, Dispatch, SetStateAction } from "react";
+
 export interface Users {
     id: number,
     name: string,
@@ -93,3 +95,14 @@ export interface UserPost {
     password: string,
     name: string,
   }
+
+export interface TaskProviderProps {
+    children: ReactNode;
+  }
+
+export interface CreateContextProps {
+    products: ProductInterface[];
+    total: number,
+    addProduct: (product: ProductInterface) => void;
+    setProducts: Dispatch<SetStateAction<ProductInterface[]>>;
+}
