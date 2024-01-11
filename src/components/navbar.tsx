@@ -58,7 +58,7 @@ const NavBar: React.FC = () => {
                     <img
                       src={session?.user.image ?? "No IMG"}
                       alt="No IMG"
-                      className="w--11 h-11 mr-6 hover:scale-110"
+                      className="w--11 h-11 mr-6 hover:scale-110 rounded-full"
                     />
                   ) : (
                     <img
