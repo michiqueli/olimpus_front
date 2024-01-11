@@ -1,4 +1,4 @@
-import { ReactNode, Dispatch, SetStateAction } from "react";
+import { ReactNode } from "react";
 
 export interface Users {
     id: number,
@@ -57,6 +57,7 @@ export interface ProductInterface{
     price: number,
     discount: number,
     reviews:Review[],
+    stock: number,
 }
 
 export interface FieldProps {
@@ -104,13 +105,15 @@ export interface UserPost {
     name: string,
   }
 
-export interface TaskProviderProps {
+export interface CartProviderProps {
     children: ReactNode;
   }
 
 export interface CreateContextProps {
-    products: ProductInterface[];
+    contextProducts: ProductInterface[];
     total: number,
+    totalProducts: number,
     addProduct: (product: ProductInterface) => void;
-    setProducts: Dispatch<SetStateAction<ProductInterface[]>>;
+    deleteProduct: (productos: ProductInterface[], id: string) => void;
+    deleteAllProducts: (products: ProductInterface[]) => void;
 }

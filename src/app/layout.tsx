@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { Providers } from "@/Redux/provider";
-import NavBar from "../components/navbar";
-import Footer from "../components/footer";
+import NavBar from "@/components/constants/navbar";
+import Footer from "@/components/constants/footer";
 import SessionAuthProvider from "../context/SessionAuthProvider";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata: Metadata = {
   title: "Olimpus ",
@@ -18,13 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+          <CartProvider>
         <SessionAuthProvider>
-          <Providers>
-            <NavBar />
-            {children}
-            <Footer />
-          </Providers>
+            <Providers>
+              <NavBar />
+                {children}
+              <Footer />
+            </Providers>
         </SessionAuthProvider>
+          </CartProvider>
       </body>
     </html>
   );

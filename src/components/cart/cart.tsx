@@ -1,10 +1,10 @@
-import { useRouter } from "next/navigation"
-import { CartProps } from "./interfaces"
+import { useRouter } from "next/navigation";
+import { CartProps } from "../interfaces";
+import { useProduct } from "@/context/CartContext";
 
 const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
     const router= useRouter()
-
-
+    const {contextProducts, total, totalProducts, deleteAllProducts, deleteProduct} = useProduct();
 
     return(
         <>
@@ -23,71 +23,30 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                                 <button onClick={onClose} type="button" className="relative -m-2 p-2 text-gray-400 hover:text-gray-500">X</button>
                                 </div>
                             </div>
-                            <div className="mt-8">
-                            <div className="flow-root">
-                                <ul role="list" className="-my-6 divide-y divide-gray-200">
-                                <li className="flex py-6">
-                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <img src="/camiseta-casual.png" alt="" width={50} height={50} className="h-full w-full object-cover object-center"></img>
-                                    </div>
-                                    <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                        <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3>
-                                            <a onClick={()=>router.push("/productDetail")}>Throwback Hip Bag</a>
-                                        </h3>
-                                        <p className="ml-4">$90.00</p>
-                                        </div>
-                                        <p className="mt-1 text-sm text-gray-500">Salmon</p>
-                                    </div>
-                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                        <p className="text-gray-500">Cantidad 1</p>
-                                        <div className="flex">
-                                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                            <img alt="" src="/eliminar.png" width={20} height={20} className="mt-20 ml-60" />
-                                        </button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </li>
-                                <li className="flex py-6">
-                                    <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                                    <img src="/camiseta-casual.png" alt="" width={50} height={50} className="h-full w-full object-cover object-center"></img>
-                                    </div>
-                                    <div className="ml-4 flex flex-1 flex-col">
-                                    <div>
-                                        <div className="flex justify-between text-base font-medium text-gray-900">
-                                        <h3><a onClick={()=>router.push("/productDetail")}>Medium Stuff Satchel</a></h3>
-                                        <p className="ml-4">$32.00</p>
-                                        </div>
-                                        <p className="mt-1 text-sm text-gray-500">Blue</p>
-                                    </div>
-                                    <div className="flex flex-1 items-end justify-between text-sm">
-                                    
-                                        <p className="text-gray-500">Cantidad 1</p>
-                                        <div className="flex ml-60 ">
-                                        <button type="button" className="font-medium text-indigo-600 hover:text-indigo-500">
-                                            <img alt="" src="/eliminar.png" width={20} height={20} className="mt-20" />
-                                        </button>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </li>
-                                </ul>
-                            </div>
-                            </div>
+                            
                         </div>
                             <div>
                             <p className="mt-0.5 text-sm text-gray-500 ml-20">Los productos en SALE no tienen cambio</p>
                             </div>
                             <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                            <div className="flex justify-between text-base font-medium text-gray-900">
-                                <p>Total</p>
-                                <p>$262.00</p>
-                            </div>
-                            <p className="mt-0.5 text-sm text-gray-500">
-                                Envío e impuestos calculados al finalizar la compra
-                            </p>
+                                {
+                                    contextProducts.length > 1 ? (
+
+                                        contextProducts.map(product => (
+                                            <div>
+                                                <h1>{product.name}</h1>
+                                                <h1>{product.price}</h1>
+                                                <h1>{product.description}</h1>
+                                            </div>
+                                        ))
+                                    )
+                                    :
+                                    <h1 className="text.black">No tenes agregado ningún producto al carrito wey</h1>
+                                }
+          
+    
+
+
                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <button onClick={()=>router.push("")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
                                 Iniciar compra

@@ -1,9 +1,10 @@
-import { useState, useEffect } from "react"
-import {v4 as UUIDV4} from "uuid"
-import { useProduct } from "@/context/CartContext"
-import { ProductInterface } from "../interfaces"
+import { useState, useEffect } from "react";
+import {v4 as UUIDV4} from 'uuid';
+import { useProduct } from "@/context/CartContext";
+import { ProductInterface } from "../interfaces";
+
 export const useCart=()=>{
-    const {products, setProducts, addProduct, total} = useProduct()
+    const {products, total, totalProducts, addProduct, deleteProduct, deleteAllProducts} = useProduct()
     // const [products, setProducts]= useState([])
     const [badgeCount, setBadgeCount]= useState(0)
     // const [storageProducts, setStorageProductos]= useLocalStorage("products",[])
@@ -12,29 +13,31 @@ export const useCart=()=>{
 
     // },[storageProducts])
 
+    // const setNewProduct = (product: ProductInterface) => {
+    //     const id = UUIDV4();
+    //     let cart = [...storageProducts];
+    //     const { name, price, quantity, image } = product;
+    //     let productIndex = cart.findIndex((element) => element.name === name);
+    
+    //     if (productIndex === -1) {
+    //         setStorageProductos([...storageProducts, { id, name, price, quantity, image }]);
+    //     } else {
+    //         cart[productIndex].quantity += quantity;  // Corregir esta línea
+    //         setStorageProductos([...cart]);
+    //     }
+    // }
     const setNewProduct = (product: ProductInterface) => {
         const id = UUIDV4();
-        let cart = [...storageProducts];
-        const { name, price, quantity, image } = product;
-        let productIndex = cart.findIndex((element) => element.name === name);
-    
-        if (productIndex === -1) {
-            setStorageProductos([...storageProducts, { id, name, price, quantity, image }]);
-        } else {
-            cart[productIndex].quantity += quantity;  // Corregir esta línea
-            setStorageProductos([...cart]);
-        }
+        addProduct(product);
+        
     }
     
-    const deleteProduct=(id)=>{
-        const productFilter= storageProducts.filter((pr)=>{
-            if(pr.id !== id){
-                return pr
-            }
-        })
-        setStorageProductos(productFilter)
+    //lo traemos desde el contexto
+    const quitarUno = (id: string)=>{
+        deleteProduct(id);
     }
 
+    //lo traemos desde el contexto
     const deteleAllProducts=()=>{
         setStorageProductos()
     }

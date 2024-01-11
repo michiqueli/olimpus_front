@@ -4,40 +4,50 @@ import { useRouter, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import envios from "../../../assets/envio.png";
-import { Review } from "@/components/interfaces";
-import Cart from "@/components/cart";
+import { ProductInterface, Review } from "@/components/interfaces";
+import Cart from "@/components/cart/cart";
+import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
-  const router = useRouter();
+  const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   const params = useParams();
   const [product, setProduct] = useState({
-    name: "",
+    id: '',
+    name: '',
+    description: '',
+    image: '',
     price: 0,
-    description: "",
-    image: "",
-    Reviews: [] as Review[],
-    stock: 0,
     discount: 0,
+    reviews: [] as Review[],
+    stock: 0
   });
-
   
   const productID = params.id;
 
-  const [count, setCount] = useState(1);
+  const [count, setCount] = useState(0);
 
   const increment = () => {
     setCount(count + 1);
+    addProduct(product)
+    //console.log('name' + product.name);
+    
   };
 
   const decrement = () => {
-    if (count > 1) {
+    if (count > 0) {
       setCount(count - 1);
     }
+    deleteProduct(contextProducts, product.id)
+    //console.log('eliminado' + product.name);
+    
   };
 
+  console.log(contextProducts);
+  
+
   function getAverageRating(): number {
-    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.Reviews.length;
+    const totalRating = product.reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / product.reviews.length;
   }
 
   useEffect(() => {
@@ -122,6 +132,17 @@ export default function ProductDetail() {
                   Envíos gratis a partir de $20.000
                 </h2>
               </div>
+              <div>
+                {
+                  product.stock > 0 ? (
+                    <h1 className="text-sm text-black">Stock: {product.stock}</h1>
+                  )
+                  :
+                  (
+                    <h1 className="text-xl text-red-600">Producto SIN stock</h1>
+                  )
+                }
+              </div>
               <div className="mt-10 ml-40 text-lg">
                 <h2>Cantidad</h2>
               </div>
@@ -147,7 +168,7 @@ export default function ProductDetail() {
           </div>
           <div className="max-w-4xl mx-auto mt-4 flex">
             {/* Promedio de Valoración General */}
-            {product.Reviews && product.Reviews.length > 0 && (
+            {product.reviews && product.reviews.length > 0 && (
               <div className="mr-8">
                 <h3 className="text-black font-bold text-lg">
                   Promedio de Valoración General:
@@ -170,8 +191,8 @@ export default function ProductDetail() {
             {/* Opiniones */}
             <div className="max-w-4xl mx-auto p-6 border  border-gray-300 rounded-md bg-gray-50">
               <h2 className="text-black font-bold text-center text-xl">Opiniones:</h2>
-              {product.Reviews &&
-                product.Reviews.map((review: Review, index) => (
+              {product.reviews &&
+                product.reviews.map((review: Review, index) => (
                   <div key={index} className="mt-4 border-b border-gray-300 pb-4">
                     <div className="text-yellow-500 mb-2">
                       {Array.from({ length: Math.max(0, review.rating) }).map(
