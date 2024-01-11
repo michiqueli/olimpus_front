@@ -34,14 +34,30 @@ export interface Review{
   };
 
 export interface ProductInterface{
-    id: string,
-    name: string,
-    description: string,
-    image: string
-    price: number,
-    discount: number,
-    reviews:Review[],
+    name: string;
+    price: number;
+    stock: number;
+    description: string;
+    image: string;
+    discount: number;
+    isActive: boolean;
+    TypeId: number;
+    SubtypeId: number;
 }
+
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
 
 export interface FieldProps {
     placeholder: string,
