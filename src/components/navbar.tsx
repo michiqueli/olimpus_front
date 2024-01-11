@@ -55,11 +55,19 @@ const NavBar: React.FC = () => {
                   onClick={() => setDropdownVisible(!dropdownVisible)}
                   className="flex items-center focus:outline-none"
                 >
-                  <img
-                    src="/user.png"
-                    alt=""
-                    className="w-11 h-11 mr-6 hover:scale-110"
-                  />
+                  {session.user.image ? (
+                    <img
+                      src={session.user.image}
+                      alt="No IMG"
+                      className="w--11 h-11 mr-6 hover:scale-110"
+                    />
+                  ) : (
+                    <img
+                      src="/user.png"
+                      alt=""
+                      className="w-11 h-11 mr-6 hover:scale-110"
+                    />
+                  )}
                 </button>
                 {dropdownVisible && (
                   <div className="w-36 absolute top-12 right-0 bg-white border border-gray-300 p-3 shadow-md rounded-md z-20">
