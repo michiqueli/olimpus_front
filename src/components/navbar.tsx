@@ -57,7 +57,7 @@ const NavBar: React.FC = () => {
                 >
                   {session?.user ? (
                     <img
-                      src={session?.user.image}
+                      src={session?.user.image ?? "default-image-url"}
                       alt="No IMG"
                       className="w--11 h-11 mr-6 hover:scale-110"
                     />
