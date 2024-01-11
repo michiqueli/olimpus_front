@@ -55,7 +55,7 @@ const NavBar: React.FC = () => {
                   onClick={() => setDropdownVisible(!dropdownVisible)}
                   className="flex items-center focus:outline-none"
                 >
-                  {session.user.image ? (
+                  {session?.user.image? (
                     <img
                       src={session?.user.image}
                       alt="No IMG"
