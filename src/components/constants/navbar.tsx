@@ -1,14 +1,17 @@
 'use client';
 import { useRouter, usePathname } from "next/navigation";
 import SearchBar from "./searchbar";
-import GoBack from "./buttons/goBack";
+import GoBack from "../buttons/goBack";
 import { useState } from "react";
 import React from "react";
 import { signIn, useSession, signOut } from "next-auth/react";
-import Cart from "./cart";
+import Cart from "../cart/cart";
+import { useProduct } from "@/context/CartContext";
 
 const NavBar: React.FC = () => {
   const {data: session} = useSession();
+  const {total} = useProduct();
+  
   
   const router = useRouter();
   const path = usePathname();
@@ -98,6 +101,9 @@ const NavBar: React.FC = () => {
             <button onClick={handleCartClick}>
               <img src="/shopping.png" alt="" className="w-11 h-11 hover:scale-110" />
             </button>
+            <h1 className="text-black">
+              Total: {total}
+            </h1>
           </div>
         </div>
       </div>
