@@ -44,14 +44,15 @@ function CreateProductForm() {
     const typeId = parseInt(e.target.value, 10);
     setProduct({ ...product, TypeId: typeId });
     try {
-      const subtypesData = await getSubtypesByTypeId(typeId);
-      setSubtypes(subtypesData)
-      console.log(subtypesData)
+      const response = await getSubtypesByTypeId(typeId);
+        console.log(response);
+        setSubtypes(response);
+       
     } catch (error) {
       console.error('Error al obtener subtipos', error);
     }
   }
-  
+  console.log(subtypes)
 
   // RESTO DEL FORM
   const onChange = (e: React.ChangeEvent<any>) => {
