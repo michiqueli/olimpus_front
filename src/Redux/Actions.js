@@ -301,7 +301,7 @@ export const getUserHistorial= async (userId,dispatch)=>{
 
 export const createReview= async (payload)=>{
   try {
-     let json= await axios.post(`https://olimpusback.up.railway.app/createReview`,payload)
+     let json= await axios.post(`https://olimpusback.up.railway.app/reviews/createReview`,payload)
      return json.data
   }catch(error){
       console.error("Error al eliminar el producto del carrito", error);
