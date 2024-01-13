@@ -15,7 +15,6 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) => {
   const renderedProductIds = new Set();
 
   const checkout = async () => {
-    console.log(contextProducts);
     const data = {
       products: contextProducts.map((product) => ({
         title: product.name,
@@ -24,8 +23,6 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) => {
         unit_price: product.price,
       })),
     };
-
-    console.log(data);
 
     try {
       const response = await axios.post(
