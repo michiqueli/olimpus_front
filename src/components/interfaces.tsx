@@ -39,6 +39,10 @@ export interface Review{
     rating: number;
   };
 
+ export interface ProductReview {
+    image: string;
+  };
+
 export interface ProductInterface{
     id: string,
     name: string,
