@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Users {
     id: number,
     name: string,
@@ -19,6 +21,14 @@ export interface CartProps{
     isOpen: boolean;
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>  
     onClose: ()=> void   
+}
+
+export interface Errors {
+    name?: string;
+    email?: string;
+    password?: string;
+    street?: string;
+    zipCode?: string;
 }
 
 export interface PrimaryButtonProps {
@@ -51,6 +61,7 @@ export interface ProductInterface{
     price: number,
     discount: number,
     reviews:Review[],
+    stock: number,
 }
 
 export interface FieldProps {
@@ -97,3 +108,16 @@ export interface UserPost {
     password: string,
     name: string,
   }
+
+export interface CartProviderProps {
+    children: ReactNode;
+  }
+
+export interface CreateContextProps {
+    contextProducts: ProductInterface[];
+    total: number,
+    totalProducts: number,
+    addProduct: (product: ProductInterface) => void;
+    deleteProduct: (productos: ProductInterface[], id: string) => void;
+    deleteAllProducts: (products: ProductInterface[]) => void;
+}
