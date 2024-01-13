@@ -35,6 +35,10 @@ function CreateProductForm() {
   const [types, setTypes] = useState<any[]>([]);
   const [subtypes, setSubtypes] = useState<any[]>([]);
   const [metric, setMetrics] = useState<any[]>([]);
+  const [selectedType, setSelectedType] = useState<number>(0);
+  const [selectedSubtype, setSelectedSubtype] = useState<string>(''); 
+  const [isSubtypeSelected, setIsSubtypeSelected] = useState<boolean>(false);
+  const [selectedMetric, setSelectedMetric] = useState<number>(0);
   
   useEffect(() => {
     const fetchTypes = async () => {
@@ -67,10 +71,17 @@ function CreateProductForm() {
     } catch (error) {
       console.error('Error al obtener subtipos', error);
     }
+    setSelectedType(typeId);
+    setSelectedSubtype('');
+    setIsSubtypeSelected(false);
+    setSelectedMetric(0);
   }
 
   const handleSubTypeChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const subtypeName = e.target.value
+    setSelectedSubtype(subtypeName);
+    setIsSubtypeSelected(true);
+    setSelectedMetric(0)
     try {
       const response = await getMetrics(subtypeName);
       setMetrics(response)
@@ -81,11 +92,11 @@ function CreateProductForm() {
 
   const handleMetricChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const metricId = e.target.value
+    setSelectedMetric(Number(metricId))
     setProduct({ ...product, SubtypeId: Number(metricId) });
-
   }
 
-  console.log(product)
+  console.log(product);
 
   // RESTO DEL FORM
   const onChange = (e: React.ChangeEvent<any>) => {
@@ -107,66 +118,99 @@ function CreateProductForm() {
 
   return (
     <div className='flex flex-col justify-center items-center my-4'>
-      <form onSubmit={handleSubmit} className='flex flex-col items-center h-full w-3/12'>
-        <input
-          placeholder='Nombre/s'
-          type='text'
-          name='name'
-          onChange={onChange}
-          value={product.name}
-          className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
-        />
-        <input
-          placeholder='Precio'
-          type='number'
-          name='price'
-          onChange={onChange}
-          value={product.price}
-          className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
-        />
-        <input
-          placeholder='Stock'
-          name='stock'
-          type='number'
-          onChange={onChange}
-          value={product.stock}
-          className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
-        />
-        <textarea
-          placeholder='Descripción'
-          name='description'
-          onChange={onChange}
-          value={product.description}
-          className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
-        />
-        <input
-          placeholder='Imagen'
-          type='text'
-          name='image'
-          onChange={onChange}
-          value={product.image}
-          className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
-        />
-        <select value={product.TypeId} onChange={handleTypeChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
-          <option value={0} disabled>Selecciona el tipo de producto</option>
-          {types.map((type) => (
-            <option key={type.id} value={type.id}>{type.name}</option>
-          ))}
-        </select>
-        <select onChange={handleSubTypeChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
-          <option value={0} disabled>Selecciona el Sub-tipo de producto</option>
-          {subtypes.map((subtype) => (
-            <option key={subtype.id} value={subtype.name}>{subtype.name}</option>
-          ))}
-        </select>
-        <select value={product.SubtypeId} onChange={handleMetricChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
-          <option value={0} disabled>Selecciona la Medida del Producto</option>
-          {metric.map((metric) => (
-            <option key={metric.id} value={metric.id}>{metric.metric}</option>
-          ))}
-        </select>
-        <FormButton title='Crear Producto.' />
-      </form>
+      <div className='flex flex-col items-center h-full w-3/12 bg-gray-100 mx-2 border border-gray-300 rounded-lg shadow'>
+        <form onSubmit={handleSubmit} className='flex flex-col items-center h-full w-10/12 mb-6'>
+          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+            <h1 className='text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-white'>Nuevo producto</h1>
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Nombre:</label>
+            <input
+              placeholder='Nombre/s'
+              type='text'
+              name='name'
+              onChange={onChange}
+              value={product.name}
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+            />
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Precio:</label>
+            <input
+              placeholder='Precio'
+              type='number'
+              name='price'
+              onChange={onChange}
+              value={product.price}
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+            />
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Stock:</label>
+            <input
+              placeholder='Stock'
+              name='stock'
+              type='number'
+              onChange={onChange}
+              value={product.stock}
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+            />
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Descripción:</label>
+            <textarea
+              placeholder='Descripción'
+              name='description'
+              onChange={onChange}
+              value={product.description}
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+            />
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Imagen:</label>
+            <input
+              placeholder='Imagen'
+              type='text'
+              name='image'
+              onChange={onChange}
+              value={product.image}
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+            />
+          </div>
+          <div className='flex-col justify-start w-full'>
+            <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Tipo de producto:</label>
+            <select value={product.TypeId} onChange={handleTypeChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
+              <option value={0} disabled>Selecciona el tipo de producto</option>
+              {types.map((type) => (
+                <option key={type.id} value={type.id}>{type.name}</option>
+              ))}
+            </select>
+          </div>
+          {selectedType !== 0 &&(
+            <div className='flex-col justify-start w-full'>
+              <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Subtipo de producto:</label>
+                <select value={selectedSubtype} onChange={handleSubTypeChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
+                  <option value='' disabled>Selecciona el Sub-tipo de producto</option>
+                  {subtypes.map((subtype) => (
+                    <option key={subtype.id} value={subtype.name}>{subtype.name}</option>
+                  ))}
+                </select>      
+              </div>
+          )}
+          {isSubtypeSelected && selectedSubtype !== '' &&(
+            <div className='flex-col justify-start w-full'>
+              <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Medida del producto:</label>
+                <select value={selectedMetric} onChange={handleMetricChange} className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'>
+                  <option value={0} disabled>Selecciona la Medida del Producto</option>
+                  {metric.map((metric) => (
+                    <option key={metric.id} value={metric.id}>{metric.metric}</option>
+                  ))}
+                </select>     
+            </div>
+          )}
+          <FormButton title='Crear Producto' />
+        </form>
+      </div>
     </div>
   )
 }
