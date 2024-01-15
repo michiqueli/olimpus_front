@@ -50,7 +50,7 @@ export interface Review{
     isActive:true,
     productId: number,
     userId:string
-  };
+};
 
  export interface ProductReview {
     image: string;
@@ -63,7 +63,7 @@ export interface ProductInterface{
     image: string
     price: number,
     discount: number,
-    reviews:Review[],
+    Reviews:Review[],
     stock: number,
 }
 
