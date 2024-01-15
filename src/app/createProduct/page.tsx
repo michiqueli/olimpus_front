@@ -16,8 +16,6 @@ interface Subtype {
   TypeId: number
 }
 
-
-
 function CreateProductForm() {
   const router = useRouter();
   const [product, setProduct] = useState<ProductInterface>({
@@ -31,7 +29,7 @@ function CreateProductForm() {
     TypeId: 0,
     SubtypeId: 0,
   })
-  // TYPES
+  // TYPES SUBTYPES METRICS
   const [types, setTypes] = useState<any[]>([]);
   const [subtypes, setSubtypes] = useState<any[]>([]);
   const [metric, setMetrics] = useState<any[]>([]);
@@ -98,7 +96,18 @@ function CreateProductForm() {
 
   console.log(product);
 
+  // IMAGE
+  const [imageFile, setImageFile] = useState<File | null>(null);
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files && e.target.files[0];
+    if (file){
+      setImageFile(file);
+    }
+  }
+
   // RESTO DEL FORM
+  
   const onChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
@@ -108,6 +117,23 @@ function CreateProductForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      console.log(imageFile);
+      if(imageFile){
+        const formData = new FormData();
+        formData.append('file', imageFile);
+        console.log(formData);
+        const response = await fetch('/api/upload', {
+          method: 'POST',
+          body: formData
+        });
+        if (response.ok){
+          const imageData = await response.json();
+          setProduct({ ...product, image: imageData.url });
+        } else {
+          console.error('Error al subir la imagen');
+          return;
+        }
+      }
       await createProduct(product);
       alert(`Producto cargado exitosamente: "${product.name}"`)
       router.push('/')
@@ -169,11 +195,10 @@ function CreateProductForm() {
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Imagen:</label>
             <input
-              placeholder='Imagen'
-              type='text'
-              name='image'
-              onChange={onChange}
-              value={product.image}
+              type='file'
+              name='file'
+              accept='image/*'
+              onChange={handleImageChange}
               className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
             />
           </div>
