@@ -47,6 +47,9 @@ export interface AlertButtonProps {
 export interface Review{
     content: string;
     rating: number;
+    isActive:true,
+    productId: number,
+    userId:string
   };
 
  export interface ProductReview {

@@ -12,7 +12,6 @@ export default function Pasarela () {
     const dispatch=useAppDispatch();
     const {id} = useParams();
     const datos=useAppSelector(getUsers);
-    console.log("Datos",datos)
 
     useEffect(()=>{
         getUsersById(id,dispatch)

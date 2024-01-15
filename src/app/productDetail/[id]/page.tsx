@@ -81,7 +81,7 @@ export default function ProductDetail() {
       <Cart isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose}/>
       <div>
         <div>
-          <div className="flex flex-row justify-end  bg-gray-50 ">
+          <div className="flex flex-row justify-end bg-gray-50 ">
             <div className="flex items-center mb-10 mr-4">
               <img
                 src={product.image}
@@ -90,7 +90,7 @@ export default function ProductDetail() {
               />
             </div>
             <div>
-              <div className="max-w-md mx-auto  mr-80  ml-40 ">
+              <div className="max-w-md mx-auto  mt-20 mr-80  ml-40 ">
                 <h1 className="text-black text-6xl text-center ">
                   {product.name}
                 </h1>
@@ -132,19 +132,16 @@ export default function ProductDetail() {
                   Envíos gratis a partir de $20.000
                 </h2>
               </div>
-              <div>
-                {
-                  product.stock > 0 ? (
-                    <h1 className="text-sm text-black">Stock: {product.stock}</h1>
-                  )
-                  :
-                  (
-                    <h1 className="text-xl text-red-600">Producto SIN stock</h1>
-                  )
-                }
-              </div>
-              <div className="mt-10 ml-40 text-lg">
-                <h2>Cantidad</h2>
+              <div className="flex justify-between items-center ml-40 mt-10">
+                <div className="text-lg">
+                  <h2>Cantidad</h2>
+                </div>
+
+                {product.stock > 0 ? (
+                  <h1 className="text-lg text-black mr-80">Stock: {product.stock}</h1>
+                ) : (
+                  <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
+                )}
               </div>
               <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
                 <button
@@ -161,7 +158,7 @@ export default function ProductDetail() {
                   +
                 </button>
               </div>
-              <button onClick={handleAddToCart} className="my-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
+              <button onClick={handleAddToCart} className="my-20 ml-60 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
                 Agregar al carrito
               </button>
             </div>

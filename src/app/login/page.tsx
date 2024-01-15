@@ -34,7 +34,10 @@ const loginPage = () => {
         try {
             setError({});
             const response = await userLogin(credentials);
-            const {usuario, email: userEmail, token} = response;
+            const {usuario, id, email: userEmail, token} = response;
+            localStorage.setItem('userId', id)
+            const variable= localStorage.getItem("userId")
+            console.log(response);
             Cookies.set('jwt', token);
             router.push('/')
         } catch (error) {
