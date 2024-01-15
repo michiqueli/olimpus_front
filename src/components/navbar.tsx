@@ -1,6 +1,6 @@
 'use client';
 import { useRouter, usePathname } from "next/navigation";
-import SearchBar from "./searchbar";
+import SearchBar from "./constants/searchbar";
 import GoBack from "./buttons/goBack";
 import { useState } from "react";
 import React from "react";
