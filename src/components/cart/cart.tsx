@@ -7,6 +7,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
     const {contextProducts, total, totalProducts, deleteAllProducts, deleteProduct} = useProduct();
     const renderedProductIds = new Set();
 
+
     return(
         <>
         {isOpen && (
@@ -41,27 +42,46 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                                 }
                             // Agregar el ID del producto al conjunto
                                 renderedProductIds.add(product.id);
+
                                 return (
-                                    <div key={product.id}>
-                                    <img src={product.image} alt="image product" width={100} height={100} className="object-cover" />
-                                    <h1 onClick={() => router.push("/productDetail")}>{product.name}</h1>
-                                    <h1>{product.price}</h1>
-                                    <h1>{product.description}</h1>
+                                  <div className="ml-4 flex flex-1 flex-col border-b border-gray-300 mb-4">
+                                   <div className="flex items-center">
+                                      <img src={product.image} alt="image product" width={100} height={100} className="object-cover" />
+                                      <div className="ml-4 flex flex-col">
+                                        <div className="flex items-center"> {/* Contenedor del nombre y botón */}
+                                          <h1 className="cursor-pointer mr-14" onClick={() => router.push("/productDetail")}>{product.name}</h1>
+                                          <button onClick={()=>deleteProduct(contextProducts, product.id)} type="button" className="mr-6">
+                                            <img width={20} height={20} src="/eliminar.png" alt="Eliminar" />
+                                          </button>
+                                        </div>
+                                        <p className=" mt-1 text-xs text-gray-500">{product.description}</p>
+                                      </div>
                                     </div>
+
+                                    <div className="flex items-center ml-4 mt-4">
+                                      <p className="text-gray-500 text-sm mr-2">Cantidad: {totalProducts}</p>
+                                      <div className="flex-grow"></div> {/* Este div ocupa todo el espacio disponible */}
+                                      <h1 className="text-l">${product.price}</h1>
+                                    </div>
+
+                                  </div>
                                 );
                             })
                             ) : (
-                                <h1 className="text.black">No tienes agregado ningún producto al carrito, wey</h1>
+                              <h1 className="text.black">No tienes agregado ningún producto al carrito.</h1>
                             )}
-                            <h1>cantidad: {totalProducts}</h1>
+                            <div className="flex justify-between text-base text-xl text-black">
+                              <p className="ml-8">Subtotal</p>
+                              <p>${total}</p>
+                            </div>
                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                <button onClick={()=>router.push("")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
-                                Iniciar compra
-                                </button>
+                              <button onClick={()=>router.push("/pasarelaPagos/")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
+                              Iniciar compra
+                              </button>
                             </div>
                             <div className="mt-6 flex justify-center text-center text-sm text-black-500">
                                 <button type="button" className="font-medium text-black-700 hover:text-yellow-300" onClick={()=>router.push("/catalogo")}>
-                                Ver mas productos
+                                  Ver mas productos
                                 <span aria-hidden="true"> &rarr;</span>
                                 </button>
                             </div>
