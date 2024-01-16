@@ -1,6 +1,6 @@
-import { ProductInterface } from "../interfaces";
+import { CreateProductInterface } from "../interfaces";
 
-const createProduct = async (product: ProductInterface) => {
+const createProduct = async (product: CreateProductInterface) => {
     try {
         const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/products`,{
             method: 'POST',

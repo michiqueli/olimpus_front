@@ -4,7 +4,7 @@ import List from "../../list";
 import { useState } from "react";
 import deleteUser from "@/components/requests/deleteUser";
 import { ActiveBuyersProps } from "../../interfaces";
-import Pagination from "../../pagination";
+import Pagination from "../../design/pagination";
 import EditButton from "../../buttons/editButton";
 import AlertButton from "../../buttons/alertButton";
 

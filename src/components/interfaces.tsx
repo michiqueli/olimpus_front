@@ -67,6 +67,18 @@ export interface ProductInterface{
     stock: number,
 }
 
+export interface CreateProductInterface{
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    isActive: boolean,
+    TypeId: number,
+    SubtypeId: number
+    stock: number,
+}
+
 export interface ProductType{
     id: number;
     name: string;
