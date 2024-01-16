@@ -94,14 +94,13 @@ function CreateProductForm() {
     setProduct({ ...product, SubtypeId: Number(metricId) });
   }
 
-  console.log(product);
-
   // IMAGE
   const [imageFile, setImageFile] = useState<File | null>(null);
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
     if (file){
+      console.log('Archivo seleccionado:', file);
       setImageFile(file);
     }
   }
@@ -111,30 +110,42 @@ function CreateProductForm() {
   const onChange = (e: React.ChangeEvent<any>) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
-    console.log('Producto actualizado:', { ...product, [name]: value });
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      console.log(imageFile);
+
+      console.log('Imagen antes de enviar:', imageFile);
+
+      let updatedProduct = {...product};
+      
       if(imageFile){
         const formData = new FormData();
         formData.append('file', imageFile);
-        console.log(formData);
+
+        console.log('FormData:', formData);
+
         const response = await fetch('/api/upload', {
           method: 'POST',
           body: formData
         });
         if (response.ok){
           const imageData = await response.json();
-          setProduct({ ...product, image: imageData.url });
+          console.log('Respuesta de carga de imagen:', imageData);
+
+          const imageUrl = imageData.url;
+          console.log('URL de la imagen:', imageUrl);
+
+          updatedProduct = {...updatedProduct, image: imageUrl};
+          console.log('Producto después de actualizar la imagen:', { ...product, image: imageUrl });
         } else {
           console.error('Error al subir la imagen');
           return;
         }
       }
-      await createProduct(product);
+      console.log('Producto final', updatedProduct);
+      await createProduct(updatedProduct);
       alert(`Producto cargado exitosamente: "${product.name}"`)
       router.push('/')
     } catch (error) {
