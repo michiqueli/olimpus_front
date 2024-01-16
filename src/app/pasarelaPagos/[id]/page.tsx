@@ -1,27 +1,48 @@
 "use client";
 import { useRouter } from "next/navigation";
+import { getUsersById } from "@/Redux/Actions";
+import { useParams } from "next/navigation";
+import { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
+import { getUsers } from "@/Redux/sliceUsers";
 
 export default function Pasarela () {
+
     const router=useRouter();
+    const dispatch=useAppDispatch();
+    const {id} = useParams();
+    const datos=useAppSelector(getUsers);
+
+    useEffect(()=>{
+        getUsersById(id,dispatch)
+    },[dispatch])
 
     return(
         <div>
             <div className="flex">
             <div className="max-w-sm w-full lg:max-w-full lg:flex ml-20">
                 <div className="border-r border-b border-l border-gray-400 lg:border-l-0 lg:border-t lg:border-gray-400 bg-white rounded-b lg:rounded-b-none lg:rounded-r p-4 flex flex-col">
-                    <div className="mb-8">
-                        <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                            <img width={30} height={30} src="/sobre.png" alt="Image not found" className="mr-2" />
-                            Aca va renderizado el email
-                        </h2>
-                        <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                            <img width={40} height={40} src="/ubicacion.png" alt="Image not found" className="mr-2" />
-                            Aca va renderizado la direccion y codigo postal
-                        </h2>
-                        <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                            <img width={60} height={60} src="/envio.png" alt="Image not found" className="mr-2" />
-                            Envio a convenir: acordar costo de envio por whatsapp (Oca o Correo Argentino)
-                        </h2>
+                <div className="mb-8">
+                        {datos && (
+                            <div>
+                                <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
+                                    <img width={30} height={30} src="/sobre.png" alt="Image not found" className="mr-2" />
+                                    {datos.email}
+                                </h2>
+                                
+                                <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
+                                    <img width={40} height={40} src="/ubicacion.png" alt="Image not found" className="mr-2" />
+                                    {datos.street},
+
+                                    CP {datos.zipCode}
+                                    
+                                </h2>
+                                <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
+                                    <img width={60} height={60} src="/envio.png" alt="Image not found" className="mr-2" />
+                                    Envio a convenir: acordar costo de envio por whatsapp (Oca o Correo Argentino)
+                                </h2>
+                            </div>
+                        )}
                     </div>
                 </div>
             </div>

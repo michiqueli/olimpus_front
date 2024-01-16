@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Users {
     id: number,
     name: string,
@@ -13,6 +15,20 @@ export type UserList = Users[];
 
 export interface GoBackButtonProps {
     title: string,
+}
+
+export interface CartProps{  
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>  
+    onClose: ()=> void   
+}
+
+export interface Errors {
+    name?: string;
+    email?: string;
+    password?: string;
+    street?: string;
+    zipCode?: string;
 }
 
 export interface PrimaryButtonProps {
@@ -31,17 +47,40 @@ export interface AlertButtonProps {
 export interface Review{
     content: string;
     rating: number;
+    isActive:true,
+    productId: number,
+    userId:string
+  };
+
+ export interface ProductReview {
+    image: string;
   };
 
 export interface ProductInterface{
-    id: string,
-    name: string,
-    description: string,
-    image: string
-    price: number,
-    discount: number,
-    reviews:Review[],
+    name: string;
+    price: number;
+    stock: number;
+    description: string;
+    image: string;
+    discount: number;
+    isActive: boolean;
+    TypeId: number;
+    SubtypeId: number;
 }
+
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
 
 export interface FieldProps {
     placeholder: string,
@@ -87,3 +126,16 @@ export interface UserPost {
     password: string,
     name: string,
   }
+
+export interface CartProviderProps {
+    children: ReactNode;
+  }
+
+export interface CreateContextProps {
+    contextProducts: ProductInterface[];
+    total: number,
+    totalProducts: number,
+    addProduct: (product: ProductInterface) => void;
+    deleteProduct: (productos: ProductInterface[], id: string) => void;
+    deleteAllProducts: (products: ProductInterface[]) => void;
+}
