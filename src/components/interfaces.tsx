@@ -67,6 +67,20 @@ export interface ProductInterface{
     stock: number,
 }
 
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
+
 export interface FieldProps {
     placeholder: string,
     name: string,
