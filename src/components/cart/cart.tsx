@@ -75,7 +75,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                               <p>${total}</p>
                             </div>
                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                              <button onClick={()=>router.push("/pasarelaPagos/")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
+                              <button onClick={()=>router.push("/pasarelaPagos/3fd84315-bb86-4329-95f6-8fef02ea12ef")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
                               Iniciar compra
                               </button>
                             </div>
