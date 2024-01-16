@@ -17,6 +17,7 @@ const regexZipCode = /^[0-9]+$/;
 const validaciones = (inputs: any): ValidationErrors => {
     const errors: ValidationErrors = {};
 
+    //hacer otro if por cada validacion para que no se muestren todos a la vez 
     if (!inputs.name || typeof inputs.name !== 'string' || inputs.name.length === 0) {
         errors.name = 'Nombre requerido';
     } else if (!regexName.test(inputs.name)) {
