@@ -12,7 +12,8 @@ const createProduct = async (product: ProductInterface) => {
         if (!response.ok){
             throw new Error('Error al crear el producto');
         }
-        const resposeData = await response.json();
+        const responseData = await response.json();
+        window.alert(`Producto creado exitosamente. ID: ${responseData.name}`);
     } catch (error) {
         if (error instanceof Error) {
             window.alert(error.message);
