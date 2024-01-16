@@ -4,6 +4,7 @@ import { getSearchedProducts } from "@/Redux/sliceProducts";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { ProductInterface } from "../../components/interfaces";
+
 import Pagination from "@/components/design/pagination";
 import GoBack from "../../components/buttons/goBack";
 

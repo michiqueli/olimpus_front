@@ -50,22 +50,33 @@ export interface Review{
     isActive:true,
     productId: number,
     userId:string
-  };
+};
 
  export interface ProductReview {
     image: string;
   };
 
 export interface ProductInterface{
-    name: string;
-    price: number;
-    stock: number;
-    description: string;
-    image: string;
-    discount: number;
-    isActive: boolean;
-    TypeId: number;
-    SubtypeId: number;
+    id: string,
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    Reviews:Review[],
+    stock: number,
+}
+
+export interface CreateProductInterface{
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    isActive: boolean,
+    TypeId: number,
+    SubtypeId: number
+    stock: number,
 }
 
 export interface ProductType{

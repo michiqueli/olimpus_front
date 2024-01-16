@@ -11,6 +11,7 @@ import { useProduct } from "@/context/CartContext";
 export default function ProductDetail() {
   const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   const params = useParams();
+
   const [product, setProduct] = useState({
     id: '',
     name: '',
@@ -18,11 +19,12 @@ export default function ProductDetail() {
     image: '',
     price: 0,
     discount: 0,
-    reviews: [] as Review[],
+    Reviews: [] as Review[],
     stock: 0
   });
   
   const productID = params.id;
+  
 
   const [count, setCount] = useState(0);
 
@@ -46,8 +48,8 @@ export default function ProductDetail() {
   
 
   function getAverageRating(): number {
-    const totalRating = product.reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.reviews.length;
+    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / product.Reviews.length;
   }
 
   useEffect(() => {
@@ -55,6 +57,7 @@ export default function ProductDetail() {
       try {
         const productFind = await getProductById(productID);
         setProduct(productFind);
+        console.log("p", productFind)
       } catch (error) {
         console.error(
           "Error en render componente de detalle producto",
@@ -165,7 +168,7 @@ export default function ProductDetail() {
           </div>
           <div className="max-w-4xl mx-auto mt-4 flex">
             {/* Promedio de Valoración General */}
-            {product.reviews && product.reviews.length > 0 && (
+            {product.Reviews && product.Reviews.length > 0 && (
               <div className="mr-8">
                 <h3 className="text-black font-bold text-lg">
                   Promedio de Valoración General:
@@ -188,8 +191,8 @@ export default function ProductDetail() {
             {/* Opiniones */}
             <div className="max-w-4xl mx-auto p-6 border  border-gray-300 rounded-md bg-gray-50">
               <h2 className="text-black font-bold text-center text-xl">Opiniones:</h2>
-              {product.reviews &&
-                product.reviews.map((review: Review, index) => (
+              {product.Reviews &&
+                product.Reviews.map((review: Review, index) => (
                   <div key={index} className="mt-4 border-b border-gray-300 pb-4">
                     <div className="text-yellow-500 mb-2">
                       {Array.from({ length: Math.max(0, review.rating) }).map(
