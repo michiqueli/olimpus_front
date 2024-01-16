@@ -16,7 +16,7 @@ export default function ProductRev() {
   const [rev, setRev] = useState<Review>({
     rating: 0,
     content: "",
-    userId: "",
+    userId: "e6815d5d-7d2b-405e-b706-09f366d93de5",
     productId: 0,
     isActive: true
   });
