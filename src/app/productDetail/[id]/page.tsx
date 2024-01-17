@@ -20,7 +20,7 @@ export default function ProductDetail() {
     discount: 0,
     reviews: [] as Review[],
     stock: 0,
-    quantity: 0
+    quantity: 0,
   });
   
   const productID = params.id;
@@ -28,25 +28,26 @@ export default function ProductDetail() {
 
   const increment = (producto: CartInterface) => {
     setCount(count + 1);
-    // addProduct(product)
     const productos = localStorage.getItem('products');
-    const existingProduct = productos ? JSON.parse(productos).find((p: CartInterface) => p.id === producto.id) : undefined;
-    
-    if (existingProduct) {
-      existingProduct.quantity += 1;
-      
-      
-    localStorage.setItem('products', JSON.stringify([...contextProducts, existingProduct]));
-    
-  } else {
-    const newProduct = { ...producto, quantity: 1 };
-
-    // localStorage.setItem('products', JSON.stringify([...contextProducts, newProduct]));
-   
-  }
-
+    let updatedProducts: CartInterface[] = [];
   
-};
+    if (productos) {
+      const parsedProducts: CartInterface[] = JSON.parse(productos);
+      const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
+  
+      if (existingProductIndex !== -1) {
+
+        parsedProducts[existingProductIndex].quantity += 1;
+        updatedProducts = parsedProducts;
+      } else {
+        updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
+      }
+    } else {
+      updatedProducts = [{ ...producto, quantity: 1 }];
+    }
+  
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
+  };
 
   const decrement = () => {
     if (count > 0) {
@@ -56,10 +57,10 @@ export default function ProductDetail() {
     
   };
 
-  function getAverageRating(): number {
-    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.Reviews.length;
-  }
+  // function getAverageRating(): number {
+  //   const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
+  //   return totalRating / product.Reviews.length;
+  // }
 
   useEffect(() => {
     async function fetchData() {

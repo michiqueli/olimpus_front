@@ -110,7 +110,6 @@ export interface PaginationProps {
 export interface CredentialsLogin {
     email: string,
     password: string,
-    googlePass: string,
 }
 
 export interface ValidationsInterface {
@@ -146,7 +145,6 @@ export interface CreateContextProps {
     contextProducts: CartInterface[];
     total: number,
     totalProducts: number,
-<<<<<<< HEAD
     addProduct: (product: CartInterface) => void;
     deleteProduct: (productos: CartInterface[], id: string) => void;
     deleteAllProducts: (products: CartInterface[]) => void;
@@ -162,9 +160,3 @@ export interface PostCartInterface {
     currency_id: string,
     unit_price: number,
 }
-=======
-    addProduct: (product: ProductInterface) => void;
-    deleteProduct: (productos: ProductInterface[], id: string) => void;
-    deleteAllProducts: (products: ProductInterface[]) => void;
-}
->>>>>>> e39336501e6e3a30c4877992a1c7978c8a651982

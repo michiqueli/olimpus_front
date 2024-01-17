@@ -1,20 +1,11 @@
 "use client";
 
-import React, {useLayoutEffect} from 'react';
 import { useRouter, redirect } from 'next/navigation';
 import PrimaryButton from '../../components/buttons/primaryButton';
-import { isAuthenticated } from '../unauthorized/auth';
 
 export default function Dashboard() {
   //const storedToken = localStorage.getItem('token');
   const router = useRouter();
-
-  useLayoutEffect(() => {
-    const isAuth = isAuthenticated;
-    if (!isAuth) {
-      redirect("/Unauthorized")
-    }
-  }, [])
 
   const logOut = async () => {
     try {

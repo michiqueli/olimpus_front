@@ -1,22 +1,14 @@
 "use client";
-import React, {useLayoutEffect} from "react";
-import { useRouter, redirect } from "next/navigation";
+
+import { useRouter } from "next/navigation";
 import { getUsersById } from "@/Redux/Actions";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { getUsers } from "@/Redux/sliceUsers";
 import { useProduct } from "@/context/CartContext";
-import { isAuthenticated } from "@/app/unauthorized/auth";
 
 export default function Pasarela () {
-    useLayoutEffect(() => {
-        const isAuth = isAuthenticated;
-        if (!isAuth) {
-          redirect("/Unauthorized")
-        }
-      }, [])
-
     const router=useRouter();
     const dispatch=useAppDispatch();
     const {id} = useParams();
@@ -90,7 +82,7 @@ export default function Pasarela () {
                                         );
                                     })
                                 }
-                                <div className="flex justify-between text-base text-xl text-black border-t pt-4">
+                                <div className="flex justify-between text-xl text-black border-t pt-4">
                                     <p className="">Subtotal</p>
                                     <p>${total}</p>
                                 </div>

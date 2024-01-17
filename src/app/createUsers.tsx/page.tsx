@@ -1,19 +1,12 @@
 "use client";
 
-import { useRouter, redirect } from 'next/navigation';
-import { useState, useLayoutEffect} from "react";
+import { useRouter } from 'next/navigation';
+import { useState} from "react";
 import validations from './validationsUser';
 import postUser from '../../components/requests/postUser';
 import { UserPost } from '../../components/interfaces';
-import { isAuthenticated } from '../unauthorized/auth';
 
 export default function CreateUser () {
-  useLayoutEffect(() => {
-    const isAuth = isAuthenticated;
-    if (!isAuth) {
-      redirect("/Unauthorized")
-    }
-  }, [])
 
   const storedToken = 'token';
   const router = useRouter();

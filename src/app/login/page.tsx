@@ -7,14 +7,13 @@ import { useRouter } from "next/navigation";
 import { CredentialsLogin } from '../../components/interfaces';
 import Field from '../../components/field';
 import { signIn } from 'next-auth/react';
-import { FaEye, FaEyeSlash } from 'react-icons/fa'
+import { FaEye, FaEyeSlash } from 'react-icons/fa';
 
 const loginPage = () => {
     const router = useRouter();
     const [credentials, setCredentials] = useState<CredentialsLogin>({
         email:'',
         password:'',
-        googlePass: '',
     })
     const [error, setError] = useState<{ [key: string]: string }>({});
     const [viewPass, setViewPass] = useState(false);
@@ -29,25 +28,48 @@ const loginPage = () => {
         const {name, value} = e.target;
         setCredentials((prev) => ({...prev, [name]: value}));
     }
+    // const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    //     e.preventDefault();
+    //     try {
+    //         setError({});
+    //         const response = await userLogin(credentials);
+            
+    //         const {id, name, email, token} = response.user;
+    //         Cookies.set('jwt', token);
+    //         router.push('/')
+    //     } catch (error) {
+    //         if (error instanceof Error){
+    //             if (error.message === 'Credenciales Invalidas'){
+    //                 setError({ email: 'Credenciales Invalidas' });
+    //             } else {
+    //                 console.error('Error en el inicio de sesión: ', error.message)
+    //             }
+    //         } 
+    //     }
+    // }
+
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         try {
-            setError({});
-            const response = await userLogin(credentials);
-            
-            const {id, name, email, token} = response.user;
-            Cookies.set('jwt', token);
-            router.push('/')
+          setError({});
+          await signIn('credentials', {
+            email: credentials.email,
+            password: credentials.password,
+            redirect: false,
+          });
+    
+          router.push('/');
         } catch (error) {
             if (error instanceof Error){
                 if (error.message === 'Credenciales Invalidas'){
-                    setError({ email: 'Credenciales Invalidas' });
+                setError({ email: 'Credenciales Invalidas' });
                 } else {
-                    console.error('Error en el inicio de sesión: ', error.message)
+                console.error('Error en el inicio de sesión: ', error.message)
                 }
-            } 
         }
+      };
     }
+
     return (
         <div className='flex flex-col justify-center items-center my-4'>
             <img src="/olimpus.png" alt="" className='h-48 my-4'/>
@@ -73,7 +95,7 @@ const loginPage = () => {
                     <button className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Inicia Sesión</button>
                 </form>
                 <button className='mb-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'
-                 onClick={async () => signIn()}>
+                 onClick={() => signIn('google')}>
                     Iniciar Sesión con Google
                 </button>
                 <div className='flex flex-row'>
