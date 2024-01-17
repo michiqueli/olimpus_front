@@ -18,7 +18,7 @@ export default function ProductDetail() {
     image: '',
     price: 0,
     discount: 0,
-    reviews: [] as Review[],
+    Reviews: [] as Review[],
     stock: 0,
     quantity: 0,
   });
@@ -57,10 +57,10 @@ export default function ProductDetail() {
     
   };
 
-  // function getAverageRating(): number {
-  //   const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
-  //   return totalRating / product.Reviews.length;
-  // }
+  function getAverageRating(): number {
+    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / product.Reviews.length;
+  }
 
   useEffect(() => {
     async function fetchData() {
