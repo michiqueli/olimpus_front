@@ -2,7 +2,7 @@
 
 import { Users } from "../../components/interfaces";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import ActiveAdmins from "../../components/users/admins/adminUsers";
 import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
@@ -23,7 +23,6 @@ export default function AllUsers(){
   const [buyers, setBuyers] = useState<Users[]>([]);
   const [inactivebBuyers, setInactiveBuyers] = useState<Users[]>([]);
 
-
   useEffect(() => {
     async function fetchData() {
       try {
@@ -40,12 +39,10 @@ export default function AllUsers(){
     fetchData();
   }, []);
 
-  // id, name, email, password, zipcode, street, roleId, isActive
   const toggleActive = () => {
     setActive(!active);
   };  
   
-console.log(filtusers);
 
   return (
     <div>

@@ -1,6 +1,6 @@
 "use client";
-import React from "react";
-import { useEffect } from "react";
+
+import { useEffect,} from "react";
 import {getUsersById} from "@/Redux/Actions"
 import {useAppDispatch, useAppSelector} from "@/Redux/hooks"
 import { useParams } from "next/navigation";
@@ -14,7 +14,6 @@ export default function UserDetail() {
   const { id } = useParams();
   const usuarios=useAppSelector(getUsers);
  
-
   useEffect(()=>{
     getUsersById(id,dispatch)
   },[dispatch])
