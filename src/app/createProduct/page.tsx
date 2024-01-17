@@ -2,7 +2,7 @@
 
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/navigation';
-import { ProductInterface } from '@/components/interfaces';
+import { CreateProductInterface } from '@/components/interfaces';
 import createProduct from '@/components/requests/createProduct';
 import getAllTypes from '@/components/requests/getAllTypes';
 import getSubtypesByTypeId from '@/components/requests/getSubtypesByTypeId';
@@ -19,7 +19,7 @@ interface Subtype {
 
 function CreateProductForm() {
   const router = useRouter();
-  const [product, setProduct] = useState<ProductInterface>({
+  const [product, setProduct] = useState<CreateProductInterface>({
     name: '',
     price: 0,
     stock: 0,
