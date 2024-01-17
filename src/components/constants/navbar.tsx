@@ -43,7 +43,6 @@ const NavBar: React.FC = () => {
                 />
               </button>
             </div>
-<<<<<<< HEAD
             {session?.user ? (
               <div>
                 <h1 className="text-black">Bienvenido {session?.user.name}</h1>
@@ -105,11 +104,6 @@ const NavBar: React.FC = () => {
               </button>
             </div>
             <h1 className="text-black">Total: {total}</h1>
-=======
-            <button onClick={handleCartClick}>
-              <img src="/shopping.png" alt="" className="w-11 h-11 hover:scale-110" />
-            </button>
->>>>>>> e39336501e6e3a30c4877992a1c7978c8a651982
           </div>
         </div>
         <div className="my-2 ml-2">

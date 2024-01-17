@@ -10,7 +10,7 @@ import { CartInterface } from "@/components/interfaces";
 export default function Home() {
   const {data: session} = useSession();
 
-  const stored = localStorage.setItem('allProducts');
+  const stored = localStorage.getItem('allProducts');
   const array = stored? JSON.parse(stored) : undefined;
 
   return (

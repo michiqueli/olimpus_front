@@ -1,8 +1,8 @@
 "use client";
 
 import { Users } from "../../components/interfaces";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useEffect, useState, useLayoutEffect } from "react";
+import { useRouter, redirect } from "next/navigation";
 import ActiveAdmins from "../../components/users/admins/adminUsers";
 import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
@@ -11,6 +11,7 @@ import { useAppSelector } from "@/Redux/hooks";
 import { getUsers } from "@/Redux/sliceUsers";
 import getAllUsers from "../../components/requests/getAllUsers";
 import PrimaryButton from "../../components/buttons/primaryButton";
+import { isAuthenticated } from "../unauthorized/auth";
 
 export default function AllUsers(){
   //const listUsers = useAppSelector<UserList[]>(users);
@@ -23,6 +24,12 @@ export default function AllUsers(){
   const [buyers, setBuyers] = useState<Users[]>([]);
   const [inactivebBuyers, setInactiveBuyers] = useState<Users[]>([]);
 
+  useLayoutEffect(() => {
+    const isAuth = isAuthenticated;
+    if (!isAuth) {
+      redirect("/Unauthorized")
+    }
+  }, [])
 
   useEffect(() => {
     async function fetchData() {

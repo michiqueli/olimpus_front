@@ -1,13 +1,21 @@
 "use client";
-import { useRouter } from "next/navigation";
+import React, {useLayoutEffect} from "react";
+import { useRouter, redirect } from "next/navigation";
 import { getUsersById } from "@/Redux/Actions";
 import { useParams } from "next/navigation";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { getUsers } from "@/Redux/sliceUsers";
 import { useProduct } from "@/context/CartContext";
+import { isAuthenticated } from "@/app/unauthorized/auth";
 
 export default function Pasarela () {
+    useLayoutEffect(() => {
+        const isAuth = isAuthenticated;
+        if (!isAuth) {
+          redirect("/Unauthorized")
+        }
+      }, [])
 
     const router=useRouter();
     const dispatch=useAppDispatch();

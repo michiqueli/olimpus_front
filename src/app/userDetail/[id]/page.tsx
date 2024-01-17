@@ -1,14 +1,23 @@
 "use client";
-import React from "react";
-import { useEffect } from "react";
+
+import { useEffect, useLayoutEffect } from "react";
 import {getUsersById} from "@/Redux/Actions"
 import {useAppDispatch, useAppSelector} from "@/Redux/hooks"
-import { useParams } from "next/navigation";
+import { useParams, redirect } from "next/navigation";
 import { getUsers } from "@/Redux/sliceUsers";
 import { useRouter } from "next/navigation";
 // import { Users } from "@/app/components/interfaces";
+import { isAuthenticated } from "@/app/unauthorized/auth";
 
 export default function UserDetail() {
+
+  useLayoutEffect(() => {
+    const isAuth = isAuthenticated;
+    if (!isAuth) {
+      redirect("/Unauthorized")
+    }
+  }, [])
+
   const dispatch = useAppDispatch();
   const router= useRouter()
   const { id } = useParams();
