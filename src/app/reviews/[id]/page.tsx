@@ -3,7 +3,7 @@ import { getUserHistorial, getUsersById } from "@/Redux/Actions";
 import { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { useParams } from "next/navigation";
-import { setCartUser } from "@/Redux/sliceUsers";
+import { getUsers, setCartUser } from "@/Redux/sliceUsers";
 
 import { useRouter } from "next/navigation";
 
@@ -12,12 +12,14 @@ export default function Reviews () {
     const dispatch=useAppDispatch();
     const router=useRouter();
     const compras=useAppSelector(setCartUser);
+    const user= useAppSelector(getUsers)
+    console.log("u",user)
     const {id}=useParams();
     console.log("compras",compras)
 
-    // useEffect(()=>{
-    //     getUsersById(id,dispatch)
-    // },[dispatch])
+    useEffect(()=>{
+        getUsersById(id,dispatch)
+    },[dispatch])
 
     useEffect(() => {
         getUserHistorial(id,dispatch)
@@ -25,6 +27,7 @@ export default function Reviews () {
 
     return (
         <div>
+            
             <div>
                 {compras.payload.users.cartUser.carts && compras.payload.users.cartUser.carts.length ? (
                     <div>

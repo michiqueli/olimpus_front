@@ -47,6 +47,13 @@ export interface AlertButtonProps {
 export interface Review{
     content: string;
     rating: number;
+    isActive:true,
+    productId: number,
+    userId:string
+};
+
+ export interface ProductReview {
+    image: string;
   };
 
 export interface ProductInterface{
@@ -56,9 +63,35 @@ export interface ProductInterface{
     image: string
     price: number,
     discount: number,
-    reviews:Review[],
+    Reviews:Review[],
     stock: number,
 }
+
+export interface CreateProductInterface{
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    isActive: boolean,
+    TypeId: number,
+    SubtypeId: number
+    stock: number,
+}
+
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
 
 export interface FieldProps {
     placeholder: string,
@@ -113,6 +146,7 @@ export interface CreateContextProps {
     contextProducts: CartInterface[];
     total: number,
     totalProducts: number,
+<<<<<<< HEAD
     addProduct: (product: CartInterface) => void;
     deleteProduct: (productos: CartInterface[], id: string) => void;
     deleteAllProducts: (products: CartInterface[]) => void;
@@ -128,3 +162,9 @@ export interface PostCartInterface {
     currency_id: string,
     unit_price: number,
 }
+=======
+    addProduct: (product: ProductInterface) => void;
+    deleteProduct: (productos: ProductInterface[], id: string) => void;
+    deleteAllProducts: (products: ProductInterface[]) => void;
+}
+>>>>>>> e39336501e6e3a30c4877992a1c7978c8a651982

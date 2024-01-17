@@ -13,7 +13,7 @@ export default function UserDetail() {
   const router= useRouter()
   const { id } = useParams();
   const usuarios=useAppSelector(getUsers);
-  const router=useRouter();
+ 
 
   useEffect(()=>{
     getUsersById(id,dispatch)
@@ -36,7 +36,6 @@ export default function UserDetail() {
             </div>
           )}
         </div>
-        <button onClick={()=>router.push("/misCompras")}>Mis compras</button>
       </div>
     </div>
   );

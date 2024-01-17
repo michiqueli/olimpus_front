@@ -24,6 +24,7 @@ export default function ProductDetail() {
   });
   
   const productID = params.id;
+  
 
   const increment = (producto: CartInterface) => {
     setCount(count + 1);
@@ -56,8 +57,8 @@ export default function ProductDetail() {
   };
 
   function getAverageRating(): number {
-    const totalRating = product.reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.reviews.length;
+    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / product.Reviews.length;
   }
 
   useEffect(() => {
@@ -65,6 +66,7 @@ export default function ProductDetail() {
       try {
         const productFind = await getProductById(productID);
         setProduct(productFind);
+        console.log("p", productFind)
       } catch (error) {
         console.error(
           "Error en render componente de detalle producto",
@@ -90,7 +92,7 @@ export default function ProductDetail() {
       <Cart isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose}/>
       <div>
         <div>
-          <div className="flex flex-row justify-end  bg-gray-50 ">
+          <div className="flex flex-row justify-end bg-gray-50 ">
             <div className="flex items-center mb-10 mr-4">
               <img
                 src={product.image}
@@ -99,7 +101,7 @@ export default function ProductDetail() {
               />
             </div>
             <div>
-              <div className="max-w-md mx-auto  mr-80  ml-40 ">
+              <div className="max-w-md mx-auto  mt-20 mr-80  ml-40 ">
                 <h1 className="text-black text-6xl text-center ">
                   {product.name}
                 </h1>
@@ -141,19 +143,16 @@ export default function ProductDetail() {
                   Envíos gratis a partir de $20.000
                 </h2>
               </div>
-              <div>
-                {
-                  product.stock > 0 ? (
-                    <h1 className="text-sm text-black">Stock: {product.stock}</h1>
-                  )
-                  :
-                  (
-                    <h1 className="text-xl text-red-600">Producto SIN stock</h1>
-                  )
-                }
-              </div>
-              <div className="mt-10 ml-40 text-lg">
-                <h2>Cantidad</h2>
+              <div className="flex justify-between items-center ml-40 mt-10">
+                <div className="text-lg">
+                  <h2>Cantidad</h2>
+                </div>
+
+                {product.stock > 0 ? (
+                  <h1 className="text-lg text-black mr-80">Stock: {product.stock}</h1>
+                ) : (
+                  <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
+                )}
               </div>
               <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
                 <button
@@ -170,14 +169,14 @@ export default function ProductDetail() {
                   +
                 </button>
               </div>
-              <button onClick={handleAddToCart} className="my-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
+              <button onClick={handleAddToCart} className="my-20 ml-60 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
                 Agregar al carrito
               </button>
             </div>
           </div>
           <div className="max-w-4xl mx-auto mt-4 flex">
             {/* Promedio de Valoración General */}
-            {product.reviews && product.reviews.length > 0 && (
+            {product.Reviews && product.Reviews.length > 0 && (
               <div className="mr-8">
                 <h3 className="text-black font-bold text-lg">
                   Promedio de Valoración General:
@@ -200,8 +199,8 @@ export default function ProductDetail() {
             {/* Opiniones */}
             <div className="max-w-4xl mx-auto p-6 border  border-gray-300 rounded-md bg-gray-50">
               <h2 className="text-black font-bold text-center text-xl">Opiniones:</h2>
-              {product.reviews &&
-                product.reviews.map((review: Review, index) => (
+              {product.Reviews &&
+                product.Reviews.map((review: Review, index) => (
                   <div key={index} className="mt-4 border-b border-gray-300 pb-4">
                     <div className="text-yellow-500 mb-2">
                       {Array.from({ length: Math.max(0, review.rating) }).map(
