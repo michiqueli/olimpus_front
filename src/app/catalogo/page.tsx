@@ -16,7 +16,7 @@ export default function ProductosCompleto() {
   const filtered = useAppSelector(getFilteredProducts);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const recordsPerPage = 9;
+  const recordsPerPage = 6;
 
   useEffect(() => {
     dispatch(getTodosProducts);
