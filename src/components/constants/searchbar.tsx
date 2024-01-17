@@ -12,7 +12,7 @@ export default function SearchBar() {
     name: '',
   });
 
-  interface ResultState{ // PASARSELO A ANGELO
+  interface ResultState{
     name:string
   }
 

@@ -9,10 +9,11 @@ import { createUser } from '@/Redux/Actions';
 import validator from "./validator"
 import { Errors } from '@/components/interfaces';
 
-const RegisterPage = () => {
 
+
+const RegisterPage = () => {
     const router = useRouter();
-    const dispatch=useAppDispatch();
+    const dispatch = useAppDispatch();
 
     const [userData, setUserData] = useState({
         name: "",
@@ -20,41 +21,41 @@ const RegisterPage = () => {
         password: "",
         street: "",
         zipCode: "",
-    })
+    });
 
-    const [errors, setErrors]= useState<Errors>({})
+    const [errors, setErrors] = useState<Errors>({});
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        const inputValue = event.target.value;
+        const { name, value } = event.target;
 
-        setUserData({ ...userData, [event.target.name]: inputValue });
+        setUserData((prevUserData) => ({ ...prevUserData, [name]: value }));
 
-        const validationErrors = validator({ ...userData, [event.target.name]: inputValue });
-        setErrors((prevErrors) => ({ ...prevErrors, ...validationErrors }));
+        // Valida el campo actual y actualiza los errores
+        const validationErrors : any = validator({ ...userData, [name]: value });
+        setErrors((prevErrors) => ({ ...prevErrors, [name]: validationErrors[name] }));
     };
-    
 
-    const handleSubmit = (event: FormEvent) => {
+    const handleSubmit = async (event: FormEvent) => {
         event.preventDefault();
 
-        if(userData.name === "" || userData.email === "" || userData.password === "" || userData.street === "" || userData.zipCode === ""){
-           window.alert("Falta completar datos") 
-        }else{
-            createUser(userData,dispatch)
+        const validationErrors = validator(userData);
+        setErrors(validationErrors);
+
+        if (Object.keys(validationErrors).length === 0) {
+
+            await createUser(userData, dispatch);
+            alert("Registro exitoso");
+            router.push('/login');
         }
     };
 
     const [viewPass, setViewPass] = useState(false);
-    
-    const handleView = () => {
-        if (viewPass === true){
-            setViewPass(false);
-        } else {
-            setViewPass(true);
-        }
-    }
 
-  return (
+    const handleView = () => {
+        setViewPass((prevViewPass) => !prevViewPass);
+    };
+
+    return (
         <div className='flex flex-col justify-center items-center my-4'>
             <img src="/olimpus.png" alt="" className='h-48 my-4'/>
             <div className='flex flex-col items-center h-full w-3/12 mb-4 bg-gray-100 mx-2 border border-gray-300 rounded-lg shadow'>
@@ -90,7 +91,7 @@ const RegisterPage = () => {
                         <Field placeholder='Tu código postal' name='zipCode' onChange={handleChange} value={userData.zipCode}/>
                         <span className="text-red-500">{errors.zipCode}</span>
                     </div>
-                    <button onClick={() => router.push('/')} className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Registrate.</button>
+                    <button type='submit' className='my-4 w-10/12 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full'>Registrate.</button>
                 </form>
                 <div className='flex flex-row'>
                     <h1 className='block mb-2 ml-2 text-sm font-medium dark:text-white'>¿Ya tienes tu cuenta?</h1>
