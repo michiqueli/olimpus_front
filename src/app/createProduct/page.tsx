@@ -165,7 +165,6 @@ function CreateProductForm() {
         }
       }
       await createProduct(updatedProduct);
-      alert(`Producto cargado exitosamente: "${product.name}"`)
       router.push('/')
     } catch (error) {
       console.error('Error al crear el producto', error);
