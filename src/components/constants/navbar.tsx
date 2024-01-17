@@ -30,7 +30,7 @@ const NavBar: React.FC = () => {
   };
 
   return (
-  <>
+  <main>
   <Cart isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose}/>
     <div className="flex flex-col">
       <div className="bg-yellow-300 w-full h-28 flex justify-center items-center">
@@ -108,7 +108,7 @@ const NavBar: React.FC = () => {
         {path !== '/' ? <GoBack title='← Volver atrás'/> : ''}
       </div>
     </div>
-  </>
+  </main>
   )
 }
 
