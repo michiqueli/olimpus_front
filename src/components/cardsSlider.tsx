@@ -3,8 +3,8 @@
 import { Carousel } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { ProductInterface } from './interfaces';
-import getAllProducts from './requests/getAllProducts';
 import { useEffect, useState } from 'react';
+import getPopularProducts from './requests/getPopularProducts';
 
 
 
@@ -14,7 +14,7 @@ function CardSlider() {
     useEffect (() => {
         const fetchData = async () => {
             try {
-                const productsData = await getAllProducts();
+                const productsData = await getPopularProducts();
                 setProducts(productsData);
             } catch (error) {
                 console.error('Error fetching products:', error);
