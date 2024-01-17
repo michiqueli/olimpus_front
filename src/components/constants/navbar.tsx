@@ -103,13 +103,6 @@ const NavBar: React.FC = () => {
                 />
               </button>
             </div>
-            <button onClick={handleCartClick}>
-              <img
-                src="/shopping.png"
-                alt=""
-                className="w-11 h-11 hover:scale-110"
-              />
-            </button>
             <h1 className="text-black">Total: {total}</h1>
           </div>
         </div>

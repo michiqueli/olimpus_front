@@ -40,12 +40,10 @@ export default function AllUsers(){
     fetchData();
   }, []);
 
-  // id, name, email, password, zipcode, street, roleId, isActive
   const toggleActive = () => {
     setActive(!active);
   };  
   
-console.log(filtusers);
 
   return (
     <div>

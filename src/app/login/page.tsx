@@ -34,7 +34,8 @@ const loginPage = () => {
         try {
             setError({});
             const response = await userLogin(credentials);
-            const {usuario, email: userEmail, token} = response;
+            
+            const {id, name, email, token} = response.user;
             Cookies.set('jwt', token);
             router.push('/')
         } catch (error) {

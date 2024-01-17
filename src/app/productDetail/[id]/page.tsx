@@ -1,16 +1,16 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
-import envios from "../../../assets/envio.png";
-import { ProductInterface, Review } from "@/components/interfaces";
+import { Review, CartInterface } from "@/components/interfaces";
 import Cart from "@/components/cart/cart";
 import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
   const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   const params = useParams();
+  const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
     id: '',
     name: '',
@@ -19,31 +19,41 @@ export default function ProductDetail() {
     price: 0,
     discount: 0,
     reviews: [] as Review[],
-    stock: 0
+    stock: 0,
+    quantity: 0
   });
   
   const productID = params.id;
 
-  const [count, setCount] = useState(0);
-
-  const increment = () => {
+  const increment = (producto: CartInterface) => {
     setCount(count + 1);
-    addProduct(product)
-    //console.log('name' + product.name);
+    // addProduct(product)
+    const productos = localStorage.getItem('products');
+    const existingProduct = productos ? JSON.parse(productos).find((p: CartInterface) => p.id === producto.id) : undefined;
     
-  };
+    if (existingProduct) {
+      existingProduct.quantity += 1;
+      
+      
+    localStorage.setItem('products', JSON.stringify([...contextProducts, existingProduct]));
+    
+  } else {
+    const newProduct = { ...producto, quantity: 1 };
+
+    // localStorage.setItem('products', JSON.stringify([...contextProducts, newProduct]));
+   
+  }
+
+  
+};
 
   const decrement = () => {
     if (count > 0) {
       setCount(count - 1);
     }
     deleteProduct(contextProducts, product.id)
-    //console.log('eliminado' + product.name);
     
   };
-
-  console.log(contextProducts);
-  
 
   function getAverageRating(): number {
     const totalRating = product.reviews.reduce((sum, review) => sum + review.rating, 0);
@@ -65,15 +75,14 @@ export default function ProductDetail() {
     fetchData();
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar si el modal está abierto o cerrado
+  const [isOpen, setIsOpen] = useState(false);
 
   const onClose = () => {
     setIsOpen(false);
   };
 
   const handleAddToCart = () => {
-    // Lógica para agregar al carrito...
-    setIsOpen(true); // Abrir el modal al agregar al carrito
+    setIsOpen(true);
   };
 
   return (
@@ -156,7 +165,7 @@ export default function ProductDetail() {
                 <p className="mr-20 font-normal "> {count}</p>
                 <button
                   className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
-                  onClick={increment}
+                  onClick={() => increment(product)}
                 >
                   +
                 </button>

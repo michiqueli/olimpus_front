@@ -11,7 +11,6 @@ export default function ProductRev () {
     const productos=useAppSelector(getProducts);
     const params =useParams();
     const productID = params.id;
-    console.log("productos",productos)
 
 
     const [product, setProduct] = useState({

@@ -4,7 +4,7 @@ import { useProduct } from "@/context/CartContext";
 import { ProductInterface } from "../interfaces";
 
 export const useCart=()=>{
-    const {products, total, totalProducts, addProduct, deleteProduct, deleteAllProducts} = useProduct()
+    const {contextProducts, total, totalProducts, addProduct, deleteProduct, deleteAllProducts} = useProduct()
     // const [products, setProducts]= useState([])
     const [badgeCount, setBadgeCount]= useState(0)
     // const [storageProducts, setStorageProductos]= useLocalStorage("products",[])
@@ -28,13 +28,18 @@ export const useCart=()=>{
     // }
     const setNewProduct = (product: ProductInterface) => {
         const id = UUIDV4();
-        addProduct(product);
+        addProduct(product)
         
     }
     
     //lo traemos desde el contexto
-    const quitarUno = (id: string)=>{
-        deleteProduct(id);
+    const _deleteProduct=(id)=>{
+        const productFilter= storageProducts.filter((pr)=>{
+            if(pr.id !== id){
+                return pr
+            }
+        })
+        setStorageProductos(productFilter)
     }
 
     //lo traemos desde el contexto

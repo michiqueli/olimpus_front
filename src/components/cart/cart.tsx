@@ -1,7 +1,8 @@
+import React from "react";
 import { useRouter } from "next/navigation";
 import { CartProps } from "../interfaces";
 import { useProduct } from "@/context/CartContext";
-import axios from "axios";
+import postCart from "../requests/postCart";
 
 const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) => {
   const router = useRouter();
@@ -13,33 +14,25 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) => {
     deleteProduct,
   } = useProduct();
   const renderedProductIds = new Set();
-
+  
   const checkout = async () => {
-    const data = {
-      products: contextProducts.map((product) => ({
+    const data = contextProducts.map((product) => ({
         title: product.name,
-        quantity: 1,
+        quantity: product.quantity,
         currency_id: "ARS",
         unit_price: product.price,
-      })),
-    };
+      }))
 
     try {
-      const response = await axios.post(
-        `http://localhost:3001/payments/create`,
-        data
-      );
-
-      // Aquí deberías manejar la respuesta según tus necesidades
-      // Puedes redirigir o realizar otras acciones
-
-      window.location.href = response.data.url;
+      const response = await postCart(data);
+      if(response) {
+        window.location.href = response.url;
+      }
     } catch (error) {
       console.error("Error al realizar el checkout:", error);
-      // Aquí puedes manejar errores según tus necesidades
     }
   };
-
+  const storedProductsString = localStorage.getItem('products');
   return (
     <>
       {isOpen && (
@@ -80,42 +73,40 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) => {
                       </p>
                     </div>
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                      {contextProducts.length > 0 ? (
-                        contextProducts.map((product) => {
-                          // Verificar si el producto ya se ha renderizado
-                          if (renderedProductIds.has(product.id)) {
-                            return null; // Evitar volver a renderizar el mismo producto
-                          }
-                          // Agregar el ID del producto al conjunto
-                          renderedProductIds.add(product.id);
-                          return (
-                            <div key={product.id}>
-                              <img
-                                src={product.image}
-                                alt="image product"
-                                width={100}
-                                height={100}
-                                className="object-cover"
-                              />
-                              <h1 onClick={() => router.push("/productDetail")}>
-                                {product.name}
-                              </h1>
-                              <h1>{product.price}</h1>
-                              <h1>{product.description}</h1>
-                            </div>
-                          );
-                        })
-                      ) : (
+                      {contextProducts.length > 0 ? storedProductsString
+                        // contextProducts.map((product) => {
+                        //   if (renderedProductIds.has(product.id)) {
+                        //     return null;
+                        //   }
+                        //   renderedProductIds.add(product.id);
+                        //   return (
+                        //     <div key={product.id}>
+                        //       <img
+                        //         src={product.image}
+                        //         alt="image product"
+                        //         width={100}
+                        //         height={100}
+                        //         className="object-cover"
+                        //       />
+                        //       <h1 onClick={() => router.push("/productDetail")}>
+                        //         {product.name}
+                        //       </h1>
+                        //       <h1>{product.price}</h1>
+                        //       <h1>{product.description}</h1>
+                        //     </div>
+                        //   );
+                        // })
+                       : 
                         <h1 className="text.black">
                           No tienes agregado ningún producto al carrito, wey
                         </h1>
-                      )}
+                      }
                       <h1>cantidad: {totalProducts}</h1>
                       <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                         <button
                           onClick={() => {
-                            checkout(); // Llama a la función checkout al hacer clic en el botón
-                            router.push(""); // También puedes mantener la redirección si es necesaria
+                            checkout(); 
+                            router.push(""); 
                           }}
                           className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 "
                         >
