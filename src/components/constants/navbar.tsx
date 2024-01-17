@@ -68,7 +68,7 @@ const NavBar: React.FC = () => {
                     {session?.user ? (
                       <>
                         <button
-                          onClick={() => router.push("/account")}
+                          onClick={() => router.push(`/userDetail/${session.user.user.id}`)}
                           className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                         >
                           Mi Perfil
