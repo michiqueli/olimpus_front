@@ -19,15 +19,15 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-          <CartProvider>
-        <SessionAuthProvider>
+        <CartProvider>
+          <SessionAuthProvider>
             <Providers>
               <NavBar />
-                {children}
+              {children}
               <Footer />
             </Providers>
-        </SessionAuthProvider>
-          </CartProvider>
+          </SessionAuthProvider>
+        </CartProvider>
       </body>
     </html>
   );

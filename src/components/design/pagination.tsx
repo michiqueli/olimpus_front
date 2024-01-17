@@ -40,7 +40,7 @@ function Pagination(props: PaginationProps) {
 
   return (
     
-    <div className="flex items-center justify-center mt-6 space-x-4">
+    <div className="flex flex-col sm:flex-row items-center justify-center mt-6 space-x-4">
         <PrimaryButton title='Anteriores' onClickfunction={prevPage}/>
         {
             numbers.map((n, i) => (

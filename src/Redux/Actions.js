@@ -1,14 +1,13 @@
 import axios from "axios"
 import { setUsers, setCartUser } from "./sliceUsers";
 import { setSearchedProducts, setProducts, setProductTypes, setFilteredProducts } from "./sliceProducts";
-
+const baseURL = process.env.NEXT_PUBLIC_BACKEND_URL
 import getAllProducts from "@/components/requests/getAllProducts";
-import getAllUsers from "@/components/requests/getAllUsers";
 
 export const getTodosProducts= async (dispatch)=>{
 
     try{
-        let json= await axios.get(`https://olimpusback.up.railway.app/products`)
+        let json= await axios.get(`${baseURL}/products`)
         dispatch(setProducts(json.data));
         dispatch(setFilteredProducts(json.data))
     }catch(error){
@@ -30,7 +29,7 @@ export const getDiscountProducts = async (dispatch) => {
 export const getProductByName = async (name, dispatch) => {
   try {
     const response = await axios.get(
-      `https://olimpusback.up.railway.app/products/name?name=${name}`
+      `${baseURL}/products/name?name=${name}`
     );
     dispatch(setSearchedProducts(response.data));
   } catch (error) {
@@ -41,7 +40,7 @@ export const getProductByName = async (name, dispatch) => {
 
 export const getById = async(id,dispatch)=>{
    try{
-        let json= await axios.get(`https://olimpusback.up.railway.app/products/${id}`)
+        let json= await axios.get(`${baseURL}/products/${id}`)
         dispatch(setProducts(json.data))
     }catch(error){
         console.error("'Error fetching product by id:', error")
@@ -50,7 +49,7 @@ export const getById = async(id,dispatch)=>{
 
 export const createProduct = async (payload, dispatch)=>{
   try{
-    let json= await axios.post(`https://olimpusback.up.railway.app/products`, payload)
+    let json= await axios.post(`${baseURL}/products`, payload)
     dispatch(setProducts(json.data))
   }catch(error){
     console.error("Error al crear el producto",error)
@@ -59,7 +58,7 @@ export const createProduct = async (payload, dispatch)=>{
 
 export const modifyProduct= async (id,payload, dispatch)=>{
   try{
-    let json= await axios.get(`https://olimpusback.up.railway.app/products/update/${id}`, payload) 
+    let json= await axios.get(`${baseURL}/products/update/${id}`, payload) 
     dispatch(setProducts(json.data))
   }catch(error){
     console.error("Error al modificar el producto")
@@ -68,7 +67,7 @@ export const modifyProduct= async (id,payload, dispatch)=>{
 
 export const deleteProduct= async (id, dispatch)=>{
   try{
-    let json= await axios.get(`https://olimpusback.up.railway.app/products/delete/${id}`) 
+    let json= await axios.get(`${baseURL}/products/delete/${id}`) 
     dispatch(setProducts(json.data))
   }catch(error){
     console.error("Error al eliminar el producto", error)
@@ -79,7 +78,7 @@ export const deleteProduct= async (id, dispatch)=>{
 
 export const createUser= async (payload, dispatch)=>{
   try{
-    let json= await axios.post(`https://olimpusback.up.railway.app/users/register`, payload) 
+    let json= await axios.post(`${baseURL}/users/register`, payload) 
     dispatch(setUsers(json.data))
   }catch(error){
     console.error("Error al crear el usuario", error)
@@ -89,7 +88,7 @@ export const createUser= async (payload, dispatch)=>{
 export const getUsers= async (dispatch)=>{
 
     try{
-       let json= await axios.get(`https://olimpusback.up.railway.app/users`)
+       let json= await axios.get(`${baseURL}/users`)
        dispatch(setUsers(json.data))
     }catch(error){
         console.error("Error al buscar los usuarios", error)
@@ -98,7 +97,7 @@ export const getUsers= async (dispatch)=>{
 
 export const getUserRegister= async (dispatch)=>{
   try{
-    let json= await axios.get(`https://olimpusback.up.railway.app/users/register`)
+    let json= await axios.get(`${baseURL}/users/register`)
     dispatch(setUsers(json.data))
   }catch(error){
     console.error("Error al buscar los usuarios", error)
@@ -107,7 +106,7 @@ export const getUserRegister= async (dispatch)=>{
 
 export const getUsersByName= async (name, dispatch)=>{
   try{
-    let json= await axios.get(`https://olimpusback.up.railway.app/users/name/?name=${name}`) 
+    let json= await axios.get(`${baseURL}/users/name/?name=${name}`) 
     dispatch(setUsers(json.data))
   }catch(error){
     console.error("Error al encontrar el usuario", error)
@@ -117,7 +116,7 @@ export const getUsersByName= async (name, dispatch)=>{
 export const getUsersById= async (id, dispatch)=>{
 
     try{
-       let json= await axios.get(`https://olimpusback.up.railway.app/users/${id}`) 
+       let json= await axios.get(`${baseURL}/users/${id}`) 
        dispatch(setUsers(json.data))
     }catch(error){
         console.error("Error al encontrar el usuario por id", error)
@@ -126,7 +125,7 @@ export const getUsersById= async (id, dispatch)=>{
 
 export const modifyUser= async (id, dispatch)=>{
   try{
-    let json= await axios.get(`https://olimpusback.up.railway.app/users/update/${id}`) 
+    let json= await axios.get(`${baseURL}/users/update/${id}`) 
     dispatch(setUsers(json.data))
   }catch(error){
     console.error("Error al modificar el usuario", error)
@@ -135,7 +134,7 @@ export const modifyUser= async (id, dispatch)=>{
 
 export const deleteUser= async (id, dispatch)=>{
   try {
-    let json= await axios.get(`https://olimpusback.up.railway.app/users/delete/${id}`) 
+    let json= await axios.get(`${baseURL}/users/delete/${id}`) 
     dispatch(setUsers(json.data))
   }catch(error){
     console.error("Error al eliminar el usuario", error);
@@ -146,7 +145,7 @@ export const deleteUser= async (id, dispatch)=>{
 export const getAllTypes = async () => {
   try {
     const response = await axios.get(
-      "https://olimpusback.up.railway.app/types/all"
+      "${baseURL}/types/all"
     );
     dispatch(setProductTypes(response.data));
   } catch (error) {
@@ -156,7 +155,7 @@ export const getAllTypes = async () => {
 
 export const getAllTypesInStock= async (dispatch, payload)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/types`,payload)
+    const json= await axios.get(`${baseURL}/types`,payload)
     dispatch(setProductTypes(json.data))
   }catch(error){
     console.error("Error al traer los productos en stock")
@@ -165,7 +164,7 @@ export const getAllTypesInStock= async (dispatch, payload)=>{
 
 export const getSubtypes= async (dispatch, payload)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/types/withSubtypes`,payload)
+    const json= await axios.get(`${baseURL}/types/withSubtypes`,payload)
     dispatch(setProductTypes(json.data))
   }catch(error){
     console.error("Error al traer los productos en stock")
@@ -175,7 +174,7 @@ export const getSubtypes= async (dispatch, payload)=>{
 ///////////////////////////// FILTERS PRODUCT ///////////////////////
 export const getTypes= async (Type, dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByType/${Type}`)
+    const json= await axios.get(`${baseURL}/products/filterByType/${Type}`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching types") 
@@ -184,16 +183,16 @@ export const getTypes= async (Type, dispatch)=>{
 
 export const getSubTypes= async (subType,dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterBySubtype/${subType}`)
+    const json= await axios.get(`${baseURL}/products/filterBySubtype/${subType}`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching subtypes")
   }
 }
 
-export const getMetrics= async (metric,dispatch)=>{
+export const getMetrics= async (subtype,metric,dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/filterByMetric/${metric}`)
+    const json= await axios.get(`${baseURL}/products/filterByMetric/${metric}/${subtype}`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching metrics")
@@ -202,7 +201,7 @@ export const getMetrics= async (metric,dispatch)=>{
 
 export const orderByPrice= async (sortedProducts,dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products/orderByPrice/${sortedProducts}`)
+    const json= await axios.get(`${baseURL}/products/orderByPrice/${sortedProducts}`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching metrics")
@@ -215,7 +214,7 @@ export const orderByPrices= async (ordenar, dispatch)=>{
 
 export const reset= async (dispatch)=>{
   try{
-    const json= await axios.get(`https://olimpusback.up.railway.app/products`)
+    const json= await axios.get(`${baseURL}/products`)
     dispatch(setFilteredProducts(json.data))
   }catch(error){
     console.error("Error fetching products ", error)
@@ -225,85 +224,22 @@ export const reset= async (dispatch)=>{
 
 //////////////////////////////// CARRITO /////////////////////////////////////////
 
-export const getProductsCart= async (dispatch)=>{
-  try{
-    const json= await axios.get("https://olimpusback.up.railway.app/products-cart")
-    dispatch(setCart(json.data))
-  }catch(error){
-    console.error("Error fetching products") 
-  }
-}
-
-export const addProductsCart = async (id,dispatch)=>{
-  try{
-    let json= await axios.post(`https://olimpusback.up.railway.app/addProducts/${id}`)
-    dispatch(setCartUser(json.data))
-  }catch(error){
-    console.error("Error al añadir el producto",error)
-  }
-}
-
-export const createEmptyCart = async (id,dispatch)=>{
-  try{
-    let json= await axios.post(`https://olimpusback.up.railway.app/createEmptyCart/${id}`)
-    dispatch(setCartUser(json.data))
-  }catch(error){
-    console.error("Error al crear el carrito de productos",error)
-  }
-}
-
-export const createEmptyHistorial= async(id, dispatch)=>{
-  try{
-    let json= await axios.post(`https://olimpusback.up.railway.app/createEmptyHistorial/${id}`)
-    dispatch(setCartUser(json.data))
-  }catch(error){
-    console.error("Error al crear el historial de usuarios",error)
-  }
-}
-
-export const deleteProductsCart= async (dispatch)=>{
-  try {
-    let json= await axios.delete(`https://olimpusback.up.railway.app/users/deleteproducts/${id}`) 
-    dispatch(setProducts(json.data))
-  }catch(error){
-    console.error("Error al eliminar el producto del carrito", error);
-  }
-}
-
-// usar para actualizar el historial
-export const updateHistory = async (userId, cartId, dispatch)=>{
-  try {
-    let json= await axios.post(`https://olimpusback.up.railway.app/purchases/addCompraToHistorial/${userId}/${cartId}`) 
-    dispatch(setCartUser(json.data))
-  }catch(error){
-    console.error("Error al eliminar el producto del carrito", error);
-  }
-}
-
-// creacion de carro nuevo activo para futuras compras
-export const newCart= async (userId,dispatch)=>{
-  try {
-    let json= await axios.post(`https://olimpusback.up.railway.app/carts/createEmptyCart/${userId}`) 
-    dispatch(setCartUser(json.data))
-  }catch(error){
-    console.error("Error al eliminar el producto del carrito", error);
-  }
-}
-
 export const getUserHistorial= async (userId,dispatch)=>{
   try {
-     let json= await axios.get(`https://olimpusback.up.railway.app/purchases/getUserHistorial/${userId}`)
+     let json= await axios.get(`${baseURL}/purchases/getUserHistorial/${userId}`)
      dispatch(setCartUser(json.data))
   }catch(error){
       console.error("Error al encontrar historial del usuario", error);
   }
 }
 
-export const createReview= async (payload)=>{
+//////////////////////////////// Reviews //////////////////////////////
+export const createReview= async (rev, dispatch)=>{
+  console.log("resp", rev)
   try {
-     let json= await axios.post(`https://olimpusback.up.railway.app/reviews/createReview`,payload)
-     return json.data
+    let json= await axios.post(`${baseURL}/reviews/createReview`, rev)
+    dispatch(setProducts(json.data))
   }catch(error){
-      console.error("Error al eliminar el producto del carrito", error);
+    console.error("Error al enviar su validación", error);
   }
 }

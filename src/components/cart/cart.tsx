@@ -55,7 +55,7 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                             )}
                             <h1>cantidad: {totalProducts}</h1>
                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
-                                <button onClick={()=>router.push("")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
+                                <button onClick={()=>router.push("/pasarelaPagos/e6815d5d-7d2b-405e-b706-09f366d93de5")} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
                                 Iniciar compra
                                 </button>
                             </div>
@@ -73,8 +73,8 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                 </div>
             </div>
         )}
-        </> 
-    )
-}
-
-export default Cart
+        </>
+      );
+    };
+    
+    export default Cart;

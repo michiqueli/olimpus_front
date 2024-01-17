@@ -5,7 +5,7 @@ import { useState } from "react";
 import activateUser from "@/components/requests/activateUser";
 import { useRouter } from "next/navigation";
 import { ActiveAdminsProps } from "../../interfaces";
-import Pagination from "../../pagination";
+import Pagination from "../../design/pagination";
 import EditButton from "../../buttons/editButton";
 import AlertButton from "../../buttons/alertButton";
 

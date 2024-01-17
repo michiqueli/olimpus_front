@@ -15,6 +15,7 @@ const regexZipCode = /^[0-9]+$/;
 const validaciones = (inputs: any): ValidationErrors => {
     const errors: ValidationErrors = {};
 
+
     if (inputs.name) {
         if (typeof inputs.name !== 'string' || inputs.name.length === 0) {
             errors.name = 'Nombre requerido';
@@ -24,6 +25,7 @@ const validaciones = (inputs: any): ValidationErrors => {
             delete errors.name;
         }
     }
+
 
     if (inputs.email) {
         if (typeof inputs.email !== 'string' || inputs.email.length === 0) {
@@ -67,6 +69,7 @@ const validaciones = (inputs: any): ValidationErrors => {
 
     return errors;
 };
+
 
 export default validaciones;
 

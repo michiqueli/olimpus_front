@@ -47,11 +47,15 @@ export interface AlertButtonProps {
 export interface Review{
     content: string;
     rating: number;
-  };
+    isActive:true,
+    ProductId: number,
+    UserId:string
+};
 
- export interface ProductReview {
+export interface ProductReview {
     image: string;
-  };
+    name:string
+};
 
 export interface ProductInterface{
     id: string,
@@ -60,9 +64,35 @@ export interface ProductInterface{
     image: string
     price: number,
     discount: number,
-    reviews:Review[],
+    Reviews:Review[],
     stock: number,
 }
+
+export interface CreateProductInterface{
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    isActive: boolean,
+    TypeId: number,
+    SubtypeId: number
+    stock: number,
+}
+
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
 
 export interface FieldProps {
     placeholder: string,
@@ -81,7 +111,6 @@ export interface PaginationProps {
 export interface CredentialsLogin {
     email: string,
     password: string,
-    googlePass: string,
 }
 
 export interface ValidationsInterface {
@@ -114,10 +143,21 @@ export interface CartProviderProps {
   }
 
 export interface CreateContextProps {
-    contextProducts: ProductInterface[];
+    contextProducts: CartInterface[];
     total: number,
     totalProducts: number,
-    addProduct: (product: ProductInterface) => void;
-    deleteProduct: (productos: ProductInterface[], id: string) => void;
-    deleteAllProducts: (products: ProductInterface[]) => void;
+    addProduct: (product: CartInterface) => void;
+    deleteProduct: (productos: CartInterface[], id: string) => void;
+    deleteAllProducts: (products: CartInterface[]) => void;
+}
+
+export interface CartInterface extends ProductInterface {
+    quantity: number,
+}
+
+export interface PostCartInterface {
+    title: string,
+    quantity: number,
+    currency_id: string,
+    unit_price: number,
 }

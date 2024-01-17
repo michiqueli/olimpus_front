@@ -1,16 +1,16 @@
 "use client";
 
-import { useRouter, useParams } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
-import envios from "../../../assets/envio.png";
-import { ProductInterface, Review } from "@/components/interfaces";
+import { Review, CartInterface } from "@/components/interfaces";
 import Cart from "@/components/cart/cart";
 import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
   const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   const params = useParams();
+  const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
     id: '',
     name: '',
@@ -18,19 +18,35 @@ export default function ProductDetail() {
     image: '',
     price: 0,
     discount: 0,
-    reviews: [] as Review[],
-    stock: 0
+    Reviews: [] as Review[],
+    stock: 0,
+    quantity: 0,
   });
   
   const productID = params.id;
+  
 
-  const [count, setCount] = useState(0);
-
-  const increment = () => {
+  const increment = (producto: CartInterface) => {
     setCount(count + 1);
-    addProduct(product)
-    //console.log('name' + product.name);
-    
+    const productos = localStorage.getItem('products');
+    let updatedProducts: CartInterface[] = [];
+  
+    if (productos) {
+      const parsedProducts: CartInterface[] = JSON.parse(productos);
+      const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
+  
+      if (existingProductIndex !== -1) {
+
+        parsedProducts[existingProductIndex].quantity += 1;
+        updatedProducts = parsedProducts;
+      } else {
+        updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
+      }
+    } else {
+      updatedProducts = [{ ...producto, quantity: 1 }];
+    }
+  
+    localStorage.setItem('products', JSON.stringify(updatedProducts));
   };
 
   const decrement = () => {
@@ -38,16 +54,12 @@ export default function ProductDetail() {
       setCount(count - 1);
     }
     deleteProduct(contextProducts, product.id)
-    //console.log('eliminado' + product.name);
     
   };
 
-  console.log(contextProducts);
-  
-
   function getAverageRating(): number {
-    const totalRating = product.reviews.reduce((sum, review) => sum + review.rating, 0);
-    return totalRating / product.reviews.length;
+    const totalRating = product.Reviews.reduce((sum, review) => sum + review.rating, 0);
+    return totalRating / product.Reviews.length;
   }
 
   useEffect(() => {
@@ -55,6 +67,7 @@ export default function ProductDetail() {
       try {
         const productFind = await getProductById(productID);
         setProduct(productFind);
+        console.log("p", productFind)
       } catch (error) {
         console.error(
           "Error en render componente de detalle producto",
@@ -65,15 +78,14 @@ export default function ProductDetail() {
     fetchData();
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false); // Estado para controlar si el modal está abierto o cerrado
+  const [isOpen, setIsOpen] = useState(false);
 
   const onClose = () => {
     setIsOpen(false);
   };
 
   const handleAddToCart = () => {
-    // Lógica para agregar al carrito...
-    setIsOpen(true); // Abrir el modal al agregar al carrito
+    setIsOpen(true);
   };
 
   return (
@@ -81,7 +93,7 @@ export default function ProductDetail() {
       <Cart isOpen={isOpen} setIsOpen={setIsOpen} onClose={onClose}/>
       <div>
         <div>
-          <div className="flex flex-row justify-end  bg-gray-50 ">
+          <div className="flex flex-row justify-end bg-gray-50 ">
             <div className="flex items-center mb-10 mr-4">
               <img
                 src={product.image}
@@ -90,7 +102,7 @@ export default function ProductDetail() {
               />
             </div>
             <div>
-              <div className="max-w-md mx-auto  mr-80  ml-40 ">
+              <div className="max-w-md mx-auto  mt-20 mr-80  ml-40 ">
                 <h1 className="text-black text-6xl text-center ">
                   {product.name}
                 </h1>
@@ -132,19 +144,16 @@ export default function ProductDetail() {
                   Envíos gratis a partir de $20.000
                 </h2>
               </div>
-              <div>
-                {
-                  product.stock > 0 ? (
-                    <h1 className="text-sm text-black">Stock: {product.stock}</h1>
-                  )
-                  :
-                  (
-                    <h1 className="text-xl text-red-600">Producto SIN stock</h1>
-                  )
-                }
-              </div>
-              <div className="mt-10 ml-40 text-lg">
-                <h2>Cantidad</h2>
+              <div className="flex justify-between items-center ml-40 mt-10">
+                <div className="text-lg">
+                  <h2>Cantidad</h2>
+                </div>
+
+                {product.stock > 0 ? (
+                  <h1 className="text-lg text-black mr-80">Stock: {product.stock}</h1>
+                ) : (
+                  <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
+                )}
               </div>
               <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
                 <button
@@ -156,19 +165,19 @@ export default function ProductDetail() {
                 <p className="mr-20 font-normal "> {count}</p>
                 <button
                   className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
-                  onClick={increment}
+                  onClick={() => increment(product)}
                 >
                   +
                 </button>
               </div>
-              <button onClick={handleAddToCart} className="my-20 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
+              <button onClick={handleAddToCart} className="my-20 ml-60 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full">
                 Agregar al carrito
               </button>
             </div>
           </div>
           <div className="max-w-4xl mx-auto mt-4 flex">
             {/* Promedio de Valoración General */}
-            {product.reviews && product.reviews.length > 0 && (
+            {product.Reviews && product.Reviews.length > 0 && (
               <div className="mr-8">
                 <h3 className="text-black font-bold text-lg">
                   Promedio de Valoración General:
@@ -191,8 +200,8 @@ export default function ProductDetail() {
             {/* Opiniones */}
             <div className="max-w-4xl mx-auto p-6 border  border-gray-300 rounded-md bg-gray-50">
               <h2 className="text-black font-bold text-center text-xl">Opiniones:</h2>
-              {product.reviews &&
-                product.reviews.map((review: Review, index) => (
+              {product.Reviews &&
+                product.Reviews.map((review: Review, index) => (
                   <div key={index} className="mt-4 border-b border-gray-300 pb-4">
                     <div className="text-yellow-500 mb-2">
                       {Array.from({ length: Math.max(0, review.rating) }).map(
