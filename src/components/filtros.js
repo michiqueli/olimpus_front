@@ -136,9 +136,9 @@ export default function Filtered() {
   };
   
   return (
-    <div className="flex space-x-4 mb-10">
+    <div className="flex space-x-4 mb-10 w-[98%] content-center">
       <div className="flex-grow w-4 h-4">
-        <label className="">Filtrar por categoría:</label>
+        <label className="">Categorías:</label>
         <select className="w-full" defaultValue={'default'} name="products" onChange={event => handleInputChange(event)}>
           <option value="todos">Todos</option>
           {[...new Set(allProducts.map(el => el.Type.name))].map(typeName => (
@@ -148,7 +148,7 @@ export default function Filtered() {
       </div>
       
       <div className="flex-grow w-4 h-4">
-        <label className="">Filtrar por productos:</label>
+        <label className="">Producto:</label>
         <select className="w-full" defaultValue={'default'} name="subtypes" onChange={event => handleInputSubtypes(event)}>
           <option></option>
           {filteredSubtypes.map(typeName => (
@@ -158,7 +158,7 @@ export default function Filtered() {
       </div>
       
       <div className="flex-grow w-4 h-4">
-        <label className="">Filtrar por medida:</label>
+        <label className="">Medida:</label>
         <select className="w-full" defaultValue={'default'} name="metrics" onChange={event => handleInputMetrics(event)}>
           <option></option>
           {filteredMetrics.map(metric => (
@@ -167,7 +167,7 @@ export default function Filtered() {
         </select>
       </div>
       <div className="flex-grow w-4 h-4">
-        <label className="">Ordenar por precio:</label>
+        <label className="">Ordenar:</label>
         <select className="w-full"  name="price" onChange={event => handleOrderByPrice(event)}>
           <option value="asc">Ascendente</option>
           <option value="desc">Descendente</option>
