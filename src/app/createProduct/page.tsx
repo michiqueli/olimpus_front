@@ -63,12 +63,8 @@ function CreateProductForm() {
 
   const handleTypeChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const typeId = parseInt(e.target.value, 10);
-    if (!typeId || isNaN(typeId)) {
-      setErrors({ ...errors, TypeId: 'Tipo de producto requerido' });
-      return;
-    }
     setProduct({ ...product, TypeId: typeId });
-    setErrors({ ...errors, TypeId: undefined });
+    setErrors({ ...errors, Type: undefined });
     try {
       const response = await getSubtypesByTypeId(typeId);
       const uniqueNamesSet = new Set<string>();
@@ -91,11 +87,8 @@ function CreateProductForm() {
   }
 
   const handleSubTypeChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const subtypeName = e.target.value
-    if (!subtypeName) {
-      setErrors({ ...errors, SubtypeId: 'Subtipo de producto requerido' });
-      return;
-    }
+    const subtypeName = e.target.value 
+    setErrors({ ...errors, Subtype: undefined });
     setSelectedSubtype(subtypeName);
     setIsSubtypeSelected(true);
     setSelectedMetric(0)
@@ -109,13 +102,9 @@ function CreateProductForm() {
 
   const handleMetricChange = async (e: React.ChangeEvent<HTMLSelectElement>) => {
     const metricId = e.target.value
-    if (!metricId || isNaN(parseFloat(metricId))) {
-      setErrors({ ...errors, SubtypeId: 'Medida del producto requerida' });
-      return;
-    }
     setSelectedMetric(Number(metricId))
     setProduct({ ...product, SubtypeId: Number(metricId) });
-    setErrors({ ...errors, SubtypeId: undefined });
+    setErrors({ ...errors, Metric: undefined });
   }
 
   // IMAGE
@@ -123,12 +112,10 @@ function CreateProductForm() {
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files && e.target.files[0];
-    if (!file) {
-        setErrors({ ...errors, image: 'Imagen requerida' });
-        return;
+    if(file){
+      setErrors({ ...errors, image: undefined})
     }
     setImageFile(file);
-    setErrors({ ...errors, image: undefined });
 };
 
   // RESTO DEL FORM
@@ -140,6 +127,7 @@ function CreateProductForm() {
     const validationErrors = productFormValidations({...product, [e.target.name]: value});
     setErrors((prevErrors) => ({...prevErrors,...validationErrors}));
   };
+  console.log(errors);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -147,25 +135,42 @@ function CreateProductForm() {
       alert('Hay errores en el formulario. Corrígelos antes de enviar.');
       return;
     }
+    if (!imageFile) {
+      setErrors({ ...errors, image: 'Imagen requerida' });
+      return;
+    } else {
+      setErrors({ ...errors, image: undefined });
+    }
+    if (product.TypeId === 0) {
+      setErrors({ ...errors, Type: 'Tipo de producto requerido' });
+      return;
+    } else {
+      setErrors({ ...errors, Type: undefined });
+    }
+    if (selectedType !== 0 && selectedSubtype === '') {
+      setErrors({ ...errors, Subtype: 'Subtipo de producto requerido' });
+      return;
+    } else {
+      setErrors({ ...errors, Subtype: undefined });
+    }
+    if (isSubtypeSelected && selectedMetric === 0) {
+      setErrors({ ...errors, Metric: 'Medida del producto requerida' });
+      return;
+    } else {
+      setErrors({ ...errors, Metric: undefined });
+    }
     try {
-
-
       let updatedProduct = {...product};
-
-      
       if(imageFile){
         const formData = new FormData();
         formData.append('file', imageFile);
-        
         const response = await fetch('/api/upload', {
           method: 'POST',
           body: formData
         });
         if (response.ok){
           const imageData = await response.json();
-          
           const imageUrl = imageData.url;
-          
           updatedProduct = {...updatedProduct, image: imageUrl};
         } else {
           console.error('Error al subir la imagen');
@@ -196,7 +201,7 @@ function CreateProductForm() {
               value={product.name}
               className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
             />
-            {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
+            {errors.name && <p className="text-red-500 text-xs mb-1 ml-2">{errors.name}</p>}
           </div>
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Precio:</label>
@@ -208,7 +213,7 @@ function CreateProductForm() {
               value={product.price}
               className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
             />
-            {errors.price && <p className="text-red-500 text-xs mt-1">{errors.price}</p>}
+            {errors.price && <p className="text-red-500 text-xs mb-1 ml-2">{errors.price}</p>}
           </div>
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Stock:</label>
@@ -220,7 +225,7 @@ function CreateProductForm() {
               value={product.stock}
               className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
             />
-            {errors.stock && <p className="text-red-500 text-xs mt-1">{errors.stock}</p>}
+            {errors.stock && <p className="text-red-500 text-xs mb-1 ml-2">{errors.stock}</p>}
           </div>
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Descripción:</label>
@@ -229,9 +234,9 @@ function CreateProductForm() {
               name='description'
               onChange={onChange}
               value={product.description}
-              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
+              className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-1 text-start py-2 w-full focus:outline-none'
             />
-            {errors.description && <p className="text-red-500 text-xs mt-1">{errors.description}</p>}
+            {errors.description && <p className="text-red-500 text-xs mb-1 ml-2">{errors.description}</p>}
           </div>
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Imagen:</label>
@@ -242,7 +247,7 @@ function CreateProductForm() {
               onChange={handleImageChange}
               className='text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none'
             />
-            {errors.image && <p className="text-red-500 text-xs mt-1">{errors.image}</p>}
+            {errors.image && <p className="text-red-500 text-xs mb-1 ml-2">{errors.image}</p>}
           </div>
           <div className='flex-col justify-start w-full'>
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">Tipo de producto:</label>
@@ -252,7 +257,7 @@ function CreateProductForm() {
                 <option key={type.id} value={type.id}>{type.name}</option>
               ))}
             </select>
-            {errors.TypeId && <p className="text-red-500 text-xs mt-1">{errors.TypeId}</p>}
+            {errors.Type && <p className="text-red-500 text-xs mb-1 ml-2">{errors.Type}</p>}
           </div>
           {selectedType !== 0 &&(
             <div className='flex-col justify-start w-full'>
@@ -262,7 +267,8 @@ function CreateProductForm() {
                   {subtypes.map((subtype) => (
                     <option key={subtype.id} value={subtype.name}>{subtype.name}</option>
                   ))}
-                </select>      
+                </select>
+                {errors.Subtype && <p className="text-red-500 text-xs mb-1 ml-2">{errors.Subtype}</p>}
               </div>
           )}
           {isSubtypeSelected && selectedSubtype !== '' &&(
@@ -274,7 +280,7 @@ function CreateProductForm() {
                     <option key={metric.id} value={metric.id}>{metric.metric}</option>
                   ))}
                 </select>     
-                {errors.SubtypeId && <p className="text-red-500 text-xs mt-1">{errors.SubtypeId}</p>}
+                {errors.Metric && <p className="text-red-500 text-xs mb-1 ml-2">{errors.Metric}</p>}
             </div>
           )}
           <FormButton title='Crear Producto' />
