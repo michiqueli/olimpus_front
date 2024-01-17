@@ -1,5 +1,6 @@
 "use client";
-import { useRouter } from 'next/navigation';
+
+import { useRouter, redirect } from 'next/navigation';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
 export default function Dashboard() {

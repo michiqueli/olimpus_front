@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from "next/navigation";
 import { getUsersById } from "@/Redux/Actions";
 import { useParams } from "next/navigation";
@@ -8,7 +9,6 @@ import { getUsers } from "@/Redux/sliceUsers";
 import { useProduct } from "@/context/CartContext";
 
 export default function Pasarela () {
-
     const router=useRouter();
     const dispatch=useAppDispatch();
     const {id} = useParams();
@@ -82,7 +82,7 @@ export default function Pasarela () {
                                         );
                                     })
                                 }
-                                <div className="flex justify-between text-base text-xl text-black border-t pt-4">
+                                <div className="flex justify-between text-xl text-black border-t pt-4">
                                     <p className="">Subtotal</p>
                                     <p>${total}</p>
                                 </div>

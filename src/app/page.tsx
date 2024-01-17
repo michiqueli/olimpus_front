@@ -4,9 +4,14 @@ import CardSlider from "../components/cardsSlider";
 import NovedadesSlider from "../components/novedadesSlider";
 import Banner from "../components/catalogo";
 import { useSession } from "next-auth/react";
+import { useProduct } from "@/context/CartContext";
+import { CartInterface } from "@/components/interfaces";
 
 export default function Home() {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
+
+  const stored = localStorage.getItem('allProducts');
+  const array = stored ? JSON.parse(stored) : undefined;
 
   return (
     <main className="w-full h-full flex flex-col items-center text-center">
@@ -17,23 +22,29 @@ export default function Home() {
         <div className="my-6">
           <CardSlider />
         </div>
-        <div>
-            <div className="my-6">
-              <Banner/>
-            </div>
-        {/* {
-          session?.user ? (
-          ):
-          (
-            <div className="my-6">
-              <h1 className="text-black">
-                NO TENES INICIADA SESION
-              </h1>
-            </div>
-          )
-        } */}
+        <div className="my-6">
+          <Banner />
         </div>
-     </div>
+        <div className="my-6">
+          <h1 className="text-black">
+            {session?.user ? (
+              // Contenido si el usuario tiene sesión iniciada
+              <span>Contenido para usuarios con sesión iniciada</span>
+            ) : (
+              // Contenido si el usuario no tiene sesión iniciada
+              <span>NO TENES INICIADA SESION</span>
+            )}
+          </h1>
+        </div>
+        <div>
+          {array &&
+            array.map((prod: CartInterface) => (
+              <div key={prod.id}>
+                <h1 className="text-black">{prod.name}</h1>
+              </div>
+            ))}
+        </div>
+      </div>
     </main>
   );
 }

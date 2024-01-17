@@ -1,8 +1,9 @@
 'use client';
 
+import React, {useState} from "react";
 import { createContext, useContext } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { ProductInterface, CartProviderProps, CreateContextProps } from "@/components/interfaces";
+import { CartProviderProps, CreateContextProps, CartInterface } from "@/components/interfaces";
 
 export const CartContext = createContext<CreateContextProps | undefined>(undefined);
 
@@ -13,17 +14,29 @@ export const useProduct = () => {
 };
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [contextProducts, setProducts] = useLocalStorage<ProductInterface[]>('products', []);
+  const [contextProducts, setProducts] = useLocalStorage<CartInterface[]>('products', []);
   const [total, setTotal] = useLocalStorage<number>('totalPrice', 0);
   const [totalProducts, setTotalProducts] = useLocalStorage<number>('totalProducts', 0);
 
-  const addProduct = (product: ProductInterface) => {
-    setProducts([...contextProducts, product]);
-    setTotal((precExt) => precExt + product.price);
-    setTotalProducts((prevTotal) => prevTotal + 1);
-  };
+  const addProduct = (product: CartInterface) => {
+  const existingProduct = contextProducts.find(p => p.id === product.id);
 
-  const deleteProduct = (productos: ProductInterface[], id: string) => {
+  if (existingProduct) {
+    existingProduct.quantity += 1;
+    // localStorage.setItem('products', JSON.stringify([...contextProducts, existingProduct]));
+    setProducts([...contextProducts]);
+  } else {
+    const newProduct = { ...product, quantity: 1 };
+    // localStorage.setItem('products', JSON.stringify([...contextProducts, newProduct]));
+    setProducts([...contextProducts, newProduct]);
+  }
+
+  setTotal((prevTotal) => prevTotal + product.price);
+  setTotalProducts((prevTotal) => prevTotal + 1);
+};
+
+
+  const deleteProduct = (productos: CartInterface[], id: string) => {
     const indexProduct = productos.findIndex((product) => product.id === id);
   
     if (indexProduct !== -1) {

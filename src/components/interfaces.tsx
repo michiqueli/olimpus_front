@@ -48,13 +48,14 @@ export interface Review{
     content: string;
     rating: number;
     isActive:true,
-    productId: number,
-    userId:string
+    ProductId: number,
+    UserId:string
 };
 
- export interface ProductReview {
+export interface ProductReview {
     image: string;
-  };
+    name:string
+};
 
 export interface ProductInterface{
     id: string,
@@ -110,7 +111,6 @@ export interface PaginationProps {
 export interface CredentialsLogin {
     email: string,
     password: string,
-    googlePass: string,
 }
 
 export interface ValidationsInterface {
@@ -143,10 +143,21 @@ export interface CartProviderProps {
   }
 
 export interface CreateContextProps {
-    contextProducts: ProductInterface[];
+    contextProducts: CartInterface[];
     total: number,
     totalProducts: number,
-    addProduct: (product: ProductInterface) => void;
-    deleteProduct: (productos: ProductInterface[], id: string) => void;
-    deleteAllProducts: (products: ProductInterface[]) => void;
+    addProduct: (product: CartInterface) => void;
+    deleteProduct: (productos: CartInterface[], id: string) => void;
+    deleteAllProducts: (products: CartInterface[]) => void;
+}
+
+export interface CartInterface extends ProductInterface {
+    quantity: number,
+}
+
+export interface PostCartInterface {
+    title: string,
+    quantity: number,
+    currency_id: string,
+    unit_price: number,
 }
