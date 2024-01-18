@@ -1,8 +1,9 @@
 'use client';
 
+import React, {useState} from "react";
 import { createContext, useContext } from "react";
 import { useLocalStorage } from "@/hooks/useLocalStorage";
-import { ProductInterface, CartProviderProps, CreateContextProps } from "@/components/interfaces";
+import { CartProviderProps, CreateContextProps, CartInterface } from "@/components/interfaces";
 
 export const CartContext = createContext<CreateContextProps | undefined>(undefined);
 
@@ -13,24 +14,41 @@ export const useProduct = () => {
 };
 
 export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
-  const [contextProducts, setProducts] = useLocalStorage<ProductInterface[]>('products', []);
-  const [total, setTotal] = useLocalStorage<number>('totalPrice', 0);
-  const [totalProducts, setTotalProducts] = useLocalStorage<number>('totalProducts', 0);
+  const [contextProducts, setContextProducts] = useState<CartInterface[]>(() => {
+    const productosEnJSON = localStorage.getItem('allProducts');
+    return productosEnJSON ? JSON.parse(productosEnJSON) : [];
+  });
 
-  const addProduct = (product: ProductInterface) => {
-    setProducts([...contextProducts, product]);
-    setTotal((precExt) => precExt + product.price);
+  const [total, setTotal] = useState<number>(0);
+  const [totalProducts, setTotalProducts] = useState<number>(0);
+
+  const addProduct = (product: CartInterface) => {
+    let updatedProducts: CartInterface[] = [];
+    const existingProductIndex = contextProducts.findIndex((p: CartInterface) => p.id === product.id);
+
+    if (existingProductIndex !== -1) {
+      contextProducts[existingProductIndex].quantity += 1;
+      updatedProducts = contextProducts;
+    } else {
+      updatedProducts = [...contextProducts, { ...product, quantity: 1 }];
+    }
+
+    localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
+
+    setContextProducts(updatedProducts);
+    setTotal((prevTotal) => prevTotal + product.price);
     setTotalProducts((prevTotal) => prevTotal + 1);
   };
 
-  const deleteProduct = (productos: ProductInterface[], id: string) => {
+
+  const deleteProduct = (productos: CartInterface[], id: string) => {
     const indexProduct = productos.findIndex((product) => product.id === id);
   
     if (indexProduct !== -1) {
       const productToRemove = contextProducts[indexProduct];
       const newContextProducts = [...contextProducts];
       newContextProducts.splice(indexProduct, 1);
-      setProducts(newContextProducts);
+      setContextProducts(newContextProducts);
   
       setTotalProducts((prevTotal) => prevTotal - 1);
   
@@ -41,7 +59,7 @@ export const CartProvider: React.FC<CartProviderProps> = ({ children }) => {
   };
   
   const deleteAllProducts = () => {
-    setProducts([]);
+    setContextProducts([]);
     setTotal(0);
     setTotalProducts(0);
   }

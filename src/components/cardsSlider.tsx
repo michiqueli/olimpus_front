@@ -3,8 +3,8 @@
 import { Carousel } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
 import { ProductInterface } from './interfaces';
-import getAllProducts from './requests/getAllProducts';
 import { useEffect, useState } from 'react';
+import getPopularProducts from './requests/getPopularProducts';
 
 
 
@@ -14,7 +14,7 @@ function CardSlider() {
     useEffect (() => {
         const fetchData = async () => {
             try {
-                const productsData = await getAllProducts();
+                const productsData = await getPopularProducts();
                 setProducts(productsData);
             } catch (error) {
                 console.error('Error fetching products:', error);
@@ -30,7 +30,7 @@ function CardSlider() {
     return (
         <div className="h-96 w-full mx-auto flex flex-row">
             <div className='flex w-72'>
-                <img src="/masVendidos.png" alt="" className='rounded-lg'/>
+                <img src="/mejorPuntuados.png" alt="" className='rounded-lg'/>
             </div>
             <Carousel slide={false} leftControl={<img src="/izq.png" className='h-12 opacity-80 hover:opacity-100' />} rightControl={<img src="/der.png" className='h-12 opacity-80 hover:opacity-100'/>} >
                 {slides.map((slide, index) => (

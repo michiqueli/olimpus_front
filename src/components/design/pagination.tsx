@@ -14,7 +14,6 @@ import React from 'react';
 import { PaginationProps } from '../interfaces';
 import PrimaryButton from '../buttons/primaryButton';
 
-
 function Pagination(props: PaginationProps) {
     const {data, recordsPerPage, currentPage, setCurrentPage} = props;
     

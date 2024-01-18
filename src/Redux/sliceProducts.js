@@ -64,13 +64,22 @@ export const getAllProducts = async (dispatch) => {
   }
 };
 
-export const getProductsWithDiscount = async (dispatch) => {
+export const getProductsWithDiscount = async (dispatch, options = {}) => {
   try {
     const response = await axios.get(
       `${process.env.NEXT_PUBLIC_BACKEND_URL}/products/withDiscount`
     );
-    dispatch(setWithDiscountProducts(response.data));
-    dispatch(setSearchedProducts(response.data))
+    const productsWithDiscount = response.data;
+    if (options.minDiscountPercentage !== undefined) {
+      const filteredProducts = productsWithDiscount.filter(
+        (product) => product.discount >= options.minDiscountPercentage
+      );
+      dispatch(setWithDiscountProducts(filteredProducts));
+      dispatch(setSearchedProducts(filteredProducts));
+    } else {
+      dispatch(setWithDiscountProducts(productsWithDiscount));
+      dispatch(setSearchedProducts(productsWithDiscount));
+    }
   } catch (error) {
     console.error("Error fetching products", error);
   }
