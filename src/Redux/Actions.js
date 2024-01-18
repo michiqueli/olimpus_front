@@ -240,6 +240,6 @@ export const createReview= async (rev, dispatch)=>{
     let json= await axios.post(`${baseURL}/reviews/createReview`, rev)
     dispatch(setProducts(json.data))
   }catch(error){
-    console.error("Error al eliminar el producto del carrito", error);
+    console.error("Error al enviar su validación", error);
   }
 }

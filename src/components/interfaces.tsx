@@ -48,13 +48,14 @@ export interface Review{
     content: string;
     rating: number;
     isActive:true,
-    productId: number,
-    userId:string
+    ProductId: number,
+    UserId:string
 };
 
- export interface ProductReview {
+export interface ProductReview {
     image: string;
-  };
+    name:string
+};
 
 export interface ProductInterface{
     id: string,

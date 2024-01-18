@@ -25,7 +25,11 @@ function NovedadesSlicer() {
 
   
   const FilterByDiscount = () => {
-    getProductsWithDiscount(dispatch);
+    getProductsWithDiscount(dispatch, { minDiscountPercentage: 0 });
+    router.push("/resultPage");
+  }
+  const FilterByPercDiscount = async () => {
+    getProductsWithDiscount(dispatch, { minDiscountPercentage: 50 });
     router.push("/resultPage");
   }
 
@@ -41,7 +45,7 @@ function NovedadesSlicer() {
         </button>
         <button
           className="w-full h-full"
-          
+          onClick={FilterByPercDiscount}
         >
           <img
             className="object-fit w-full h-full"
@@ -51,7 +55,6 @@ function NovedadesSlicer() {
         </button>
         <button
           className="w-full h-full"
-          
         >
           <img
             className="object-fit w-full h-full"
