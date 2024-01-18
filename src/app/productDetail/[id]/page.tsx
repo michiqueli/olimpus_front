@@ -98,7 +98,7 @@ export default function ProductDetail() {
       icon: "success",
       title: "Producto Agregado al Carrito... revisa Tu carrito para finalizar la compra",
       showConfirmButton: false,
-      timer: 1500,
+      timer: 2500,
     });
   };
 

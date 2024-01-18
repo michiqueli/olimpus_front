@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 
 const Cart = () => {
   const router = useRouter();
+  let amount = 0;
   const [productos, setProductos] = useState(() => {
     const productosEnJSON = localStorage.getItem("allProducts");
     return productosEnJSON ? JSON.parse(productosEnJSON) : [];
@@ -54,7 +55,7 @@ const Cart = () => {
         <h2 className="text-xl font-medium text-center text-gray-900">
           Carrito de compras
         </h2>
-  
+
         {productos.length > 0 ? (
           <div className="flex flex-wrap justify-center">
             {productos.map((product: CartInterface) => (
@@ -62,19 +63,32 @@ const Cart = () => {
                 key={product.id}
                 className="m-4 border-4 p-4 flex flex-col justify-center text-center items-center w-56"
               >
-                <button onClick={() => router.push(`/productDetail/${product.id}`)}>
-                <div className="flex items-center justify-center">
-                  <img
-                    src={product.image}
-                    alt="image product"
-                    width={100}
-                    height={100}
-                    className=""
-                  />
+                <button
+                  onClick={() => router.push(`/productDetail/${product.id}`)}
+                >
+                  <div className="flex items-center justify-center">
+                    <img
+                      src={product.image}
+                      alt="image product"
+                      width={100}
+                      height={100}
+                      className=""
+                    />
                   </div>
                   <h1 className="text-2xl font-semibold ">{product.name}</h1>
-                  <h1 className="text-sm font-semibold ">{product.description}</h1>
-                  <h1 className="text-xl text-lime-600 ">$ {product.price}</h1>
+                  <h1 className="text-sm font-semibold ">
+                    {product.description}
+                  </h1>
+                  {product.discount > 0 ? (
+                    <h1 className="text-xl text-lime-600 ">
+                      ${" "}
+                      {product.price - (product.price * product.discount) / 100}
+                    </h1>
+                  ) : (
+                    <h1 className="text-xl text-lime-600 ">
+                      $ {product.price}
+                    </h1>
+                  )}
                 </button>
                 <h1>Cantidad: {product.quantity}</h1>
                 <button
@@ -91,17 +105,28 @@ const Cart = () => {
             No tienes agregado ningún producto al carrito, wey
           </h1>
         )}
-  
+
         <div className="text-center my-4">
           <p className="text-sm text-gray-500">
             Los productos en SALE no tienen cambio
           </p>
         </div>
-  
+
         <h1 className="text-xl font-semibold text-center">
-          Cantidad total: {productos.length}
+          Cantidad de Productos: {productos.length}
         </h1>
-  
+        <h1 className="text-xl font-semibold text-center">
+          Monto Total: $
+          {productos.reduce((total : any , product: any) => {
+            const discountedPrice =
+              product.discount > 0
+                ? product.price - (product.price * product.discount) / 100
+                : product.price;
+
+            return total + discountedPrice * product.quantity;
+          }, 0)}
+        </h1>
+
         <div className="mt-6 flex-col flex items-center justify-center text-center">
           <button
             className="bg-red-500 font-semibold h-8 rounded-lg px-1 mr-2 w-44"
@@ -118,7 +143,7 @@ const Cart = () => {
             Iniciar compra
           </button>
         </div>
-  
+
         <div className="mt-6 flex justify-center text-center text-sm text-black-500">
           <button
             type="button"
@@ -130,7 +155,7 @@ const Cart = () => {
         </div>
       </div>
     </main>
-  )
-          }
+  );
+};
 
 export default Cart;
