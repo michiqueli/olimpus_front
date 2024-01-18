@@ -4,12 +4,13 @@ import SearchBar from "./searchbar";
 import GoBack from "../buttons/goBack";
 import { useState } from "react";
 import React from "react";
-import { signIn, useSession, signOut } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 import Cart from "../cart/cart";
 import { useProduct } from "@/context/CartContext";
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
+  
   const { total } = useProduct();
 
   const router = useRouter();
@@ -45,7 +46,8 @@ const NavBar: React.FC = () => {
             </div>
             {session?.user ? (
               <div>
-                <h1 className="text-black">Bienvenido {session?.user.name}</h1>
+                <h1 className="text-black">Bienvenido {session?.user.user.id}</h1>
+        
               </div>
             ) : (
               ""
@@ -73,6 +75,17 @@ const NavBar: React.FC = () => {
                         >
                           Mi Perfil
                         </button>
+                        <div>
+                          {
+                            session.user.user.roleId === 1 || session.user.user.roleId === 2 ? (
+                              <button>Admin</button>
+                              )
+                              :
+                            (
+                              ''
+                            )
+                          }
+                        </div>
                         <button
                           onClick={async () => {
                             await signOut({

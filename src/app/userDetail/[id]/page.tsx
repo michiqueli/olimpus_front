@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 // import { Users } from "@/app/components/interfaces";
 
 export default function UserDetail() {
+
   const dispatch = useAppDispatch();
   const router= useRouter()
   const { id } = useParams();

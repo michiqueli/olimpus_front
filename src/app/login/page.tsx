@@ -57,7 +57,6 @@ const loginPage = () => {
             password: credentials.password,
             redirect: false,
           });
-    
           router.push('/');
         } catch (error) {
             if (error instanceof Error){
@@ -68,6 +67,7 @@ const loginPage = () => {
                 }
         }
       };
+      
     }
 
     return (
