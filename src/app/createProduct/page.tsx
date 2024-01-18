@@ -1,7 +1,7 @@
 "use client";
 import axios from "axios";
-import React, { useEffect, useState, useLayoutEffect } from "react";
-import { useRouter, redirect } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import { CreateProductInterface } from "@/components/interfaces";
 import createProduct from "@/components/requests/createProduct";
 import getAllTypes from "@/components/requests/getAllTypes";
@@ -9,7 +9,6 @@ import getSubtypesByTypeId from "@/components/requests/getSubtypesByTypeId";
 import getMetrics from "@/components/requests/getMetrics";
 import FormButton from "@/components/buttons/fornButton";
 import productFormValidations, { ProductFormValidatorProps } from "./validator";
-import { isAuthenticated } from "../unauthorized/auth";
 
 interface Subtype {
   id: number;
@@ -17,13 +16,6 @@ interface Subtype {
   metric: string;
   TypeId: number;
 }
-
-// useLayoutEffect(() => {
-//   const isAuth = isAuthenticated;
-//   if (!isAuth) {
-//     redirect("/Unauthorized");
-//   }
-// }, []);
 
 function CreateProductForm() {
   const router = useRouter();
