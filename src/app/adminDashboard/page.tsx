@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter, redirect } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
 export default function Dashboard() {
@@ -22,40 +22,19 @@ export default function Dashboard() {
         <div className='flex flex-col mt-32 items-center'>
           <div className='justify-arround '>
             <PrimaryButton onClickfunction={()=> router.push('/')} title='Usuarios'/>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Crear usuario
-            </button>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear usuario'/>
           </div>
           <div className='flex justify-arround'>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Transacciones
-            </button>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Crear transacción
-            </button>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Transacciones'/>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear transacción'/>
           </div>
           <div className='flex justify-arround'>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Ingresos
-            </button>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Stocks
-            </button>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Ingresos'/>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Stocks'/>
           </div>
           <div className='flex justify-arround '>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Auditoría
-            </button>
-            <button onClick={logOut}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Salir
-            </button>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Productos'/>
+            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear producto'/>
           </div>
         </div>
       </div>

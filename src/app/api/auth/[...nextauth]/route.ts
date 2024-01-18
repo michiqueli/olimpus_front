@@ -1,9 +1,7 @@
 import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 import CredentialsProvider from "next-auth/providers/credentials";
-import userLogin from "@/components/requests/loginUSer";
-import { error } from "console";
-import { Session } from "inspector";
+
 
 const handler = NextAuth({
   providers: [
@@ -30,7 +28,6 @@ const handler = NextAuth({
           }
         );
         const user = await res.json();
-
         if (user.error) throw user;
 
         return user;

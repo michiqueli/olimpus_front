@@ -14,13 +14,15 @@ export default function ProductRev() {
   const params = useParams();
   const productID = params.id;
   const {data: session} = useSession();
+
+  const user : any = session?.user
   
 
   const [rev, setRev] = useState<Review>({
     rating: 0,
     content: "",
     // UserId: "e6815d5d-7d2b-405e-b706-09f366d93de5",
-    UserId: session.user.user.id,
+    UserId: user.user.id,
     ProductId: 0,
     isActive: true
   });
