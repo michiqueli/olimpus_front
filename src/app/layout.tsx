@@ -5,7 +5,6 @@ import NavBar from "@/components/constants/navbar";
 import Footer from "@/components/constants/footer";
 import SessionAuthProvider from "../context/SessionAuthProvider";
 import { CartProvider } from "@/context/CartContext";
-import Cart from "@/components/cart/cart";
 
 export const metadata: Metadata = {
   title: "Olimpus ",
