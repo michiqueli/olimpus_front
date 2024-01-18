@@ -27,7 +27,7 @@ export default function AllUsers(){
     async function fetchData() {
       try {
         const userList = await getAllUsers();
-        const filteredAdmins = userList.filter((user: Users) => user.roleid === 2);
+        const filteredAdmins = userList.filter((user: Users) => user.roleid === 1);
         const filteredBuyers = userList.filter((user: Users) => user.roleid === 3);
   
         setAdmins(filteredAdmins);

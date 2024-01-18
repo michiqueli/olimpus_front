@@ -55,10 +55,6 @@ export default function Pasarela() {
       },
       amount: 800,
       compraId: null,
-      redirect_urls: {
-        success: `https://olimpus-shop.vercel.app/userDetail/${user.user.id}`, // Reemplaza con la URL de éxito de tu aplicación
-        failure: "https://olimpus-shop.vercel.app/catalogo", // Reemplaza con la URL de fracaso de tu aplicación
-      },
     };
     await postPayment(paymentData).
     then((response) => {

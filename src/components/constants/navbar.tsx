@@ -10,9 +10,9 @@ import { useProduct } from "@/context/CartContext";
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
-  
+
   const { total } = useProduct();
-  const user: any = session?.user
+  const user: any = session?.user;
 
   const router = useRouter();
   const path = usePathname();
@@ -70,21 +70,25 @@ const NavBar: React.FC = () => {
                     {session?.user ? (
                       <>
                         <button
-                          onClick={() => router.push(`/userDetail/${user.user.id}`)}
+                          onClick={() =>
+                            router.push(`/userDetail/${user.user.id}`)
+                          }
                           className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                         >
                           Mi Perfil
                         </button>
                         <div>
-                          {
-                            session.user.user.roleId === 1 || session.user.user.roleId === 2 ? (
-                              <button>Admin</button>
-                              )
-                              :
-                            (
-                              ''
-                            )
-                          }
+                          {user.user.roleId === 1 || user.user.roleId === 2 ? (
+                            <button 
+                            onClick={() =>
+                              router.push(`/adminDashboard/`)
+                            }
+                            className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none">
+                              Admin
+                            </button>
+                          ) : (
+                            ""
+                          )}
                         </div>
                         <button
                           onClick={async () => {
