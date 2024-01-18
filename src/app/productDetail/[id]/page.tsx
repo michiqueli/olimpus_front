@@ -25,33 +25,34 @@ export default function ProductDetail() {
   
   const productID = params.id;
 
-    const productos = localStorage.getItem('allProducts');
-    if(productos){
+  const productos = localStorage.getItem('allProducts');
 
-      const parsedProducts: CartInterface[] = JSON.parse(productos);
-    }
-  
-
+  if(productos){
+    const parsedProducts: CartInterface[] = JSON.parse(productos);
+  }
   const increment = (producto: CartInterface) => {
-    setCount(count + 1);
-    const productos = localStorage.getItem('allProducts');
-    let updatedProducts: CartInterface[] = [];
-  
-    if (productos) {
-      const parsedProducts: CartInterface[] = JSON.parse(productos);
-      const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
-  
-      if (existingProductIndex !== -1) {
-        parsedProducts[existingProductIndex].quantity += 1;
-        updatedProducts = parsedProducts;
+    if(count < product.stock){
+
+      setCount(count + 1);
+      const productos = localStorage.getItem('allProducts');
+      let updatedProducts: CartInterface[] = [];
+    
+      if (productos) {
+        const parsedProducts: CartInterface[] = JSON.parse(productos);
+        const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
+    
+        if (existingProductIndex !== -1) {
+          parsedProducts[existingProductIndex].quantity += 1;
+          updatedProducts = parsedProducts;
+        } else {
+          updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
+        }
       } else {
-        updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
+        updatedProducts = [{ ...producto, quantity: 1 }];
       }
-    } else {
-      updatedProducts = [{ ...producto, quantity: 1 }];
+    
+      localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
     }
-  
-    localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
   };
 
  
@@ -82,7 +83,6 @@ export default function ProductDetail() {
       try {
         const productFind = await getProductById(productID);
         setProduct(productFind);
-        console.log("p", productFind)
       } catch (error) {
         console.error(
           "Error en render componente de detalle producto",
