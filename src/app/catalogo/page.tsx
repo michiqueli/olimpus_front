@@ -4,11 +4,10 @@ import { getTodosProducts } from "@/Redux/Actions";
 import { ProductInterface } from "../../components/interfaces";
 import { useEffect, useState } from "react";
 
-import { useRouter } from "next/navigation";
-import Filtered from "../../components/filtros";
-import { getProducts, getFilteredProducts } from "@/Redux/sliceProducts";
+import { useRouter } from 'next/navigation';
+import Filtered from '../../components/filtros';
+import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
 import Pagination from "@/components/design/pagination";
-
 export default function ProductosCompleto() {
   const dispatch = useAppDispatch();
   const router = useRouter();
