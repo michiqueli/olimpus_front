@@ -1,7 +1,7 @@
 import { PostCartInterface } from "../interfaces";
-const postCart = async (data: PostCartInterface[]) => {
+const postPayment = async (data: PostCartInterface[]) => {
     try {
-          const response = await fetch(`${process.env.NEXTPu}/payments/create`, {
+          const response = await fetch(`http://localhost:3001/payments/create`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
@@ -30,4 +30,4 @@ const postCart = async (data: PostCartInterface[]) => {
     };
 }
 
-export default postCart;
+export default postPayment;

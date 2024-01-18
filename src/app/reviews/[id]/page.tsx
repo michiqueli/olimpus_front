@@ -12,7 +12,6 @@ export default function Reviews () {
     const dispatch=useAppDispatch();
     const router=useRouter();
     const compras=useAppSelector(setCartUser);
-    console.log("compras", compras)
     const {id}=useParams();
 
     useEffect(() => {
