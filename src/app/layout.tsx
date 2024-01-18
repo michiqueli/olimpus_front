@@ -24,12 +24,7 @@ export default function RootLayout({
           <SessionAuthProvider>
             <Providers>
               <NavBar />
-              <div className="flex w-full">
-              <div className="flex-col-2 w-[85%]">
                 {children}
-              </div>
-              <Cart />
-            </div>
               <Footer />
             </Providers>
           </SessionAuthProvider>
