@@ -8,7 +8,7 @@ import Cart from "@/components/cart/cart";
 import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
-  const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
+  // const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   const params = useParams();
   const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
@@ -24,11 +24,17 @@ export default function ProductDetail() {
   });
   
   const productID = params.id;
+
+    const productos = localStorage.getItem('allProducts');
+    if(productos){
+
+      const parsedProducts: CartInterface[] = JSON.parse(productos);
+    }
   
 
   const increment = (producto: CartInterface) => {
     setCount(count + 1);
-    const productos = localStorage.getItem('products');
+    const productos = localStorage.getItem('allProducts');
     let updatedProducts: CartInterface[] = [];
   
     if (productos) {
@@ -36,7 +42,6 @@ export default function ProductDetail() {
       const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
   
       if (existingProductIndex !== -1) {
-
         parsedProducts[existingProductIndex].quantity += 1;
         updatedProducts = parsedProducts;
       } else {
@@ -46,15 +51,25 @@ export default function ProductDetail() {
       updatedProducts = [{ ...producto, quantity: 1 }];
     }
   
-    localStorage.setItem('products', JSON.stringify(updatedProducts));
+    localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
   };
 
-  const decrement = () => {
+ 
+  const decrement = (product: CartInterface) => {
     if (count > 0) {
       setCount(count - 1);
     }
-    deleteProduct(contextProducts, product.id)
+    const productosLS = localStorage.getItem('allProducts');
     
+    if(productosLS){
+      const parsedProducts: CartInterface[] = JSON.parse(productosLS)
+      const findProd = parsedProducts.find(prod => product.id == prod.id);
+
+      if(findProd){
+        findProd.quantity -= 1;
+        localStorage.setItem('allProducts', JSON.stringify(parsedProducts))
+      }
+    }
   };
 
   function getAverageRating(): number {
@@ -157,7 +172,7 @@ export default function ProductDetail() {
               </div>
               <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
                 <button
-                  onClick={decrement}
+                  onClick={() => decrement(product)}
                   className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
                 >
                   -
@@ -224,4 +239,3 @@ export default function ProductDetail() {
     </>
   )
 }
-            
