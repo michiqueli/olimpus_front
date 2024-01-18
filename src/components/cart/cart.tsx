@@ -1,14 +1,50 @@
+import React, {useState} from "react";
 import { useRouter } from "next/navigation";
-import { CartProps } from "../interfaces";
-import { useProduct } from "@/context/CartContext";
+import { CartInterface, CartProps } from "../interfaces";
 import { useSession } from "next-auth/react";
 
 const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
-    const router= useRouter()
-    const {contextProducts, total, totalProducts, deleteAllProducts, deleteProduct} = useProduct();
+    const router= useRouter();
+    const [productos, setProductos] = useState(() => {
+      const productosEnJSON = localStorage.getItem('allProducts');
+      return productosEnJSON ? JSON.parse(productosEnJSON) : [];
+    });
+   
     const renderedProductIds = new Set();
     const { data: session } = useSession();
     const user : any = session?.user;
+
+    const deleteOneProduct = (product: CartInterface) => {
+      const findProdIndex = productos.findIndex((prod: CartInterface) => prod.id === product.id);
+  
+      if (findProdIndex !== -1) {
+        const updatedProducts = [...productos];
+        updatedProducts.splice(findProdIndex, 1);
+  
+        setProductos(updatedProducts);
+        localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
+      }
+    };
+
+    const decrementOne = (product: CartInterface) => {
+    const productosLS = localStorage.getItem('allProducts');
+    
+      if(productosLS){
+        const parsedProducts: CartInterface[] = JSON.parse(productosLS)
+        const findProd = parsedProducts.find(prod => product.id == prod.id);
+
+      if(findProd){
+        findProd.quantity -= 1;
+        localStorage.setItem('allProducts', JSON.stringify(parsedProducts))
+      }
+    }
+    }
+
+    const deleteAll = () => {
+      setProductos([]);
+      localStorage.removeItem('allProducts');
+    }
+  
 
     return(
         <>
@@ -36,27 +72,23 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                       <p className="mt-0.5 text-sm text-gray-500 ml-20">Los productos en SALE no tienen cambio</p>
                     </div>
                     <div className="border-t border-gray-200 px-4 py-6 sm:px-6">
-                        {contextProducts.length > 0 ? (
-                            contextProducts.map((product) => {
-                            // Verificar si el producto ya se ha renderizado
-                                if (renderedProductIds.has(product.id)) {
-                                    return null; // Evitar volver a renderizar el mismo producto
-                                }
-                            // Agregar el ID del producto al conjunto
-                                renderedProductIds.add(product.id);
-                                return (
+                        {productos.length > 0 ? (
+                            productos.map((product: CartInterface) => (
                                     <div key={product.id}>
                                     <img src={product.image} alt="image product" width={100} height={100} className="object-cover" />
                                     <h1 onClick={() => router.push("/productDetail")}>{product.name}</h1>
                                     <h1>{product.price}</h1>
                                     <h1>{product.description}</h1>
+                                    <h1>Cantidad: {product.quantity}</h1>
+                                    <button onClick={() => deleteOneProduct(product)}>Eliminar</button>
                                     </div>
-                                );
-                            })
+                                )
+                            )
                             ) : (
                                 <h1 className="text.black">No tienes agregado ningún producto al carrito, wey</h1>
-                            )}
-                            <h1>cantidad: {totalProducts}</h1>
+                            )
+                            }
+                            <h1>cantidad total: {productos.length}</h1>
                             <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                                 <button onClick={()=>router.push(`/pasarelaPagos/${user.user.id}`)} className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 ">
                                 Iniciar compra
@@ -64,12 +96,12 @@ const Cart: React.FC<CartProps> = ({ isOpen, setIsOpen, onClose }) =>{
                             </div>
                             <div className="mt-6 flex justify-center text-center text-sm text-black-500">
                                 <button type="button" className="font-medium text-black-700 hover:text-yellow-300" onClick={()=>router.push("/catalogo")}>
-                                Ver mas productos
-                                <span aria-hidden="true"> &rarr;</span>
+                                  Ver mas productos
+                                  <span aria-hidden="true"> &rarr;</span>
                                 </button>
                             </div>
-                            </div>
-                        </div>
+                      </div>
+                      </div>
                     </div>
                     </div>
                 </div>

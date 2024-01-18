@@ -16,6 +16,10 @@ export default function Pasarela() {
   const { id } = useParams();
   const datos = useAppSelector(getUsers);
   const { contextProducts, total, totalProducts } = useProduct();
+  const PRODUCTOSAUSAR = localStorage.getItem('allProducts');
+  if(PRODUCTOSAUSAR){
+    const PARSEADO = JSON.parse(PRODUCTOSAUSAR);
+  }
   const renderedProductIds = new Set();
 
   useEffect(() => {
