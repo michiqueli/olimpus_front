@@ -1,7 +1,7 @@
 import { PostCartInterface } from "../interfaces";
 const postPayment = async (data: PostCartInterface[]) => {
     try {
-          const response = await fetch(`http://localhost:3001/payments/create`, {
+          const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/payments/create`, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
