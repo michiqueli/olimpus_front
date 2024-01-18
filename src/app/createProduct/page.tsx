@@ -1,5 +1,6 @@
 "use client";
 import axios from "axios";
+import Swal from "sweetalert2";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CreateProductInterface } from "@/components/interfaces";
@@ -106,20 +107,32 @@ function CreateProductForm() {
   const [file, setFile] = useState(null);
   const [loading, setLoading] = useState(false);
   const [res, setRes] = useState("");
-  const handleSelectFile = (e : any) => setFile(e.target.files[0]);
+  const handleSelectFile = (e: any) => setFile(e.target.files[0]);
+  const [imageUrl, setImageUrl] = useState<string | null>(null);
+  const [showDeleteButton, setShowDeleteButton] = useState(false);
 
   const handleUpload = async () => {
     try {
       setLoading(true);
       const data = new FormData();
-      data.append("my_file", file || '');
-      const res = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`, data);
+      data.append("my_file", file || "");
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_BACKEND_URL}/upload`,
+        data
+      );
       setRes(res.data.url);
+      setImageUrl(res.data.url);
+      setShowDeleteButton(true); // Mostrar el botón de eliminar
     } catch (error) {
       alert(error);
     } finally {
       setLoading(false);
     }
+  };
+  const handleDeleteImage = () => {
+    setImageUrl(null);
+    setRes("");
+    setShowDeleteButton(false);
   };
   // RESTO DEL FORM
   const onChange = (e: React.ChangeEvent<any>) => {
@@ -138,7 +151,11 @@ function CreateProductForm() {
     if (
       Object.values(errors).some((error) => error !== undefined && error !== "")
     ) {
-      alert("Hay errores en el formulario. Corrígelos antes de enviar.");
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: `Hay errores en el formulario corrijalos antes de enviar`,
+      });
       return;
     }
     if (!file) {
@@ -168,7 +185,9 @@ function CreateProductForm() {
     try {
       let updatedProduct = { ...product, image: res };
       await createProduct(updatedProduct);
-      router.push("/");
+      setTimeout(function () {
+        location.reload();
+      }, 4000);
     } catch (error) {
       console.error("Error al crear el producto", error);
     }
@@ -256,20 +275,39 @@ function CreateProductForm() {
             <label className="block mb-2 ml-2 text-sm font-medium dark:text-white">
               Imagen:
             </label>
-            <input
-              id="file"
-              type="file"
-              onChange={handleSelectFile}
-              multiple={false}
-            />
-            {file && (
-              <>
+            {imageUrl ? (
+              <div className="flex flex-col items-center text-center">
+                <img
+                  src={imageUrl}
+                  alt="Preview"
+                  className="my-2"
+                  style={{ maxWidth: "200px", maxHeight: "200px" }}
+                ></img>
                 <button
-                  onClick={handleUpload}
-                  className=" bg-lime-600 font-bold text-sm text-black h-8 w-full my-2 rounded-xl"
+                  onClick={handleDeleteImage}
+                  className="bg-red-600 font-bold text-sm text-black h-8 w-full my-2 rounded-xl"
                 >
-                  {loading ? "uploading..." : "upload to cloudinary"}
+                  Eliminar
                 </button>
+              </div>
+            ) : (
+              <>
+                <input
+                  id="file"
+                  type="file"
+                  onChange={handleSelectFile}
+                  multiple={false}
+                />
+                {file && (
+                  <>
+                    <button
+                      onClick={handleUpload}
+                      className="bg-lime-600 font-bold text-sm text-black h-8 w-full my-2 rounded-xl"
+                    >
+                      {loading ? "...Cargando [■■■■■■■□□□□□]" : "Cargar a Cloudinary"}
+                    </button>
+                  </>
+                )}
               </>
             )}
             {errors.image && (

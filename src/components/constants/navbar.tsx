@@ -7,6 +7,7 @@ import React from "react";
 import { useSession, signOut } from "next-auth/react";
 import Cart from "../cart/cart";
 import { useProduct } from "@/context/CartContext";
+import Swal from 'sweetalert2'
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
@@ -102,10 +103,20 @@ const NavBar: React.FC = () => {
                           )}
                         </div>
                         <button
-                          onClick={async () => {
-                            await signOut({
-                              callbackUrl: "/",
+                          onClick={ async () => {
+                            Swal.fire({
+                              position: "center",
+                              icon: "error",
+                              title: "Adios...",
+                              text: "Ya no estaras logueado en Olimpus Shop",
+                              showConfirmButton: false,
+                              timer: 3500
                             });
+                            setTimeout(async () => {
+                              await signOut({
+                                callbackUrl: "/"
+                              });
+                            }, 3500);                       
                           }}
                           className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                         >
@@ -133,8 +144,8 @@ const NavBar: React.FC = () => {
                   className="w-11 h-11 hover:scale-110"
                 />
               </button>
+            <h1 className="text-black font-black ml-1">{total}</h1>
             </div>
-            <h1 className="text-black">Total: {total}</h1>
           </div>
         </div>
         <div className="my-2 ml-2">
