@@ -19,7 +19,6 @@ export default function ProductDetail() {
     price: 0,
     discount: 0,
     Reviews: [] as Review[],
-    Reviews: [] as Review[],
     stock: 0,
     quantity: 0,
   });
