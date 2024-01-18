@@ -74,7 +74,7 @@ const Cart = () => {
                 </button>
                 <h1>Cantidad: {product.quantity}</h1>
                 <button
-                  className=" bg-red-500 font-semibold h-8"
+                  className=" bg-red-500 font-semibold h-8 rounded-lg"
                   onClick={() => deleteOneProduct(product)}
                 >
                   Eliminar
@@ -94,12 +94,18 @@ const Cart = () => {
           <h1 className="text-xl font-semibold text-center">
             cantidad total: {productos.length}
           </h1>
-          <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
+          <div className="mt-6 flex-row justify-center text-center ">
+          <button
+                  className=" bg-red-500 font-semibold h-8 rounded-lg px-1"
+                  onClick={() => deleteAll()}
+                >
+                  Eliminar TODOS
+                </button>
             <button
               onClick={() => {
                 router.push(`/pasarelaPagos/${user.user.id}`);
               }}
-              className="flex items-center justify-center rounded-md border border-transparent bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 "
+              className="rounded-md  bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 mt-4"
             >
               Iniciar compra
             </button>
