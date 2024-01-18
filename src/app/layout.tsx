@@ -25,7 +25,7 @@ export default function RootLayout({
             <Providers>
               <NavBar />
               <div className="flex w-full">
-              <div className="flex-col-2 w-[85%]">
+              <div className="flex-col-2 w-[85%] min-h-screen">
                 {children}
               </div>
               <Cart />

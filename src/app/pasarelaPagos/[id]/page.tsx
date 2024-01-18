@@ -68,49 +68,50 @@ export default function Pasarela() {
 
   return (
     <div>
-      <div className="flex">
-        <div className="ml-60 mt-6">
-          <div className="max-w-sm rounded overflow-hidden shadow-lg">
-            <div className="mb-8">
-              {datos && (
-                <div>
-                  <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                    <img
-                      width={30}
-                      height={30}
-                      src="/sobre.png"
-                      alt="Image not found"
-                      className="mr-2"
-                    />
-                    {datos.email}
-                  </h2>
+      <div className="flex ">
+      <div className="ml-96 mt-6">
+      <div className="max-w-sm rounded overflow-hidden shadow-lg">
+        <div className="mb-8 flex items-center">
+          {datos && (
+            <div>
+              <h2 className="text-gray-900 font-semibold text-xl mb-2 ml-4">
+                <img
+                  width={30}
+                  height={30}
+                  src="/sobre.png"
+                  alt="Image not found"
+                  className="inline mr-4"
+                />
+                {datos.email}
+              </h2>
 
-                  <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                    <img
-                      width={40}
-                      height={40}
-                      src="/ubicacion.png"
-                      alt="Image not found"
-                      className="mr-2"
-                    />
-                    {datos.street}, CP {datos.zipCode}
-                  </h2>
-                  <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
-                    <img
-                      width={60}
-                      height={60}
-                      src="/envio.png"
-                      alt="Image not found"
-                      className="mr-2"
-                    />
-                    Envio a convenir: acordar costo de envio por whatsapp (Oca o
-                    Correo Argentino)
-                  </h2>
-                </div>
-              )}
+              <h2 className="text-gray-900 font-semibold text-xl mb-2 ml-2">
+                <img
+                  width={40}
+                  height={40}
+                  src="/ubicacion.png"
+                  alt="Image not found"
+                  className="inline mr-4"
+                />
+                {datos.street}, CP {datos.zipCode}
+              </h2>
+
+              <h2 className="text-gray-900 font-semibold text-xl mb-4 text-center ml-2">
+                <img
+                  width={60}
+                  height={60}
+                  src="/envio.png"
+                  alt="Image not found"
+                  className="inline mr-8"
+                />
+                Envío a convenir: acordar costo de envío por WhatsApp (Oca o Correo Argentino)
+              </h2>
             </div>
-          </div>
+          )}
         </div>
+      </div>
+    </div>
+
 
         <div className="max-w-sm rounded overflow-hidden shadow-lg ml-20">
           <div className="px-6 py-4">
@@ -165,7 +166,7 @@ export default function Pasarela() {
           </div>
         </div>
       </div>
-      <div className="flex items-center justify-center mt-4 text-gray-900 font-bold text-lg">
+      <div className="flex items-center justify-center  text-gray-900 font-bold text-lg  -mt-60">
         <div className="w-64 h-28 flex border border-solid border-cyan-500 rounded-full justify-center">
           <button onClick={goToPay}>
             <p>Ir a pagar</p>
