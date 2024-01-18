@@ -12,6 +12,7 @@ const NavBar: React.FC = () => {
   const { data: session } = useSession();
   
   const { total } = useProduct();
+  const user: any = session?.user
 
   const router = useRouter();
   const path = usePathname();
@@ -44,10 +45,9 @@ const NavBar: React.FC = () => {
                 />
               </button>
             </div>
-            {session?.user ? (
+            {user ? (
               <div>
-                <h1 className="text-black">Bienvenido {session?.user.user.id}</h1>
-        
+                <h1 className="text-black">Bienvenido {user.user.name}</h1>
               </div>
             ) : (
               ""
@@ -70,7 +70,7 @@ const NavBar: React.FC = () => {
                     {session?.user ? (
                       <>
                         <button
-                          onClick={() => router.push("/account")}
+                          onClick={() => router.push(`/userDetail/${user.user.id}`)}
                           className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
                         >
                           Mi Perfil

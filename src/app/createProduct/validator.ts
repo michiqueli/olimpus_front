@@ -4,8 +4,9 @@ export interface ProductFormValidatorProps {
     stock?: string;
     description?: string;
     image?: string;
-    TypeId?: string;
-    SubtypeId?: string;
+    Type?: string;
+    Subtype?: string;
+    Metric?: string;
 }
 
 const productFormValidations = (inputs: any): ProductFormValidatorProps => {
@@ -20,12 +21,16 @@ const productFormValidations = (inputs: any): ProductFormValidatorProps => {
 
     if(!inputs.price || isNaN(parseFloat(inputs.price))){
         errors.price = 'Precio requerido'
+    } else if (parseFloat(inputs.price) <= 0){
+        errors.price = 'El precio tiene que ser mayor a 0'
     }
 
     if(!inputs.stock || isNaN(parseFloat(inputs.stock))){
         errors.stock = 'Stock requerido'
     } else if (parseFloat(inputs.stock) >= 5000) {
         errors.stock = 'Máximo de stock: 5000. Para agregar más cantidad contactarse con admin/desarrollador'
+    } else if (parseFloat(inputs.stock) <= 0) {
+        errors.stock = 'El stock minimo debe ser mayor a 0'
     }
 
     if(!inputs.description || typeof inputs.description !== 'string' || inputs.description.length === 0){
