@@ -7,6 +7,7 @@ import { getUsers } from "@/Redux/sliceUsers";
 import { useRouter } from "next/navigation";
 
 export default function UserDetail() {
+
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { id } = useParams();

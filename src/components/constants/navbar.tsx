@@ -10,6 +10,7 @@ import { useProduct } from "@/context/CartContext";
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
+  
   const { total } = useProduct();
   const user: any = session?.user
 
@@ -74,6 +75,17 @@ const NavBar: React.FC = () => {
                         >
                           Mi Perfil
                         </button>
+                        <div>
+                          {
+                            session.user.user.roleId === 1 || session.user.user.roleId === 2 ? (
+                              <button>Admin</button>
+                              )
+                              :
+                            (
+                              ''
+                            )
+                          }
+                        </div>
                         <button
                           onClick={async () => {
                             await signOut({
