@@ -26,7 +26,6 @@ export default function ProductRev() {
     ProductId: 0,
     isActive: true
   });
-  console.log("rev", rev)
 
   const [product, setProduct] = useState<ProductReview>({
     image: '',

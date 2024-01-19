@@ -48,9 +48,18 @@ function CardSlider() {
 export default CardSlider;
 
 const CarrouselCard: React.FC <{ product: ProductInterface }> = ({ product }) => {
+    const router = useRouter();
     const [count, setCount] = useState(0);
     const {addProduct} = useProduct();
-    const router = useRouter();
+    const increment = () => {
+        setCount(count + 1);
+      };
+    
+      const decrement = () => {
+        if (count > 0) {
+          setCount(count - 1);
+        }
+      };
     return (
         <div className='flex flex-col items-center justify-center bg-white mx-2 border border-gray-300 rounded-lg shadow w-56 h-96 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
                 <button onClick={() => router.push(`/productDetail/${product.id}`)}>

@@ -148,7 +148,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Categorías:</label>
         <select
-          className="w-full"
+          className="text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none"
           defaultValue={"default"}
           name="products"
           onChange={(event) => handleInputChange(event)}
@@ -167,7 +167,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Producto:</label>
         <select
-          className="w-full"
+          className="text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none"
           defaultValue={"default"}
           name="subtypes"
           onChange={(event) => handleInputSubtypes(event)}
@@ -184,7 +184,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Medida:</label>
         <select
-          className="w-full"
+          className="text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none"
           defaultValue={"default"}
           name="metrics"
           onChange={(event) => handleInputMetrics(event, subtyState)}
@@ -200,7 +200,7 @@ export default function Filtered() {
       <div className="flex-grow w-4 h-4">
         <label className="">Ordenar:</label>
         <select
-          className="w-full"
+          className="text-black rounded-3xl border border-yellow-200 hover:border-yellow-300 mb-3 text-start py-2 w-full focus:outline-none"
           name="price"
           onChange={(event) => handleOrderByPrice(event)}
         >
