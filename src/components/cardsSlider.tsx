@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { ProductInterface } from './interfaces';
 import { useEffect, useState } from 'react';
 import getPopularProducts from './requests/getPopularProducts';
+import { useProduct } from '@/context/CartContext';
 
 
 
@@ -48,46 +49,7 @@ export default CardSlider;
 
 const CarrouselCard: React.FC <{ product: ProductInterface }> = ({ product }) => {
     const [count, setCount] = useState(0);
-    // const increment = (producto: ProductInterface) => {
-    //     setCount(count + 1);
-    //     const productos = localStorage.getItem("allProducts");
-    //     let updatedProducts: CartInterface[] = [];
-    
-    //     if (productos) {
-    //       const parsedProducts: CartInterface[] = JSON.parse(productos);
-    //       const existingProductIndex = parsedProducts.findIndex(
-    //         (p: CartInterface) => p.id === producto.id
-    //       );
-    
-    //       if (existingProductIndex !== -1) {
-    //         parsedProducts[existingProductIndex].quantity += 1;
-    //         updatedProducts = parsedProducts;
-    //       } else {
-    //         updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
-    //       }
-    //     } else {
-    //       updatedProducts = [{ ...producto, quantity: 1 }];
-    //     }
-    
-    //     localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
-    //   };
-    
-    //   const decrement = (product: ProductInterface) => {
-    //     if (count > 0) {
-    //       setCount(count - 1);
-    //     }
-    //     const productosLS = localStorage.getItem("allProducts");
-    
-    //     if (productosLS) {
-    //       const parsedProducts: CartInterface[] = JSON.parse(productosLS);
-    //       const findProd = parsedProducts.find((prod) => product.id == prod.id);
-    
-    //       if (findProd) {
-    //         findProd.quantity -= 1;
-    //         localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
-    //       }
-    //     }
-    //   };
+    const {addProduct} = useProduct();
     const router = useRouter();
     return (
         <div className='flex flex-col items-center justify-center bg-white mx-2 border border-gray-300 rounded-lg shadow w-56 h-96 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>

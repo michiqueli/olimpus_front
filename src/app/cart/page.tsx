@@ -1,19 +1,22 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
+import { CartInterface, CartProps } from "../../components/interfaces";
 import { useSession } from "next-auth/react";
-import { CartInterface } from "../../components/interfaces";
 import PrimaryButton from "@/components/buttons/primaryButton";
+import { useProduct } from "@/context/CartContext";
 
 const Cart = () => {
   const router = useRouter();
-  let amount = 0;
-  const [productos, setProductos] = useState(() => {
-    const productosEnJSON = localStorage.getItem("allProducts");
-    return productosEnJSON ? JSON.parse(productosEnJSON) : [];
-  });
+  const { decrementOne } = useProduct();
+  const [productos, setProductos] = useState<CartInterface[]>([]);
 
-  // const renderedProductIds = new Set();
+  useEffect(() => {
+    const prods = localStorage.getItem("allProducts");
+    const parsed = prods ? JSON.parse(prods) : [];
+    setProductos(parsed)
+  },[])
+
   const { data: session } = useSession();
   const user: any = session?.user;
 
@@ -31,28 +34,28 @@ const Cart = () => {
     }
   };
 
-  const decrementOne = (product: CartInterface) => {
-    const productosLS = localStorage.getItem("allProducts");
+  const decrementOneProd = async (product: CartInterface) => {
+    await decrementOne(product.id);
 
-    if (productosLS) {
-      const parsedProducts: CartInterface[] = JSON.parse(productosLS);
-      const findProd = parsedProducts.find((prod) => product.id === prod.id);
-
-      if (findProd) {
-        findProd.quantity -= 1;
-        localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
-        setProductos(parsedProducts);
+    const updatedProducts = productos.map((prod: CartInterface) => {
+      if (prod.id === product.id) {
+        return { ...prod, quantity: prod.quantity - 1 };
       }
-    }
+      return prod;
+    });
+
+    setProductos(updatedProducts);
+    localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
   };
 
   const deleteAll = () => {
     setProductos([]);
     localStorage.removeItem("allProducts");
   };
-  if (user) {
-    return (
-      <main className="ml-4 w-full">
+
+  return (
+    <main className="ml-4 w-full">
+      {user ? (
         <div className="flex h-full flex-col overflow-y-scroll bg-white shadow-xl">
           <h2 className="text-xl font-medium text-center text-gray-900">
             Carrito de compras
@@ -96,7 +99,7 @@ const Cart = () => {
                   <h1>Cantidad: {product.quantity}</h1>
                   <div>
                     <PrimaryButton
-                      onClickfunction={() => decrementOne(product)}
+                      onClickfunction={() => decrementOneProd(product)}
                       title="-"
                     />
                     <button
@@ -163,15 +166,13 @@ const Cart = () => {
             </button>
           </div>
         </div>
-      </main>
-  )}else{
-    return(
-    <div className="text-center h-[300px] items-center justify-center">
-    <h1 className="text-5xl">Debes iniciar Sesion para ver tu carrito</h1>
-    </div>
-    )
-  }
-  
+      ) : (
+        <div className="text-5xl font-bold text-center justify-center h-[600px]">
+          <h1>Debes Iniciar sesion para ver el carrito de compras</h1>
+        </div>
+      )}
+    </main>
+  );
 };
 
 export default Cart;
