@@ -1,14 +1,14 @@
 "use client";
-
+import Swal from "sweetalert2";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import { Review, CartInterface } from "@/components/interfaces";
-import Cart from "@/components/cart/cart";
 import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
-  // const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
+  const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
+  // const router = useRouter()
   const params = useParams();
   const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
@@ -25,33 +25,11 @@ export default function ProductDetail() {
 
   const productID = params.id;
 
-  const productos = localStorage.getItem("allProducts");
-  if (productos) {
-    const parsedProducts: CartInterface[] = JSON.parse(productos);
-  }
 
   const increment = (producto: CartInterface) => {
     setCount(count + 1);
-    const productos = localStorage.getItem("allProducts");
-    let updatedProducts: CartInterface[] = [];
+    addProduct(producto);
 
-    if (productos) {
-      const parsedProducts: CartInterface[] = JSON.parse(productos);
-      const existingProductIndex = parsedProducts.findIndex(
-        (p: CartInterface) => p.id === producto.id
-      );
-
-      if (existingProductIndex !== -1) {
-        parsedProducts[existingProductIndex].quantity += 1;
-        updatedProducts = parsedProducts;
-      } else {
-        updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
-      }
-    } else {
-      updatedProducts = [{ ...producto, quantity: 1 }];
-    }
-
-    localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
   };
 
   const decrement = (product: CartInterface) => {
@@ -84,7 +62,6 @@ export default function ProductDetail() {
       try {
         const productFind = await getProductById(productID);
         setProduct(productFind);
-        console.log("p", productFind);
       } catch (error) {
         console.error("Error en render componente de detalle producto", error);
       }
@@ -92,14 +69,14 @@ export default function ProductDetail() {
     fetchData();
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onClose = () => {
-    setIsOpen(false);
-  };
-
   const handleAddToCart = () => {
-    setIsOpen(true);
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Producto Agregado al Carrito... revisa Tu carrito para finalizar la compra",
+      showConfirmButton: false,
+      timer: 2500,
+    });
   };
 
   return (
@@ -114,8 +91,8 @@ export default function ProductDetail() {
         </div>
         <div>
           <div className="max-w-md mx-auto  mt-20 mr-80  ml-40 ">
-            <h1 className="text-black text-6xl text-center ">{product.name}</h1>
-            <h2 className="text-black text-center text-lg mt-16">
+            <h1 className="text-black text-3xl text-center ">{product.name}</h1>
+            <h2 className="text-black text-center text-lg mt-8">
               {product.description}
             </h2>
             <div className="flex flex-col items-center justify-center flex-grow">
@@ -135,7 +112,7 @@ export default function ProductDetail() {
                   </h1>
                 </div>
               ) : (
-                <h1 className="text-lime-500 text-xl">${product.price}</h1>
+                <h1 className="text-lime-500 text-2xl mt-2">${product.price}</h1>
               )}
             </div>
           </div>
@@ -145,35 +122,39 @@ export default function ProductDetail() {
               src="/envio.png"
               width={60}
               height={60}
-              className="mt-20"
+              className="mt-12"
             />
-            <h2 className="text-black text-lg ml-4 mt-20">
+            <h2 className="text-black text-lg ml-4 mt-12">
               Envíos gratis a partir de $20.000
             </h2>
           </div>
-          <div className="flex justify-between items-center ml-40 mt-10">
-            <div className="text-lg">
+          <div className="flex items-center ml-60 mt-10">
+            <div className="text-lg mr-40">
               <h2>Cantidad</h2>
             </div>
 
-            {product.stock > 0 ? (
-              <h1 className="text-lg text-black mr-80">
-                Stock: {product.stock}
-              </h1>
-            ) : (
-              <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
-            )}
+            <div>
+              {product.stock > 0 ? (
+                <h1 className="text-lg text-black text-right">
+                  Stock: {product.stock}
+                </h1>
+              ) : (
+                <h1 className="text-xl text-red-600">Producto SIN stock</h1>
+              )}
+            </div>
           </div>
-          <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
+            
+          <div className="flex items-center mt-4 ml-60 text-lg border font-bold border-gray-300 w-4/12 p-4 rounded-full ">
+
             <button
               onClick={() => decrement(product)}
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
             >
               -
             </button>
-            <p className="mr-20 font-normal "> {count}</p>
+            <p className="font-normal "> {count}</p>
             <button
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
               onClick={() => increment(product)}
             >
               +
@@ -181,7 +162,7 @@ export default function ProductDetail() {
           </div>
           <button
             onClick={handleAddToCart}
-            className="my-20 ml-60 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
+            className="my-10 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
           >
             Agregar al carrito
           </button>
@@ -232,6 +213,6 @@ export default function ProductDetail() {
             ))}
         </div>
       </div>
-    </main>
-  );
+    </main>
+  );
 }

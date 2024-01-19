@@ -146,8 +146,9 @@ export interface CreateContextProps {
     contextProducts: CartInterface[];
     total: number,
     totalProducts: number,
+    decrementOne: (id: string) => void;
     addProduct: (product: CartInterface) => void;
-    deleteProduct: (productos: CartInterface[], id: string) => void;
+    deleteProduct: (id: string) => void;
     deleteAllProducts: (products: CartInterface[]) => void;
 }
 

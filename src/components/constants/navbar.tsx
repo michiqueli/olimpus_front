@@ -2,34 +2,21 @@
 import { useRouter, usePathname } from "next/navigation";
 import SearchBar from "./searchbar";
 import GoBack from "../buttons/goBack";
-import { useState } from "react";
 import React from "react";
 import { useSession, signOut } from "next-auth/react";
-import Cart from "../cart/cart";
 import { useProduct } from "@/context/CartContext";
 import Swal from 'sweetalert2'
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
-
-  const { total } = useProduct();
+  const {contextProducts} = useProduct()
   const user: any = session?.user;
-
   const router = useRouter();
   const path = usePathname();
   // Estado para controlar la visibilidad del menú desplegable
   const [dropdownVisible, setDropdownVisible] = React.useState(false);
-
-  // Estado para abrir modal carrito
-  const [isOpen, setIsOpen] = useState(false);
-  const openModal = () => setIsOpen(true);
-
-  const handleCartClick = () => {
-    openModal();
-  };
-  const onClose = () => {
-    setIsOpen(false);
-  };
+  
+  const length = contextProducts.length;
 
   return (
     <main>
@@ -137,6 +124,14 @@ const NavBar: React.FC = () => {
                   </div>
                 )}
               </div>
+              <button onClick={() => router.push("/cart")}>
+                <img
+                  src="/shopping.png"
+                  alt=""
+                  className="w-11 h-11 hover:scale-110"
+                />
+              </button>
+            <h1 className="text-black font-black ml-1">{length}</h1>
             </div>
           </div>
         </div>
