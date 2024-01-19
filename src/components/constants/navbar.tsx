@@ -9,15 +9,14 @@ import Swal from 'sweetalert2'
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
+  const {contextProducts} = useProduct()
   const user: any = session?.user;
   const router = useRouter();
   const path = usePathname();
   // Estado para controlar la visibilidad del menú desplegable
   const [dropdownVisible, setDropdownVisible] = React.useState(false);
-
-  const prods = localStorage.getItem('allProducts');
-  const parseados = prods ? JSON.parse(prods) : 0;
-  const length = parseados.length;
+  
+  const length = contextProducts.length;
 
   return (
     <main>

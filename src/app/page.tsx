@@ -36,14 +36,6 @@ export default function Home() {
             )}
           </h1>
         </div>
-        <div>
-          {array &&
-            array.map((prod: CartInterface) => (
-              <div key={prod.id}>
-                <h1 className="text-black">{prod.name}</h1>
-              </div>
-            ))}
-        </div>
       </div>
     </main>
   );
