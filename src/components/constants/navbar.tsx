@@ -36,7 +36,7 @@ const NavBar: React.FC = () => {
             </div>
             {user ? (
               <div>
-                <h1 className="text-black">Bienvenido {user.name}</h1>
+                <h1 className="text-black">Bienvenido {user.user? user.user.name : user.name} </h1>
               </div>
             ) : (
               ""
@@ -76,19 +76,19 @@ const NavBar: React.FC = () => {
                           Mi Perfil
                         </button>
                         <div>
-                          {user.roleId === 1 || user.roleId === 2 ? (
-                            <button
-                              onClick={() => {
-                                router.push(`/adminDashboard/`);
-                                setDropdownVisible(!dropdownVisible);
-                              }}
-                              className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
-                            >
-                              Admin
-                            </button>
-                          ) : (
-                            ""
-                          )}
+                        {user.user && (user.user.roleId === 1 || user.user.roleId === 2) ? (
+                          <button
+                            onClick={() => {
+                              router.push(`/adminDashboard/`);
+                              setDropdownVisible(!dropdownVisible);
+                            }}
+                            className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"
+                          >
+                            Admin
+                          </button>
+                        ) : (
+                          ""
+                        )}
                         </div>
                         <button
                           onClick={ async () => {

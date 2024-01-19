@@ -5,6 +5,8 @@ import { CartInterface, CartProps } from "../../components/interfaces";
 import { useSession } from "next-auth/react";
 import PrimaryButton from "@/components/buttons/primaryButton";
 import { useProduct } from "@/context/CartContext";
+import AlertButton from "@/components/buttons/alertButton";
+import GreenButton from "@/components/buttons/greenButton";
 
 const Cart = () => {
   const router = useRouter();
@@ -12,10 +14,18 @@ const Cart = () => {
   const [productos, setProductos] = useState<CartInterface[]>([]);
 
   useEffect(() => {
-    const prods = localStorage.getItem("allProducts");
-    const parsed = prods ? JSON.parse(prods) : [];
-    setProductos(parsed)
-  },[])
+    const loadProductsFromLocalStorage = async () => {
+      try {
+        const prods = await localStorage.getItem("allProducts");
+        const parsed = prods ? JSON.parse(prods) : [];
+        setProductos(parsed);
+      } catch (error) {
+        console.error("Error loading products from localStorage:", error);
+      }
+    };
+  
+    loadProductsFromLocalStorage();
+  }, []);
 
   const { data: session } = useSession();
   const user: any = session?.user;
@@ -81,9 +91,6 @@ const Cart = () => {
                       />
                     </div>
                     <h1 className="text-2xl font-semibold ">{product.name}</h1>
-                    <h1 className="text-sm font-semibold ">
-                      {product.description}
-                    </h1>
                     {product.discount > 0 ? (
                       <h1 className="text-xl text-lime-600 ">
                         ${" "}
@@ -98,23 +105,15 @@ const Cart = () => {
                   </button>
                   <h1>Cantidad: {product.quantity}</h1>
                   <div>
-                    <PrimaryButton
-                      onClickfunction={() => decrementOneProd(product)}
-                      title="-"
-                    />
-                    <button
-                      className="bg-red-500 px-2 font-semibold h-8 rounded-lg mt-2"
-                      onClick={() => deleteOneProduct(product)}
-                    >
-                      Eliminar
-                    </button>
+                    <PrimaryButton onClickfunction={() => decrementOneProd(product)} title="-"/>
+                    <AlertButton onClickfunction={() => deleteOneProduct(product)} title='Eliminar'/>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <h1 className="text-black text-center my-4">
-              No tienes agregado ningún producto al carrito, wey
+              No tienes agregado ningún producto al carrito
             </h1>
           )}
 
@@ -140,30 +139,12 @@ const Cart = () => {
           </h1>
 
           <div className="mt-6 flex-col flex items-center justify-center text-center">
-            <button
-              className="bg-red-500 font-semibold h-8 rounded-lg px-1 mr-2 w-44"
-              onClick={() => deleteAll()}
-            >
-              Eliminar TODOS
-            </button>
-            <button
-              onClick={() => {
-                router.push(`/pasarelaPagos/${user.user.id}`);
-              }}
-              className=" w-52 rounded-md bg-yellow-200 px-6 py-3 text-base font-medium text-black shadow-sm hover:bg-yellow-300 mt-4"
-            >
-              Iniciar compra
-            </button>
+            <AlertButton onClickfunction={() => deleteAll()} title="Eliminar todos"/>
+            <PrimaryButton title='Ir a pagar' onClickfunction={() => {router.push(`/pasarelaPagos/${user.user.id}`)}}/>
           </div>
 
           <div className="mt-6 flex justify-center text-center text-sm text-black-500">
-            <button
-              type="button"
-              className="font-medium text-black-700 hover:text-yellow-300"
-              onClick={() => router.push("/catalogo")}
-            >
-              Ver más productos <span aria-hidden="true">&rarr;</span>
-            </button>
+            <GreenButton title='Ver más productos' onClickfunction={() => router.push("/catalogo")}/>
           </div>
         </div>
       ) : (
