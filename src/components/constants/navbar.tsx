@@ -33,13 +33,6 @@ const NavBar: React.FC = () => {
                 />
               </button>
             </div>
-            {session?.user ? (
-              <div>
-                <h1 className="text-black">Bienvenido {user?.name}</h1>
-              </div>
-            ) : (
-              <h1 className="text-black">Bienvenido {user?.user.name}</h1>
-            )}
             <SearchBar />
             <div className="flex">
               <div className="relative">
