@@ -17,24 +17,28 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <div className="h-full w-full my-6">
-        <div className='flex flex-col mt-32 items-center'>
-          <div className='justify-arround '>
-            <PrimaryButton onClickfunction={()=> router.push('/')} title='Usuarios'/>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear usuario'/>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto mt-10 bg-gray-300">
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2 text-center">Panel de administración</div>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        <div className="flex flex-col">
+          <div className="flex items-center mb-2">
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              <PrimaryButton onClickfunction={() => router.push("/allUsers")} title='Usuarios'/>
+            </span>
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              <PrimaryButton onClickfunction={() => router.push('/register')} title='Crear usuario'/>
+            </span>
           </div>
-          <div className='flex justify-arround'>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Transacciones'/>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear transacción'/>
-          </div>
-          <div className='flex justify-arround'>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Ingresos'/>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Stocks'/>
-          </div>
-          <div className='flex justify-arround '>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Productos'/>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear producto'/>
+          <span className="border-b border-gray-500 w-full my-2"></span>
+          <div className="flex items-center mb-2">
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              <PrimaryButton onClickfunction={() => router.push('/catalogo')} title='Productos'/>
+            </span>
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              <PrimaryButton onClickfunction={() => router.push('/createProduct')} title='Crear productos'/>
+            </span>
           </div>
         </div>
       </div>

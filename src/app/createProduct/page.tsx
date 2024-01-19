@@ -201,7 +201,7 @@ function CreateProductForm() {
           className="flex flex-col items-center h-full w-10/12 mb-6"
         >
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-xl font-bold leading-tight tracking-tight md:text-2xl dark:text-white">
+            <h1 className="text-xl  text-center font-bold leading-tight tracking-tight md:text-2xl dark:text-white">
               Nuevo producto
             </h1>
           </div>
