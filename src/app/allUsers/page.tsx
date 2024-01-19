@@ -2,19 +2,15 @@
 
 import { Users } from "../../components/interfaces";
 import { useEffect, useState } from "react";
-import { useRouter, redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 import ActiveAdmins from "../../components/users/admins/adminUsers";
 import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
 import InactiveBuyers from "../../components/users/buyers/inactiveBuyers";
-import { useAppSelector } from "@/Redux/hooks";
-import { getUsers } from "@/Redux/sliceUsers";
 import getAllUsers from "../../components/requests/getAllUsers";
 import PrimaryButton from "../../components/buttons/primaryButton";
 
 export default function AllUsers(){
-  //const listUsers = useAppSelector<UserList[]>(users);
-  const filtusers = useAppSelector(getUsers);
   const [component, setComponent] = useState(true);
   const [active, setActive] = useState(true);
   const router = useRouter();

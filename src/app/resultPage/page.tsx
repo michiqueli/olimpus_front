@@ -3,9 +3,8 @@ import { useAppSelector } from "@/Redux/hooks";
 import { getSearchedProducts } from "@/Redux/sliceProducts";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
-import { ProductInterface } from "../../components/interfaces";
+import { CartInterface } from "../../components/interfaces";
 import Pagination from "@/components/design/pagination";
-import GoBack from "../../components/buttons/goBack";
 import { useProduct } from "@/context/CartContext";
 
 export default function ResultPage() {
@@ -20,7 +19,7 @@ export default function ResultPage() {
     <main className="w-[100%]">
       {dataShow.length > 0 ? (
         <div className="w-[100%] flex flex-col justify-center items-center mt-10 space-y-7">
-          {dataShow.map((product: ProductInterface) => (
+          {dataShow.map((product: CartInterface) => (
             <ProductCard key={product.id} product={product} />
           ))}
           <Pagination data={displayedProducts} recordsPerPage={recordsPerPage} currentPage={currentPage} setCurrentPage={setCurrentPage}/>
@@ -37,19 +36,33 @@ export default function ResultPage() {
   );
 }
 
-const ProductCard: React.FC<{ product: ProductInterface }> = ({ product }) => {
-  const router = useRouter();
-  const [count, setCount] = useState(0);
+const ProductCard: React.FC<{ product: CartInterface }> = ({ product }) => {
   const {addProduct} = useProduct();
-  const increment = () => {
-    setCount(count + 1);
-  };
+  const [count, setCount] = useState(0);
+    const router = useRouter();
 
-  const decrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
+    const increment = (producto: CartInterface) => {
+        setCount(count + 1);
+        addProduct(producto);
+    
+      };
+
+    const decrement = (product: CartInterface) => {
+        if (count > 0) {
+          setCount(count - 1);
+        }
+        const productosLS = localStorage.getItem("allProducts");
+    
+        if (productosLS) {
+          const parsedProducts: CartInterface[] = JSON.parse(productosLS);
+          const findProd = parsedProducts.find((prod) => product.id == prod.id);
+    
+          if (findProd) {
+            findProd.quantity -= 1;
+            localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
+          }
+        }
+      };
   return (
     <div className="flex flex-row items-center bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         <button onClick={() => router.push(`/productDetail/${product.id}`)}>

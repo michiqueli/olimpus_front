@@ -1,17 +1,16 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
 import { getTodosProducts } from "@/Redux/Actions";
-import { ProductInterface } from "../../components/interfaces";
+import { CartInterface } from "../../components/interfaces";
 import { useEffect, useState } from "react";
-import { useProduct } from "@/context/CartContext";
 import { useRouter } from 'next/navigation';
 import Filtered from '../../components/filtros';
-import { getProducts, getFilteredProducts} from '@/Redux/sliceProducts';
+import {getFilteredProducts} from '@/Redux/sliceProducts';
 import Pagination from "@/components/design/pagination";
+import { useProduct } from "@/context/CartContext";
+
 export default function ProductosCompleto() {
   const dispatch = useAppDispatch();
-  const router = useRouter();
-  const allProducts = useAppSelector(getProducts);
   const filtered = useAppSelector(getFilteredProducts);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -31,7 +30,7 @@ export default function ProductosCompleto() {
         <Filtered />
       </div>
       <div className="text-center w-[98%] 2xl:grid 2xl:grid-cols-3 gap-y-6 gap-x-4 text-xs">
-        {dataShow.map((product: ProductInterface) => (
+        {dataShow.map((product: CartInterface) => (
           <ProductCard key={product.id} product={product} />
         ))}
       </div>
@@ -45,19 +44,34 @@ export default function ProductosCompleto() {
   );
 }
 
-const ProductCard: React.FC<{ product: ProductInterface }> = ({ product }) => {
-  const [count, setCount] = useState(0);
+const ProductCard: React.FC<{ product: CartInterface }> = ({ product }) => {
   const {addProduct} = useProduct();
-  const increment = () => {
-    setCount(count + 1);
-  };
+  const [count, setCount] = useState(0);
+    const router = useRouter();
 
-  const decrement = () => {
-    if (count > 0) {
-      setCount(count - 1);
-    }
-  };
-  const router = useRouter();
+    const increment = (producto: CartInterface) => {
+        setCount(count + 1);
+        addProduct(producto);
+    
+      };
+
+    const decrement = (product: CartInterface) => {
+        if (count > 0) {
+          setCount(count - 1);
+        }
+        const productosLS = localStorage.getItem("allProducts");
+    
+        if (productosLS) {
+          const parsedProducts: CartInterface[] = JSON.parse(productosLS);
+          const findProd = parsedProducts.find((prod) => product.id == prod.id);
+    
+          if (findProd) {
+            findProd.quantity -= 1;
+            localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
+          }
+        }
+      };
+  
   return (
     <div className=" w-[100%] flex flex-col sm:flex-row items-center bg-white sm:border sm:border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700">
         {/* div main */}
@@ -113,11 +127,11 @@ const ProductCard: React.FC<{ product: ProductInterface }> = ({ product }) => {
           </div>
         <div className='flex items-center justify-between border font-bold border-gray-300 w-11/12 rounded-full mb-1'>
           <button 
-          // onClick={() => decrement(product)} 
+            onClick={() => decrement(product)} 
           className="bg-yellow-100 text-black  py-2 px-4 rounded-full">-</button>
           <p className='font-normal'>{count}</p>
           <button 
-          // onClick={() => increment(product)} 
+          onClick={() => increment(product)} 
           className="bg-yellow-100 text-black  py-2 px-4 rounded-full">+</button>
         </div>
         </div>

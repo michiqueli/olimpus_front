@@ -4,12 +4,10 @@ import { useRouter } from 'next/navigation';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
 export default function Dashboard() {
-  //const storedToken = localStorage.getItem('token');
   const router = useRouter();
 
   const logOut = async () => {
     try {
-      //localStorage.removeItem('token');
       router.push('/');
     } catch (error) {
       throw new Error("Fallo en logout ");

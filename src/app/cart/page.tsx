@@ -1,7 +1,7 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import { CartInterface, CartProps } from "../../components/interfaces";
+import { CartInterface } from "../../components/interfaces";
 import { useSession } from "next-auth/react";
 import PrimaryButton from "@/components/buttons/primaryButton";
 import { useProduct } from "@/context/CartContext";
