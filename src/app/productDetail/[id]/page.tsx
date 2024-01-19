@@ -25,7 +25,6 @@ export default function ProductDetail() {
 
   const productID = params.id;
 
-
   const increment = (producto: CartInterface) => {
     setCount(count + 1);
     addProduct(producto);

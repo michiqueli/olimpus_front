@@ -2,15 +2,13 @@
 
 import { Carousel } from 'flowbite-react';
 import { useRouter } from 'next/navigation';
-import { ProductInterface } from './interfaces';
+import { CartInterface, ProductInterface } from './interfaces';
 import { useEffect, useState } from 'react';
 import getPopularProducts from './requests/getPopularProducts';
 import { useProduct } from '@/context/CartContext';
 
-
-
 function CardSlider() {
-    const [products, setProducts] = useState<ProductInterface[]>([]);
+    const [products, setProducts] = useState<CartInterface[]>([]);
     const [count, setCount] = useState(0);
     useEffect (() => {
         const fetchData = async () => {
@@ -36,7 +34,7 @@ function CardSlider() {
             <Carousel slide={false} leftControl={<img src="/izq.png" className='h-12 opacity-80 hover:opacity-100' />} rightControl={<img src="/der.png" className='h-12 opacity-80 hover:opacity-100'/>} >
                 {slides.map((slide, index) => (
                     <div key={index} className='flex justify-center'>
-                        {slide.map((product: ProductInterface) => (
+                        {slide.map((product: CartInterface) => (
                             <CarrouselCard key={product.id} product={product} />
                         ))}
                     </div>
@@ -47,10 +45,34 @@ function CardSlider() {
 }
 export default CardSlider;
 
-const CarrouselCard: React.FC <{ product: ProductInterface }> = ({ product }) => {
+const CarrouselCard: React.FC <{ product: CartInterface }> = ({ product }) => {
     const [count, setCount] = useState(0);
     const {addProduct} = useProduct();
     const router = useRouter();
+
+    const increment = (producto: CartInterface) => {
+        setCount(count + 1);
+        addProduct(producto);
+    
+      };
+
+    const decrement = (product: CartInterface) => {
+        if (count > 0) {
+          setCount(count - 1);
+        }
+        const productosLS = localStorage.getItem("allProducts");
+    
+        if (productosLS) {
+          const parsedProducts: CartInterface[] = JSON.parse(productosLS);
+          const findProd = parsedProducts.find((prod) => product.id == prod.id);
+    
+          if (findProd) {
+            findProd.quantity -= 1;
+            localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
+          }
+        }
+      };
+
     return (
         <div className='flex flex-col items-center justify-center bg-white mx-2 border border-gray-300 rounded-lg shadow w-56 h-96 hover:bg-gray-100 dark:border-gray-700 dark:bg-gray-800 dark:hover:bg-gray-700'>
                 <button onClick={() => router.push(`/productDetail/${product.id}`)}>
@@ -76,11 +98,11 @@ const CarrouselCard: React.FC <{ product: ProductInterface }> = ({ product }) =>
                 </div>
                 <div className='flex items-center justify-between border font-bold border-gray-300 w-11/12 rounded-full mb-1'>
                     <button 
-                    // onClick={() => decrement(product)} 
+                    onClick={() => decrement(product)} 
                     className="bg-yellow-100 text-black  py-2 px-4 rounded-full">-</button>
                     <p className='font-normal'>{count}</p>
                     <button 
-                    // onClick={() => increment(product)} 
+                    onClick={() => increment(product)} 
                     className="bg-yellow-100 text-black  py-2 px-4 rounded-full">+</button>
                 </div>
             </div>

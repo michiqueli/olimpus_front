@@ -81,9 +81,7 @@ export default function Pasarela() {
     const activeCart = userAllData.Carts.filter(
       (cart: any) => cart.isActive === true
     );
-    console.log(activeCart)
     const cartId = activeCart[0].id
-    console.log(cartId)
 
     postPayment(paymentData)
     .then(await postCart(cartData, userAllData.id, cartId))
