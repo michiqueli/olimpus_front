@@ -4,8 +4,6 @@ import CardSlider from "../components/cardsSlider";
 import NovedadesSlider from "../components/novedadesSlider";
 import Banner from "../components/catalogo";
 import { useSession } from "next-auth/react";
-import { useProduct } from "@/context/CartContext";
-import { CartInterface } from "@/components/interfaces";
 
 export default function Home() {
   const { data: session } = useSession();
