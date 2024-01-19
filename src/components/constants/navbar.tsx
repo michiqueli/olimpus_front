@@ -19,7 +19,11 @@ const NavBar: React.FC = () => {
   
   useEffect(() => {
     setCount(totalProducts)
-  }, [])
+  }, [totalProducts]);
+
+  useEffect(() => {
+    setCount(totalProducts);
+  }, []);
 
   return (
     <main>
@@ -132,7 +136,7 @@ const NavBar: React.FC = () => {
                   className="w-11 h-11 hover:scale-110"
                 />
               </button>
-            <h1 className="text-black font-black ml-1">{count}</h1>
+            <h1 className="text-black font-black ml-1">{totalProducts}</h1>
             </div>
           </div>
         </div>
