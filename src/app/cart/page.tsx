@@ -14,8 +14,8 @@ const Cart = () => {
   useEffect(() => {
     const prods = localStorage.getItem("allProducts");
     const parsed = prods ? JSON.parse(prods) : [];
-    setProductos(parsed);
-  }, []);
+    setProductos(parsed)
+  },[])
 
   const { data: session } = useSession();
   const user: any = session?.user;
