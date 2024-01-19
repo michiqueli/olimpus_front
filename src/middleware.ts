@@ -3,7 +3,7 @@ import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 import { getToken } from 'next-auth/jwt';
  
-export const config = { matcher : ['/adminDashboard', '/allUsers', '/pasarelaPagos', '/userDetail', '/account']}
+export const config = { matcher : ['/adminDashboard', '/allUsers', '/pasarelaPagos', '/userDetail', '/account', '/createProduct']}
 
 export async function middleware(req: NextRequest) {
   
