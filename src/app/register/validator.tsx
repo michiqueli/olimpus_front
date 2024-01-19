@@ -81,4 +81,4 @@ const validaciones = (inputs: any): ValidationErrors => {
 };
 
 
-export default validaciones;
+export default validaciones;
