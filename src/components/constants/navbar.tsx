@@ -35,7 +35,7 @@ const NavBar: React.FC = () => {
             </div>
             {user ? (
               <div>
-                <h1 className="text-black">Bienvenido {session?.user?.name ?? user?.user.name}</h1>
+                <h1 className="text-black">Bienvenido {user?.name ?? user?.user.name}</h1>
               </div>
             ) : (
               ""
