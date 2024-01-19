@@ -4,10 +4,10 @@ import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import { Review, CartInterface } from "@/components/interfaces";
-import { useRouter } from "next/navigation";
+import { useProduct } from "@/context/CartContext";
 
 export default function ProductDetail() {
-  // const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
+  const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
   // const router = useRouter()
   const params = useParams();
   const [count, setCount] = useState(0);
@@ -23,41 +23,13 @@ export default function ProductDetail() {
     quantity: 0,
   });
 
-  useEffect(()=> {
-    console.log(product);
-    
-  }, [])
-
   const productID = params.id;
 
-  const productos = localStorage.getItem('allProducts');
 
-  if(productos){
-    const parsedProducts: CartInterface[] = JSON.parse(productos);
-  }
   const increment = (producto: CartInterface) => {
-    if(count < product.stock){
+    setCount(count + 1);
+    addProduct(producto);
 
-      setCount(count + 1);
-      const productos = localStorage.getItem('allProducts');
-      let updatedProducts: CartInterface[] = [];
-    
-      if (productos) {
-        const parsedProducts: CartInterface[] = JSON.parse(productos);
-        const existingProductIndex = parsedProducts.findIndex((p: CartInterface) => p.id === producto.id);
-    
-        if (existingProductIndex !== -1) {
-          parsedProducts[existingProductIndex].quantity += 1;
-          updatedProducts = parsedProducts;
-        } else {
-          updatedProducts = [...parsedProducts, { ...producto, quantity: 1 }];
-        }
-      } else {
-        updatedProducts = [{ ...producto, quantity: 1 }];
-      }
-    
-      localStorage.setItem('allProducts', JSON.stringify(updatedProducts));
-    }
   };
 
   const decrement = (product: CartInterface) => {
@@ -171,18 +143,18 @@ export default function ProductDetail() {
               )}
             </div>
           </div>
-
             
           <div className="flex items-center mt-4 ml-60 text-lg border font-bold border-gray-300 w-4/12 p-4 rounded-full ">
+
             <button
               onClick={() => decrement(product)}
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
             >
               -
             </button>
-            <p className="mr-20 font-normal "> {count}</p>
+            <p className="font-normal "> {count}</p>
             <button
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
               onClick={() => increment(product)}
             >
               +
