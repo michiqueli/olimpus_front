@@ -8,7 +8,7 @@ interface ValidationErrors {
 
 const regexName = /^[a-zA-Z\s]+$/;
 const regexEmail = /^[a-zA-Z0-9!@#$%^&*()_+-=,.<>?/;:'"[\]{|}`~]+$/;
-const regexPassword = /^(?=.*[a-zA-Z0-9!@#$%^&*()_+-=,.<>?/;:'"[\]{|}`~])[\w!@#$%^&*()_+-=,.<>?/;:'"[\]{|}`~]{6,}$/;
+const regexPassword = /^(?=.[a-zA-Z0-9!@#$%^&()_+-=,.<>?/;:'"[\]{|}~])[\w!@#$%^&*()_+-=,.<>?/;:'"[\]{|}~]{6,}$/;
 const regexStreet = /^[a-zA-Z0-9 ]+$/;
 const regexZipCode = /^[0-9]+$/;
 
@@ -21,6 +21,8 @@ const validaciones = (inputs: any): ValidationErrors => {
             errors.name = 'Nombre requerido';
         } else if (!regexName.test(inputs.name)) {
             errors.name = 'Nombre inválido';
+        } else if (inputs.name.length > 20) {
+            errors.name = 'El nombre no puede tener más de 15 caracteres';
         } else {
             delete errors.name;
         }
@@ -32,6 +34,8 @@ const validaciones = (inputs: any): ValidationErrors => {
             errors.email = 'Email requerido';
         } else if (!regexEmail.test(inputs.email)) {
             errors.email = 'Email inválido';
+        } else if (inputs.email.length > 40) {
+            errors.email = 'El email no puede tener más de 40 caracteres';
         } else {
             delete errors.email;
         }
@@ -42,6 +46,8 @@ const validaciones = (inputs: any): ValidationErrors => {
             errors.password = 'Contraseña requerida';
         } else if (!regexPassword.test(inputs.password)) {
             errors.password = 'Contraseña inválida';
+        } else if (inputs.password.length < 4 || inputs.password.length >10) {
+            errors.password = 'La contraseña debe tener entre 4 y 10 carácteres';
         } else {
             delete errors.password;
         }
@@ -52,6 +58,8 @@ const validaciones = (inputs: any): ValidationErrors => {
             errors.street = 'Calle requerida';
         } else if (!regexStreet.test(inputs.street)) {
             errors.street = 'Calle inválida';
+        } else if (inputs.street.length > 40) {
+            errors.street = 'La calle no puede tener más de 40 caracteres';
         } else {
             delete errors.street;
         }
@@ -62,6 +70,8 @@ const validaciones = (inputs: any): ValidationErrors => {
             errors.zipCode = 'Código postal requerido';
         } else if (!regexZipCode.test(inputs.zipCode)) {
             errors.zipCode = 'Código postal inválido';
+        } else if (inputs.zipCode.length < 2 || inputs.zipCode.length > 4) {
+            errors.zipCode = 'El código postal debe ser de 4 carácteres';
         } else {
             delete errors.zipCode;
         }
@@ -72,4 +82,3 @@ const validaciones = (inputs: any): ValidationErrors => {
 
 
 export default validaciones;
-
