@@ -1,3 +1,5 @@
+import { ReactNode } from "react";
+
 export interface Users {
     id: number,
     name: string,
@@ -13,6 +15,20 @@ export type UserList = Users[];
 
 export interface GoBackButtonProps {
     title: string,
+}
+
+export interface CartProps{  
+    isOpen: boolean;
+    setIsOpen: React.Dispatch<React.SetStateAction<boolean>>  
+    onClose: ()=> void   
+}
+
+export interface Errors {
+    name?: string;
+    email?: string;
+    password?: string;
+    street?: string;
+    zipCode?: string;
 }
 
 export interface PrimaryButtonProps {
@@ -31,7 +47,15 @@ export interface AlertButtonProps {
 export interface Review{
     content: string;
     rating: number;
-  };
+    isActive:true,
+    ProductId: number,
+    UserId:string
+};
+
+export interface ProductReview {
+    image: string;
+    name:string
+};
 
 export interface ProductInterface{
     id: string,
@@ -40,8 +64,35 @@ export interface ProductInterface{
     image: string
     price: number,
     discount: number,
-    reviews:Review[],
+    Reviews:Review[],
+    stock: number,
 }
+
+export interface CreateProductInterface{
+    name: string,
+    description: string,
+    image: string
+    price: number,
+    discount: number,
+    isActive: boolean,
+    TypeId: number,
+    SubtypeId: number
+    stock: number,
+}
+
+export interface ProductType{
+    id: number;
+    name: string;
+    Subtypes?: Subtype[];
+}
+
+export interface Subtype{
+    id: number;
+    name: string;
+    metric: string;
+}
+
+
 
 export interface FieldProps {
     placeholder: string,
@@ -86,3 +137,28 @@ export interface UserPost {
     password: string,
     name: string,
   }
+
+export interface CartProviderProps {
+    children: ReactNode;
+  }
+
+export interface CreateContextProps {
+    contextProducts: CartInterface[];
+    total: number,
+    totalProducts: number,
+    decrementOne: (id: string) => void;
+    addProduct: (product: CartInterface) => void;
+    deleteProduct: (id: string) => void;
+    deleteAllProducts: (products: CartInterface[]) => void;
+}
+
+export interface CartInterface extends ProductInterface {
+    quantity: number,
+}
+
+export interface PostCartInterface {
+    title: string,
+    quantity: number,
+    currency_id: string,
+    unit_price: number,
+}

@@ -2,7 +2,7 @@
 
 import { Users } from "../../components/interfaces";
 import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, redirect } from "next/navigation";
 import ActiveAdmins from "../../components/users/admins/adminUsers";
 import InactiveAdmins from "../../components/users/admins/inactiveAdmins";
 import ActiveBuyers from "../../components/users/buyers/buyerUsers";
@@ -21,18 +21,21 @@ export default function AllUsers(){
   const [admins, setAdmins] = useState<Users[]>([]);
   const [inactiveAdmins, setInactiveAdmins] = useState<Users[]>([]);
   const [buyers, setBuyers] = useState<Users[]>([]);
-  const [inactivebBuyers, setInactiveBuyers] = useState<Users[]>([]);
-
+  const [inactiveBuyers, setInactiveBuyers] = useState<Users[]>([]);
 
   useEffect(() => {
     async function fetchData() {
       try {
         const userList = await getAllUsers();
-        const filteredAdmins = userList.filter((user: Users) => user.roleid === 2);
-        const filteredBuyers = userList.filter((user: Users) => user.roleid === 3);
+        const filteredAdmins = userList.filter((user: Users) => user.roleid === 1 && user.isActive === true);
+        const filteredBuyers = userList.filter((user: Users) => user.roleid === 3 && user.isActive === true);
+        const filteredInactiveBuyers = userList.filter((user: Users) => user.roleid === 3 && user.isActive === false);
+        const filteredInactiveAdmins = userList.filter((user: Users) => user.roleid === 1 && user.isActive === false);
   
         setAdmins(filteredAdmins);
         setBuyers(filteredBuyers);
+        setInactiveBuyers(filteredInactiveBuyers)
+        setInactiveAdmins(filteredInactiveAdmins)
       } catch (error) {
         console.error("Error en render componente", error);
       }
@@ -40,27 +43,27 @@ export default function AllUsers(){
     fetchData();
   }, []);
 
-  // id, name, email, password, zipcode, street, roleId, isActive
   const toggleActive = () => {
     setActive(!active);
   };  
   
-console.log(filtusers);
 
   return (
     <div>
+      <div className="left-0 right-0 mx-auto mb-4 flex justify-center mt-4">
+        <PrimaryButton onClickfunction={() => setComponent(!component)} title={component ? "Ver administradores" : "Ver usuarios"}/>
+        <PrimaryButton onClickfunction={toggleActive} title={active ? "Inactivos" : "Activos"}/>
+      </div>
       <div className="flex flex-col items-center w-full">
       {component ? (
           active ? 
-          <ActiveBuyers buyers={buyers} setBuyers={setBuyers} /> : <InactiveBuyers buyers={buyers} setBuyers={setBuyers}/>) 
+          <ActiveBuyers buyers={buyers} setBuyers={setBuyers} /> : <InactiveBuyers buyers={inactiveBuyers} setBuyers={setBuyers}/>) 
         : (
-          active ? <ActiveAdmins admins={admins} setAdmins={setAdmins}/> : <InactiveAdmins admins={admins} setAdmins={setAdmins}/>
+          active ? <ActiveAdmins admins={admins} setAdmins={setAdmins}/> : <InactiveAdmins admins={inactiveAdmins} setAdmins={setAdmins}/>
           )}
       </div>
-      <div className="fixed bottom-0 left-0 right-0 mx-auto mb-4 flex justify-center">
-        <PrimaryButton onClickfunction={() => setComponent(!component)} title={component ? "Ver administradores" : "Ver usuarios"}/>
+      <div className="left-0 right-0 mx-auto mb-4 flex justify-center mt-4"> 
         <PrimaryButton onClickfunction={() => router.push('/createUsers')} title='Crear nuevo usuario'/>
-        <PrimaryButton onClickfunction={toggleActive} title={active ? "Usuarios inactivos" : "Usuarios activos"}/>
         <PrimaryButton onClickfunction={() => router.push('/adminDashboard')} title='Ir al inicio'/>
       </div>
     </div>

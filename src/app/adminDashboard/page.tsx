@@ -1,4 +1,5 @@
 "use client";
+
 import { useRouter } from 'next/navigation';
 import PrimaryButton from '../../components/buttons/primaryButton';
 
@@ -16,45 +17,28 @@ export default function Dashboard() {
   }
 
   return (
-    <div>
-      <div className="h-full w-full my-6">
-        <div className='flex flex-col mt-32 items-center'>
-          <div className='justify-arround '>
-            <PrimaryButton onClickfunction={()=> router.push('/')} title='Usuarios'/>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Crear usuario
-            </button>
+    <div className="max-w-sm rounded overflow-hidden shadow-lg mx-auto mt-10 bg-gray-300">
+      <div className="px-6 py-4">
+        <div className="font-bold text-xl mb-2 text-center">Panel de administración</div>
+      </div>
+      <div className="px-6 pt-4 pb-2">
+        <div className="flex flex-col">
+          <div className="flex items-center mb-2">
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              <PrimaryButton onClickfunction={() => router.push("/allUsers")} title='Usuarios'/>
+            </span>
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              <PrimaryButton onClickfunction={() => router.push('/register')} title='Crear usuario'/>
+            </span>
           </div>
-          <div className='flex justify-arround'>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Transacciones
-            </button>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Crear transacción
-            </button>
-          </div>
-          <div className='flex justify-arround'>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Ingresos
-            </button>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Stocks
-            </button>
-          </div>
-          <div className='flex justify-arround '>
-            <button onClick={() => router.push('/')}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Auditoría
-            </button>
-            <button onClick={logOut}
-              className="mr-10 mb-10 w-60 h-20 text-white bg-custom-red hover:scale-105 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-xl px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800">
-              Salir
-            </button>
+          <span className="border-b border-gray-500 w-full my-2"></span>
+          <div className="flex items-center mb-2">
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700 mr-2">
+              <PrimaryButton onClickfunction={() => router.push('/catalogo')} title='Productos'/>
+            </span>
+            <span className="inline-block rounded-full px-3 py-1 text-sm font-semibold text-gray-700">
+              <PrimaryButton onClickfunction={() => router.push('/createProduct')} title='Crear productos'/>
+            </span>
           </div>
         </div>
       </div>

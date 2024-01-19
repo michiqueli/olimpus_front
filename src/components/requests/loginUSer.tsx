@@ -2,6 +2,7 @@ import axios from "axios";
 import { CredentialsLogin } from "../interfaces";
 
 const userLogin = async (credentials: CredentialsLogin) => {
+    // const { email, password } = credentials;
     try {
         const response = await axios.post(`${process.env.NEXT_PUBLIC_BACKEND_URL}/login`, credentials);
         return response.data;

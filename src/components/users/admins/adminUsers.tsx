@@ -3,7 +3,7 @@
 import List from "../../list";
 import { useState } from "react";
 import { ActiveAdminsProps } from "../../interfaces";
-import Pagination from "../../pagination";
+import Pagination from "../../design/pagination";
 import EditButton from "../../buttons/editButton";
 import AlertButton from "../../buttons/alertButton";
 import deleteUser from "@/components/requests/deleteUser";

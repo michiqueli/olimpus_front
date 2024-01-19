@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
-import {getProductByName} from '../Redux/sliceProducts'
+import { getProductByName } from '@/Redux/sliceProducts';
 import { useAppDispatch } from '@/Redux/hooks';
 // import { ResultState } from '../components/interfaces';
 
@@ -12,7 +12,7 @@ export default function SearchBar() {
     name: '',
   });
 
-  interface ResultState{ // PASARSELO A ANGELO
+  interface ResultState{
     name:string
   }
 
