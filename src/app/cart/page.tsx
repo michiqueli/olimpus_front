@@ -18,7 +18,6 @@ const Cart = () => {
     setProductos(parsed)
   })
 
-  // const renderedProductIds = new Set();
   const { data: session } = useSession();
   const user: any = session?.user;
 

@@ -1,28 +1,46 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { getUsersById } from "@/Redux/Actions";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import getUserById from "@/components/requests/getUserById";
+import postCompra from "@/components/requests/postCompra";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
-import { getUsers } from "@/Redux/sliceUsers";
-import { useProduct } from "@/context/CartContext";
 import postPayment from "@/components/requests/postPayment";
 import { useSession } from "next-auth/react";
+import postCart from "@/components/requests/postCart";
 
 export default function Pasarela() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const datos = useAppSelector(getUsers);
   const PRODUCTOSAUSAR = localStorage.getItem("allProducts");
+  const [userAllData, setUserAllData]: any = useState({});
 
   let PARSEADO = [];
   if (PRODUCTOSAUSAR) {
     PARSEADO = JSON.parse(PRODUCTOSAUSAR);
-    console.log(PARSEADO);
   }
-  let amount = 0
+  let amount = 0;
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const data = await getUserById(id);
+      setUserAllData(data);
+    };
+    fetchData();
+  }, []);
+
+  //------------------ Datos para postear el Carrito ------------------//
+  const cartItems = PARSEADO.map((product: any) => {
+    return {
+      productId: product.id,
+      quantity: product.quantity,
+    };
+  });
+  const cartData = {
+    items: cartItems,
+    amount: amount
+  }
+
+  //------------------Datos para Mercado Pago-----------------------//
 
   const items = PARSEADO.map((product: any) => {
     const discountedPrice =
@@ -36,16 +54,11 @@ export default function Pasarela() {
       picture_url: product.image,
       category_id: "Equipamiento",
       quantity: product.quantity,
-      currency_id: "ARS", 
+      currency_id: "ARS",
       unit_price: discountedPrice,
     };
   });
 
-  const renderedProductIds = new Set();
-
-  useEffect(() => {
-    getUsersById(id, dispatch);
-  }, [dispatch]);
   const { data: session } = useSession();
 
   const goToPay = async () => {
@@ -58,10 +71,24 @@ export default function Pasarela() {
         email: user.user.email,
         UsuarioId: user.user.id,
       },
-      amount: 800,
+      amount: amount,
       compraId: null,
     };
-    await postPayment(paymentData).then((response) => {
+    const cartData = {
+      items: cartItems,
+      amount: amount
+    }
+    const activeCart = userAllData.Carts.filter(
+      (cart: any) => cart.isActive === true
+    );
+    console.log(activeCart)
+    const cartId = activeCart[0].id
+    console.log(cartId)
+
+    postPayment(paymentData)
+    .then(await postCart(cartData, userAllData.id, cartId))
+    .then(await postCompra (userAllData.id, cartId))
+    .then((response) => {
       router.push(response?.url);
     });
   };
@@ -72,7 +99,7 @@ export default function Pasarela() {
         <div className="ml-60 mt-6">
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <div className="mb-8">
-              {datos && (
+              {userAllData && (
                 <div>
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
                     <img
@@ -82,7 +109,7 @@ export default function Pasarela() {
                       alt="Image not found"
                       className="mr-2"
                     />
-                    {datos.email}
+                    {userAllData.email}
                   </h2>
 
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
@@ -93,7 +120,7 @@ export default function Pasarela() {
                       alt="Image not found"
                       className="mr-2"
                     />
-                    {datos.street}, CP {datos.zipCode}
+                    {userAllData.street}, CP {userAllData.zipCode}
                   </h2>
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
                     <img
@@ -119,9 +146,9 @@ export default function Pasarela() {
                 {PARSEADO.map((product: any, index: any) => {
                   const discountedPrice =
                     product.discount > 0
-                      ? product.price - (product.price * product.discount) / 100 
+                      ? product.price - (product.price * product.discount) / 100
                       : product.price;
-                      amount += discountedPrice;
+                  amount = amount + discountedPrice * product.quantity;
                   return (
                     <div key={index} className="flex mb-4">
                       <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">
@@ -140,9 +167,7 @@ export default function Pasarela() {
                           <p>Cantidad: {product.quantity}</p>
                           <p className="text-l text-lime-600">
                             {product.discount > 0 ? (
-                              <>
-                                ${discountedPrice}
-                              </>
+                              <>${discountedPrice}</>
                             ) : (
                               `$${product.price}`
                             )}

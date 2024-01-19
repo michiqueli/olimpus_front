@@ -71,7 +71,9 @@ const userActive = filteredUsers.filter((user) => user.isActive == false);
             <EditButton title='Ver usuario' route={`/editUser/${user.id}`}/>
             </td>
             <td>
-              <AlertButton title='Re activar' onClickfunction={() => activateUser(user.id, setAdmins)}/>
+            <button onClick={() => activateUser(user.id, setAdmins)}
+                          className="bg-lime-400 text-black rounded-2xl px-3 py-2 w-auto h-auto hover:scale-110">Re activar
+                        </button>
             </td>
           </tr>
         ))}

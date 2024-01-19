@@ -1,10 +1,10 @@
 import { Users } from "../interfaces";
 
 const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateAction<Users[]>>) => {
-    const storedToken = localStorage.getItem('token');
+    const storedToken = 'token';
     try {
       if (storedToken !== null) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/activate`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/activate/${id}`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json', 
@@ -21,7 +21,7 @@ const activateUser = async (id: number, setUsers: React.Dispatch<React.SetStateA
       } 
       setUsers((prevUsers) => prevUsers.filter((user) => user.id !== id));
   }  else{
-          window.alert("Usuario eliminado exitosamente")
+          window.alert("Usuario Activado exitosamente")
       }
 
   } catch (error) {
