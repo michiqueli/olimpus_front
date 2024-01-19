@@ -9,17 +9,14 @@ import Swal from 'sweetalert2'
 
 const NavBar: React.FC = () => {
   const { data: session } = useSession();
-  const { total } = useProduct();
+  const {contextProducts} = useProduct()
   const user: any = session?.user;
-
   const router = useRouter();
   const path = usePathname();
   // Estado para controlar la visibilidad del menú desplegable
   const [dropdownVisible, setDropdownVisible] = React.useState(false);
-
-  const handleCartClick = () => {
-    router.push("/cart")
-  };
+  
+  const length = contextProducts.length;
 
   return (
     <main>
@@ -127,14 +124,14 @@ const NavBar: React.FC = () => {
                   </div>
                 )}
               </div>
-              <button onClick={handleCartClick}>
+              <button onClick={() => router.push("/cart")}>
                 <img
                   src="/shopping.png"
                   alt=""
                   className="w-11 h-11 hover:scale-110"
                 />
               </button>
-            <h1 className="text-black font-black ml-1">{total}</h1>
+            <h1 className="text-black font-black ml-1">{length}</h1>
             </div>
           </div>
         </div>

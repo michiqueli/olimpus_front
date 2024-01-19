@@ -1,18 +1,23 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { CartInterface, CartProps } from "../../components/interfaces";
 import { useSession } from "next-auth/react";
+import PrimaryButton from "@/components/buttons/primaryButton";
+import { useProduct } from "@/context/CartContext";
 
 const Cart = () => {
   const router = useRouter();
-  let amount = 0;
-  const [productos, setProductos] = useState(() => {
-    const productosEnJSON = localStorage.getItem("allProducts");
-    return productosEnJSON ? JSON.parse(productosEnJSON) : [];
-  });
+  const {decrementOne} = useProduct();
+  // let amount = 0;
+  const [productos, setProductos] = useState<CartInterface[]>([]);
 
-  const renderedProductIds = new Set();
+  useEffect(() => {
+    const prods = localStorage.getItem('allProducts');
+    const parsed = prods ? JSON.parse(prods) : [];
+    setProductos(parsed)
+  })
+
   const { data: session } = useSession();
   const user: any = session?.user;
 
@@ -30,18 +35,18 @@ const Cart = () => {
     }
   };
 
-  const decrementOne = (product: CartInterface) => {
-    const productosLS = localStorage.getItem("allProducts");
-
-    if (productosLS) {
-      const parsedProducts: CartInterface[] = JSON.parse(productosLS);
-      const findProd = parsedProducts.find((prod) => product.id == prod.id);
-
-      if (findProd) {
-        findProd.quantity -= 1;
-        localStorage.setItem("allProducts", JSON.stringify(parsedProducts));
+  const decrementOneProd = async (product: CartInterface) => {
+    await decrementOne(product.id);
+  
+    const updatedProducts = productos.map((prod: CartInterface) => {
+      if (prod.id === product.id) {
+        return { ...prod, quantity: prod.quantity - 1 };
       }
-    }
+      return prod;
+    });
+  
+    setProductos(updatedProducts);
+    localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
   };
 
   const deleteAll = () => {
@@ -91,12 +96,15 @@ const Cart = () => {
                   )}
                 </button>
                 <h1>Cantidad: {product.quantity}</h1>
-                <button
-                  className="bg-red-500 px-2 font-semibold h-8 rounded-lg mt-2"
-                  onClick={() => deleteOneProduct(product)}
-                >
-                  Eliminar
-                </button>
+                <div>
+                  <PrimaryButton onClickfunction={() => decrementOneProd(product)} title='-'/>
+                  <button
+                    className="bg-red-500 px-2 font-semibold h-8 rounded-lg mt-2"
+                    onClick={() => deleteOneProduct(product)}
+                  >
+                    Eliminar
+                  </button>
+                </div>
               </div>
             ))}
           </div>

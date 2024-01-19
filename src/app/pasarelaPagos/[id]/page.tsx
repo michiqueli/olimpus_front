@@ -1,67 +1,94 @@
 "use client";
 
-import { useRouter } from "next/navigation";
-import { getUsersById } from "@/Redux/Actions";
-import { useParams } from "next/navigation";
+import { useRouter, useParams } from "next/navigation";
+import getUserById from "@/components/requests/getUserById";
+import postCompra from "@/components/requests/postCompra";
 import { useEffect, useState } from "react";
-import { useAppDispatch, useAppSelector } from "@/Redux/hooks";
-import { getUsers } from "@/Redux/sliceUsers";
-import { useProduct } from "@/context/CartContext";
 import postPayment from "@/components/requests/postPayment";
 import { useSession } from "next-auth/react";
+import postCart from "@/components/requests/postCart";
 
 export default function Pasarela() {
   const router = useRouter();
-  const dispatch = useAppDispatch();
   const { id } = useParams();
-  const datos = useAppSelector(getUsers);
-  const { contextProducts, total, totalProducts } = useProduct();
-  const PRODUCTOSAUSAR = localStorage.getItem('allProducts');
-  if(PRODUCTOSAUSAR){
-    const PARSEADO = JSON.parse(PRODUCTOSAUSAR);
+  const PRODUCTOSAUSAR = localStorage.getItem("allProducts");
+  const [userAllData, setUserAllData]: any = useState({});
+
+  let PARSEADO = [];
+  if (PRODUCTOSAUSAR) {
+    PARSEADO = JSON.parse(PRODUCTOSAUSAR);
   }
-  const renderedProductIds = new Set();
+  let amount = 0;
 
   useEffect(() => {
-    getUsersById(id, dispatch);
-  }, [dispatch]);
+    const fetchData = async () => {
+      const data = await getUserById(id);
+      setUserAllData(data);
+    };
+    fetchData();
+  }, []);
+
+  //------------------ Datos para postear el Carrito ------------------//
+  const cartItems = PARSEADO.map((product: any) => {
+    return {
+      productId: product.id,
+      quantity: product.quantity,
+    };
+  });
+  const cartData = {
+    items: cartItems,
+    amount: amount
+  }
+
+  //------------------Datos para Mercado Pago-----------------------//
+
+  const items = PARSEADO.map((product: any) => {
+    const discountedPrice =
+      product.discount > 0
+        ? product.price - (product.price * product.discount) / 100
+        : product.price;
+
+    return {
+      title: product.name,
+      description: product.description,
+      picture_url: product.image,
+      category_id: "Equipamiento",
+      quantity: product.quantity,
+      currency_id: "ARS",
+      unit_price: discountedPrice,
+    };
+  });
+
   const { data: session } = useSession();
-  
 
   const goToPay = async () => {
-    const user : any = session?.user;
-    
+    const user: any = session?.user;
+
     const paymentData: any = {
-      items: [
-        {
-          title: "Remera Adidas",
-          description: "Remera super comoda",
-          picture_url: "https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw0b98b386/products/ADIN7975/ADIN7975-1.JPG",
-          category_id: "Equipamiento",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: 200,
-        },
-        {
-          title: "Pantalon Puma",
-          description: "Pantalon super comodo",
-          picture_url: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_1536,h_1536/global/535656/27/mod01/fnd/ARG/fmt/png",
-          category_id: "Equipamiento",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: 600,
-        },
-      ],
+      items: items,
       payer: {
         name: user.user.name,
         email: user.user.email,
-        UsuarioId: user.user.id
+        UsuarioId: user.user.id,
       },
-      amount: 800,
+      amount: amount,
       compraId: null,
     };
-    await postPayment(paymentData).
-    then((response) => {
+    const cartData = {
+      items: cartItems,
+      amount: amount
+    }
+    const activeCart = userAllData.Carts.filter(
+      (cart: any) => cart.isActive === true
+    );
+    console.log(activeCart)
+    const cartId = activeCart[0].id
+    console.log(cartId)
+
+    postPayment(paymentData)
+    .then(await postCart(cartData, userAllData.id, cartId))
+    .then(await postCompra (userAllData.id, cartId))
+    .then((response) => {
       router.push(response?.url);
     });
   };
@@ -72,7 +99,7 @@ export default function Pasarela() {
         <div className="ml-60 mt-6">
           <div className="max-w-sm rounded overflow-hidden shadow-lg">
             <div className="mb-8">
-              {datos && (
+              {userAllData && (
                 <div>
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
                     <img
@@ -82,7 +109,7 @@ export default function Pasarela() {
                       alt="Image not found"
                       className="mr-2"
                     />
-                    {datos.email}
+                    {userAllData.email}
                   </h2>
 
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
@@ -93,7 +120,7 @@ export default function Pasarela() {
                       alt="Image not found"
                       className="mr-2"
                     />
-                    {datos.street}, CP {datos.zipCode}
+                    {userAllData.street}, CP {userAllData.zipCode}
                   </h2>
                   <h2 className="text-gray-900 font-bold text-xl mb-2 flex items-center">
                     <img
@@ -114,51 +141,45 @@ export default function Pasarela() {
 
         <div className="max-w-sm rounded overflow-hidden shadow-lg ml-20">
           <div className="px-6 py-4">
-            {contextProducts.length > 0 && (
+            {PARSEADO && PARSEADO.length > 0 && (
               <>
-                {contextProducts
-                  .filter(
-                    (product, index, self) =>
-                      self.findIndex((p) => p.id === product.id) === index
-                  )
-                  .map((product, index) => {
-                    if (renderedProductIds.has(product.id)) {
-                      return null; // Evitar volver a renderizar el mismo producto
-                    }
-
-                    // Agregar el ID del producto al conjunto
-                    renderedProductIds.add(product.id);
-
-                    return (
-                      <div key={index} className="flex mb-4">
-                        <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">
-                          <img
-                            height={80}
-                            width={80}
-                            src={product.image}
-                            alt={`Product ${index}`}
-                          />
-                        </div>
-                        <div className="ml-4">
-                          <h2 className="text-gray-900 font-bold text-l mb-2 mt-2">
-                            {product.name}
-                          </h2>
-                          <h2 className="text-gray-900 text-sm mb-2 mt-2">
-                            {product.description}
-                          </h2>
-                          <div className="flex justify-between mt-4">
-                            <p>Cantidad: {totalProducts}</p>
-                            <p className="text-l text-gray-900">
-                              ${product.price}
-                            </p>
-                          </div>
+                {PARSEADO.map((product: any, index: any) => {
+                  const discountedPrice =
+                    product.discount > 0
+                      ? product.price - (product.price * product.discount) / 100
+                      : product.price;
+                  amount = amount + discountedPrice * product.quantity;
+                  return (
+                    <div key={index} className="flex mb-4">
+                      <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">
+                        <img
+                          height={80}
+                          width={80}
+                          src={product.image}
+                          alt={`Product ${index}`}
+                        />
+                      </div>
+                      <div className="ml-4">
+                        <h2 className="text-gray-900 font-bold text-l mb-2 mt-2">
+                          {product.name}
+                        </h2>
+                        <div className="flex justify-around mt-4 ">
+                          <p>Cantidad: {product.quantity}</p>
+                          <p className="text-l text-lime-600">
+                            {product.discount > 0 ? (
+                              <>${discountedPrice}</>
+                            ) : (
+                              `$${product.price}`
+                            )}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  );
+                })}
                 <div className="flex justify-between text-xl text-black border-t pt-4">
                   <p className="">Subtotal</p>
-                  <p>${total}</p>
+                  <p>${amount}</p>
                 </div>
               </>
             )}

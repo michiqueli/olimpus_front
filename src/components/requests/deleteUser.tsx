@@ -4,7 +4,7 @@ const deleteUser = async (id: number, setUsers: React.Dispatch<React.SetStateAct
   const storedToken = 'token';
   try {
     if (storedToken !== null) {
-      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/user/delete/${id}`, {
+      const response = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/users/delete/${id}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json', 
