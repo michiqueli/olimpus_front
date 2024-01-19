@@ -21,9 +21,7 @@ export async function POST(request: NextRequest): Promise<NextResponse> {
 
     const response: UploadApiResponse | undefined = await new Promise((resolve, reject) => {
         cloudinary.uploader.upload_stream({}, (err, result) => {
-            if (err) { reject(err) 
-                     console.log(err);
-                     }
+            if (err) { reject(err)                      }
             resolve(result);
         }).end(buffer)
     })

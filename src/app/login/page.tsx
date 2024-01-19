@@ -36,7 +36,6 @@ const loginPage = () => {
         password: credentials.password,
         redirect: false,
       }).then((response) => {
-        console.log(response)
         if (response?.status == 401) {
           Swal.fire({
             icon: "error",

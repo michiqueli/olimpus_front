@@ -235,7 +235,6 @@ export const getUserHistorial= async (userId,dispatch)=>{
 
 //////////////////////////////// Reviews //////////////////////////////
 export const createReview= async (rev, dispatch)=>{
-  console.log("resp", rev)
   try {
     let json= await axios.post(`${baseURL}/reviews/createReview`, rev)
     dispatch(setProducts(json.data))

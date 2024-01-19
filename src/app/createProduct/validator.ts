@@ -9,6 +9,8 @@ export interface ProductFormValidatorProps {
     Metric?: string;
 }
 
+const regexText = /^(?:(?!\s\s)[a-zA-Z0-9\s!@#$%^&*()-_=+[\]{};:'",.<>/?])*(?:\s{0,2}[a-zA-Z0-9\s!@#$%^&*()-_=+[\]{};:'",.<>/?])$/;
+
 const productFormValidations = (inputs: any): ProductFormValidatorProps => {
     const errors: ProductFormValidatorProps = {};
     if(!inputs.name || typeof inputs.name !== 'string' || inputs.name.length === 0){
@@ -17,6 +19,8 @@ const productFormValidations = (inputs: any): ProductFormValidatorProps => {
         errors.name = 'Nombre demasiado corto'
     } else if (inputs.name.length >= 50) {
         errors.name = 'Nombre demasiado largo'
+    } else if (!regexText.test(inputs.name)) {
+        errors.name = 'Nombre inválido';
     }
 
     if(!inputs.price || isNaN(parseFloat(inputs.price))){
@@ -35,11 +39,14 @@ const productFormValidations = (inputs: any): ProductFormValidatorProps => {
 
     if(!inputs.description || typeof inputs.description !== 'string' || inputs.description.length === 0){
         errors.description = 'Descripción requerida'
+    } else if (!regexText.test(inputs.description)) {
+        errors.description = 'Descripción invalida';
     } else if (inputs.description.length <= 30) {
         errors.description = 'Descripción muy corta, minimo 30 caracteres'
     } else if (inputs.description.length >= 1500) {
         errors.description = 'Descripción demasiado larga, máximo 500 caracteres'
     }
+
     return errors;
 }
 
