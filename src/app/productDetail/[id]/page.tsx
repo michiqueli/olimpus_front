@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 
 export default function ProductDetail() {
   // const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
-  const router = useRouter()
+  // const router = useRouter()
   const params = useParams();
   const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
@@ -22,6 +22,11 @@ export default function ProductDetail() {
     stock: 0,
     quantity: 0,
   });
+
+  useEffect(()=> {
+    console.log(product);
+    
+  }, [])
 
   const productID = params.id;
 
