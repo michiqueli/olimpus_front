@@ -36,11 +36,12 @@ const loginPage = () => {
         password: credentials.password,
         redirect: false,
       }).then((response) => {
+        console.log(response)
         if (response?.status == 401) {
           Swal.fire({
             icon: "error",
             title: "Oops...",
-            text: "Tus credenciales son incorrectas",
+            text: `Credenciales invalidas!!\nEsta seguro de que estan bien??!!\nSi es así entonces revise su Mail quiza su cuenta fue Baneada`,
           });
           setError({ email: "Credenciales Invalidas" });
         } else {
