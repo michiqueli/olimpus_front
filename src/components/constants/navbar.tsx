@@ -68,7 +68,7 @@ const NavBar: React.FC = () => {
                       <>
                         <button
                           onClick={() => {
-                            router.push(`/userDetail/${user.user.id}`);
+                            router.push(`/userDetail/${user?.user.id}`);
                             setDropdownVisible(!dropdownVisible);
                           }}
                           className="font-bold block w-full text-left px-4 py-2 hover:bg-gray-100 focus:outline-none"

@@ -90,8 +90,8 @@ export default function ProductDetail() {
         </div>
         <div>
           <div className="max-w-md mx-auto  mt-20 mr-80  ml-40 ">
-            <h1 className="text-black text-6xl text-center ">{product.name}</h1>
-            <h2 className="text-black text-center text-lg mt-16">
+            <h1 className="text-black text-3xl text-center ">{product.name}</h1>
+            <h2 className="text-black text-center text-lg mt-8">
               {product.description}
             </h2>
             <div className="flex flex-col items-center justify-center flex-grow">
@@ -111,7 +111,7 @@ export default function ProductDetail() {
                   </h1>
                 </div>
               ) : (
-                <h1 className="text-lime-500 text-xl">${product.price}</h1>
+                <h1 className="text-lime-500 text-2xl mt-2">${product.price}</h1>
               )}
             </div>
           </div>
@@ -121,26 +121,30 @@ export default function ProductDetail() {
               src="/envio.png"
               width={60}
               height={60}
-              className="mt-20"
+              className="mt-12"
             />
-            <h2 className="text-black text-lg ml-4 mt-20">
+            <h2 className="text-black text-lg ml-4 mt-12">
               Envíos gratis a partir de $20.000
             </h2>
           </div>
-          <div className="flex justify-between items-center ml-40 mt-10">
-            <div className="text-lg">
+          <div className="flex items-center ml-60 mt-10">
+            <div className="text-lg mr-40">
               <h2>Cantidad</h2>
             </div>
 
-            {product.stock > 0 ? (
-              <h1 className="text-lg text-black mr-80">
-                Stock: {product.stock}
-              </h1>
-            ) : (
-              <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
-            )}
+            <div>
+              {product.stock > 0 ? (
+                <h1 className="text-lg text-black text-right">
+                  Stock: {product.stock}
+                </h1>
+              ) : (
+                <h1 className="text-xl text-red-600">Producto SIN stock</h1>
+              )}
+            </div>
           </div>
-          <div className="flex items-center justify-between mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
+            
+          <div className="flex items-center mt-4 ml-60 text-lg border font-bold border-gray-300 w-4/12 p-4 rounded-full ">
+
             <button
               onClick={() => decrement(product)}
               className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
@@ -157,7 +161,7 @@ export default function ProductDetail() {
           </div>
           <button
             onClick={handleAddToCart}
-            className="my-20 ml-60 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
+            className="my-10 ml-80 text-xl bg-yellow-200 hover:bg-yellow-300 text-black font-normal py-2 px-4 rounded-full"
           >
             Agregar al carrito
           </button>
@@ -208,6 +212,6 @@ export default function ProductDetail() {
             ))}
         </div>
       </div>
-    </main>
-  );
+    </main>
+  );
 }
