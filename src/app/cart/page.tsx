@@ -8,41 +8,46 @@ import { useProduct } from "@/context/CartContext";
 
 const Cart = () => {
   const router = useRouter();
-  const { contextProducts, decrementOne, deleteProduct } = useProduct();
+  const {decrementOne} = useProduct();
+  // let amount = 0;
   const [productos, setProductos] = useState<CartInterface[]>([]);
 
-   useEffect(() => {
-    // Cuando el componente se monta, setea el estado local con los productos del contexto
-    setProductos(contextProducts);
-  }, [contextProducts]);
+  useEffect(() => {
+    const prods = localStorage.getItem('allProducts');
+    const parsed = prods ? JSON.parse(prods) : [];
+    setProductos(parsed)
+  })
 
   // const renderedProductIds = new Set();
   const { data: session } = useSession();
   const user: any = session?.user;
 
-  // const deleteOneProduct = async (product: CartInterface) => {
-  //   const findProdIndex = productos.findIndex(
-  //     (prod: CartInterface) => prod.id === product.id
-  //   );
+  const deleteOneProduct = (product: CartInterface) => {
+    const findProdIndex = productos.findIndex(
+      (prod: CartInterface) => prod.id === product.id
+    );
 
-  //   if (findProdIndex !== -1) {
-  //     const updatedProducts = [...productos];
-  //     updatedProducts.splice(findProdIndex, 1);
+    if (findProdIndex !== -1) {
+      const updatedProducts = [...productos];
+      updatedProducts.splice(findProdIndex, 1);
 
-  //     setProductos(updatedProducts);
-  //     localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
-  //   }
-    
-  // };
+      setProductos(updatedProducts);
+      localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
+    }
+  };
 
   const decrementOneProd = async (product: CartInterface) => {
     await decrementOne(product.id);
   
-    setProductos((prevProducts) =>
-      prevProducts.map((prod) =>
-        prod.id === product.id ? { ...prod, quantity: prod.quantity - 1 } : prod
-      )
-    );
+    const updatedProducts = productos.map((prod: CartInterface) => {
+      if (prod.id === product.id) {
+        return { ...prod, quantity: prod.quantity - 1 };
+      }
+      return prod;
+    });
+  
+    setProductos(updatedProducts);
+    localStorage.setItem("allProducts", JSON.stringify(updatedProducts));
   };
 
   const deleteAll = () => {
@@ -96,7 +101,7 @@ const Cart = () => {
                   <PrimaryButton onClickfunction={() => decrementOneProd(product)} title='-'/>
                   <button
                     className="bg-red-500 px-2 font-semibold h-8 rounded-lg mt-2"
-                    onClick={() => deleteProduct(product.id)}
+                    onClick={() => deleteOneProduct(product)}
                   >
                     Eliminar
                   </button>

@@ -10,9 +10,6 @@ import { CartInterface } from "@/components/interfaces";
 export default function Home() {
   const { data: session } = useSession();
 
-  const stored = localStorage.getItem('allProducts');
-  const array = stored ? JSON.parse(stored) : undefined;
-
   return (
     <main className="w-full h-full flex flex-col items-center text-center">
       <div className="flex flex-col">
