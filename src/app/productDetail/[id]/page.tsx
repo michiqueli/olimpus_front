@@ -139,16 +139,16 @@ export default function ProductDetail() {
               <h1 className="text-xl text-red-600 ">Producto SIN stock</h1>
             )}
           </div>
-          <div className="flex items-center mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
+          <div className="flex items-center justify-between mt-4 ml-40 text-lg border font-bold border-gray-300 w-5/12 p-4 rounded-full ">
             <button
               onClick={() => decrement(product)}
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
             >
               -
             </button>
-            <p className="mr-20 font-normal "> {count}</p>
+            <p className="font-normal "> {count}</p>
             <button
-              className="mr-20  bg-yellow-100 text-black  py-2 px-4 rounded-full"
+              className="bg-yellow-100 text-black  py-2 px-4 rounded-full"
               onClick={() => increment(product)}
             >
               +

@@ -15,53 +15,53 @@ export default function Pasarela() {
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const datos = useAppSelector(getUsers);
-  const { contextProducts, total, totalProducts } = useProduct();
-  // const PRODUCTOSAUSAR = localStorage.getItem('allProducts');
-  // if(PRODUCTOSAUSAR){
-  //   const PARSEADO = JSON.parse(PRODUCTOSAUSAR);
-  // }
+  const PRODUCTOSAUSAR = localStorage.getItem("allProducts");
+
+  let PARSEADO = [];
+  if (PRODUCTOSAUSAR) {
+    PARSEADO = JSON.parse(PRODUCTOSAUSAR);
+    console.log(PARSEADO);
+  }
+  let amount = 0
+
+  const items = PARSEADO.map((product: any) => {
+    const discountedPrice =
+      product.discount > 0
+        ? product.price - (product.price * product.discount) / 100
+        : product.price;
+
+    return {
+      title: product.name,
+      description: product.description,
+      picture_url: product.image,
+      category_id: "Equipamiento",
+      quantity: product.quantity,
+      currency_id: "ARS", 
+      unit_price: discountedPrice,
+    };
+  });
+
   const renderedProductIds = new Set();
 
   useEffect(() => {
     getUsersById(id, dispatch);
   }, [dispatch]);
   const { data: session } = useSession();
-  
 
   const goToPay = async () => {
-    const user : any = session?.user;
-    
+    const user: any = session?.user;
+
     const paymentData: any = {
-      items: [
-        {
-          title: "Remera Adidas",
-          description: "Remera super comoda",
-          picture_url: "https://www.dexter.com.ar/on/demandware.static/-/Sites-365-dabra-catalog/default/dw0b98b386/products/ADIN7975/ADIN7975-1.JPG",
-          category_id: "Equipamiento",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: 200,
-        },
-        {
-          title: "Pantalon Puma",
-          description: "Pantalon super comodo",
-          picture_url: "https://images.puma.com/image/upload/f_auto,q_auto,b_rgb:fafafa,w_1536,h_1536/global/535656/27/mod01/fnd/ARG/fmt/png",
-          category_id: "Equipamiento",
-          quantity: 1,
-          currency_id: "ARS",
-          unit_price: 600,
-        },
-      ],
+      items: items,
       payer: {
         name: user.user.name,
         email: user.user.email,
-        UsuarioId: user.user.id
+        UsuarioId: user.user.id,
       },
       amount: 800,
       compraId: null,
     };
-    await postPayment(paymentData).
-    then((response) => {
+    await postPayment(paymentData).then((response) => {
       router.push(response?.url);
     });
   };
@@ -114,51 +114,47 @@ export default function Pasarela() {
 
         <div className="max-w-sm rounded overflow-hidden shadow-lg ml-20">
           <div className="px-6 py-4">
-            {contextProducts.length > 0 && (
+            {PARSEADO && PARSEADO.length > 0 && (
               <>
-                {contextProducts
-                  .filter(
-                    (product, index, self) =>
-                      self.findIndex((p) => p.id === product.id) === index
-                  )
-                  .map((product, index) => {
-                    if (renderedProductIds.has(product.id)) {
-                      return null; // Evitar volver a renderizar el mismo producto
-                    }
-
-                    // Agregar el ID del producto al conjunto
-                    renderedProductIds.add(product.id);
-
-                    return (
-                      <div key={index} className="flex mb-4">
-                        <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">
-                          <img
-                            height={80}
-                            width={80}
-                            src={product.image}
-                            alt={`Product ${index}`}
-                          />
-                        </div>
-                        <div className="ml-4">
-                          <h2 className="text-gray-900 font-bold text-l mb-2 mt-2">
-                            {product.name}
-                          </h2>
-                          <h2 className="text-gray-900 text-sm mb-2 mt-2">
-                            {product.description}
-                          </h2>
-                          <div className="flex justify-between mt-4">
-                            <p>Cantidad: {totalProducts}</p>
-                            <p className="text-l text-gray-900">
-                              ${product.price}
-                            </p>
-                          </div>
+                {PARSEADO.map((product: any, index: any) => {
+                  const discountedPrice =
+                    product.discount > 0
+                      ? product.price - (product.price * product.discount) / 100 
+                      : product.price;
+                      amount += discountedPrice;
+                  return (
+                    <div key={index} className="flex mb-4">
+                      <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">
+                        <img
+                          height={80}
+                          width={80}
+                          src={product.image}
+                          alt={`Product ${index}`}
+                        />
+                      </div>
+                      <div className="ml-4">
+                        <h2 className="text-gray-900 font-bold text-l mb-2 mt-2">
+                          {product.name}
+                        </h2>
+                        <div className="flex justify-around mt-4 ">
+                          <p>Cantidad: {product.quantity}</p>
+                          <p className="text-l text-lime-600">
+                            {product.discount > 0 ? (
+                              <>
+                                ${discountedPrice}
+                              </>
+                            ) : (
+                              `$${product.price}`
+                            )}
+                          </p>
                         </div>
                       </div>
-                    );
-                  })}
+                    </div>
+                  );
+                })}
                 <div className="flex justify-between text-xl text-black border-t pt-4">
                   <p className="">Subtotal</p>
-                  <p>${total}</p>
+                  <p>${amount}</p>
                 </div>
               </>
             )}
