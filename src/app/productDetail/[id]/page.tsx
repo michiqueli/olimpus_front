@@ -1,14 +1,14 @@
 "use client";
-
+import Swal from "sweetalert2";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { getProductById } from "@/Redux/sliceProducts";
 import { Review, CartInterface } from "@/components/interfaces";
-import Cart from "@/components/cart/cart";
-import { useProduct } from "@/context/CartContext";
+import { useRouter } from "next/navigation";
 
 export default function ProductDetail() {
   // const {contextProducts, deleteProduct, deleteAllProducts, addProduct} = useProduct()
+  // const router = useRouter()
   const params = useParams();
   const [count, setCount] = useState(0);
   const [product, setProduct] = useState({
@@ -22,6 +22,11 @@ export default function ProductDetail() {
     stock: 0,
     quantity: 0,
   });
+
+  useEffect(()=> {
+    console.log(product);
+    
+  }, [])
 
   const productID = params.id;
 
@@ -92,14 +97,14 @@ export default function ProductDetail() {
     fetchData();
   }, []);
 
-  const [isOpen, setIsOpen] = useState(false);
-
-  const onClose = () => {
-    setIsOpen(false);
-  };
-
   const handleAddToCart = () => {
-    setIsOpen(true);
+    Swal.fire({
+      position: "center",
+      icon: "success",
+      title: "Producto Agregado al Carrito... revisa Tu carrito para finalizar la compra",
+      showConfirmButton: false,
+      timer: 2500,
+    });
   };
 
   return (
