@@ -63,13 +63,13 @@ const filteredUsers = buyers.filter((user) => {
                     className="border-b transition duration-300 ease-in-out hover:bg-neutral-100 dark:border-neutral-500 dark:hover:bg-neutral-200">
                     <td className="whitespace-nowrap px-6 py-4 font-medium">{user.name}</td>
                      <td className="whitespace-nowrap px-6 py-4">{user.email}</td>
-                     <td className="whitespace-nowrap px-6 py-4">{user.roleid === 1 ? 'SúperAdmin' : user.roleid === 2 ? 'Admin' : user.roleid === 3 ? 'Mecánico' : ''}</td>
+                     <td className="whitespace-nowrap px-6 py-4">{user.roleid === 1 ? 'SúperAdmin' : user.roleid === 2 ? 'Admin' : user.roleid === 3 ? 'Buyer' : ''}</td>
                       <td>
                         <EditButton route={`/editUser/${user.id}`} title='Ver usuario'/>
                       </td>
                       <td>
-                        <button onClick={() => activateUser(user.id, setBuyers)}>
-                          <a className="text-custom-red px-3">Re activar</a>
+                        <button onClick={() => activateUser(user.id, setBuyers)}
+                          className="bg-lime-400 text-black rounded-2xl px-3 py-2 w-auto h-auto hover:scale-110">Re activar
                         </button>
                       </td>
                     </tr>

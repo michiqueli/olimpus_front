@@ -58,7 +58,7 @@ export default function Pasarela() {
         email: user.user.email,
         UsuarioId: user.user.id,
       },
-      amount: 800,
+      amount: amount,
       compraId: null,
     };
     await postPayment(paymentData).then((response) => {
@@ -121,7 +121,7 @@ export default function Pasarela() {
                     product.discount > 0
                       ? product.price - (product.price * product.discount) / 100 
                       : product.price;
-                      amount += discountedPrice;
+                      amount = amount+(discountedPrice*product.quantity);
                   return (
                     <div key={index} className="flex mb-4">
                       <div className="h-20 w-20 flex-none bg-cover rounded-lg text-center overflow-hidden">

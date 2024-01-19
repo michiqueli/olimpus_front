@@ -34,7 +34,7 @@ export default function Dashboard() {
           </div>
           <div className='flex justify-arround '>
             <PrimaryButton onClickfunction={() => router.push('/')} title='Productos'/>
-            <PrimaryButton onClickfunction={() => router.push('/')} title='Crear producto'/>
+            <PrimaryButton onClickfunction={() => router.push('/createProduct')} title='Crear producto'/>
           </div>
         </div>
       </div>

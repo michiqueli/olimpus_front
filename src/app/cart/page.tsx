@@ -7,7 +7,7 @@ import PrimaryButton from "@/components/buttons/primaryButton";
 
 const Cart = () => {
   const router = useRouter();
-  // let amount = 0;
+  let amount = 0;
   const [productos, setProductos] = useState(() => {
     const productosEnJSON = localStorage.getItem("allProducts");
     return productosEnJSON ? JSON.parse(productosEnJSON) : [];
